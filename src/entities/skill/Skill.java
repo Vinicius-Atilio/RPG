@@ -1,4 +1,17 @@
-package entities;
+package entities.skill;
+
+import entities.character.Character;
+import entities.ally.Heavenly;
+import entities.ally.Animal;
+import entities.ally.Arcane;
+import entities.ally.Standard;
+import entities.skill.melee.Melee;
+import entities.defense.AgilityDefense;
+import entities.defense.HeavenlyDefense;
+import entities.defense.MagicDefense;
+import entities.skill.ranged.MagicRanged;
+import entities.skill.ranged.StrengthDefense;
+import entities.skill.ranged.StrengthRanged;
 
 import java.util.Arrays;
 import java.util.List;
@@ -75,7 +88,9 @@ public abstract class Skill {
             " protege o aliado com uma barreira mágica!"
     );
 
-    protected Skill(String name, String description,String skillAction, int cooldown, boolean special) {
+    public Skill() {}
+
+    protected Skill(String name, String description, String skillAction, int cooldown, boolean special) {
         this.name = name;
         this.description = description;
         this.skillAction = skillAction;
@@ -115,12 +130,12 @@ public abstract class Skill {
 
     public static List<Skill> ofHunter() {
         return Arrays.asList(
-                StrengthRanged.ofPrecisionShot(),
-                StrengthRanged.ofExplosiveTrap(),
-                AgilityDefense.ofEvasion(),
-                StrengthRanged.ofArrowRain(),
-                StrengthRanged.ofPoisonArrow(),
-                Animal.ofBeast());
+//                StrengthRanged.ofPrecisionShot(),
+//                StrengthRanged.ofExplosiveTrap(),
+                AgilityDefense.ofEvasion());
+//                StrengthRanged.ofArrowRain(),
+//                StrengthRanged.ofPoisonArrow(),
+//                Animal.ofBeast());
     }
 
     public void updateSkillCooldown() {
@@ -166,10 +181,11 @@ public abstract class Skill {
         return this instanceof Support;
     }
 
-    public abstract void executeSelectedSkill(Character actionPlayer,  Character passivePlayer);
-
+    public abstract void executeSelectedSkill(Character actionPlayer, Character passivePlayer);
     public abstract void skillTypeAction(Character actionPlayer);
     public abstract void skillAction(Character actionPlayer, Character passivePlayer);
+//    public abstract void applyBuff(Character targetPlayer);
+//    public abstract void applyDeBuff(Character targetPlayer);
 
 
     protected String getSkillAction(List<String> actionList) {

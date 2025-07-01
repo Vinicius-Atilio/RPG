@@ -1,4 +1,4 @@
-package entities;
+package entities.character;
 
 public class Attribute {
     private int strength;

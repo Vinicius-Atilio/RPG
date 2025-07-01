@@ -1,6 +1,6 @@
 package enums;
 
-import entities.Attribute;
+import entities.character.Attribute;
 
 public enum MainAttribute {
     Strength,

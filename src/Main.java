@@ -1,6 +1,6 @@
 import builders.CharacterBuilder;
 import entities.BattleGround;
-import entities.Character;
+import entities.character.Character;
 import enums.Specialization;
 
 public class Main {

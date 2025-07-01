@@ -1,4 +1,6 @@
-package entities;
+package entities.skill;
+
+import entities.character.Character;
 
 public class Support extends Skill {
 
@@ -7,17 +9,17 @@ public class Support extends Skill {
     }
 
     @Override
-    public void executeSelectedSkill(Character actionPlayer, Character passivePlayer) {
+    public void executeSelectedSkill(entities.character.Character actionPlayer, entities.character.Character passivePlayer) {
 
     }
 
     @Override
-    public void skillTypeAction(Character actionPlayer) {
+    public void skillTypeAction(entities.character.Character actionPlayer) {
 
     }
 
     @Override
-    public void skillAction(Character actionPlayer, Character passivePlayer) {
+    public void skillAction(entities.character.Character actionPlayer, Character passivePlayer) {
 
     }
 

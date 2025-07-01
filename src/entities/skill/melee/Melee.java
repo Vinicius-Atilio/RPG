@@ -1,4 +1,7 @@
-package entities;
+package entities.skill.melee;
+
+import entities.character.Character;
+import entities.skill.Skill;
 
 import java.util.Arrays;
 import java.util.List;

@@ -1,6 +1,9 @@
 package enums;
 
 import entities.*;
+import entities.ally.*;
+import entities.character.Attribute;
+import entities.skill.Skill;
 
 import java.util.List;
 

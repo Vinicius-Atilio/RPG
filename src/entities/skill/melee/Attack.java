@@ -1,4 +1,7 @@
-package entities;
+package entities.skill.melee;
+
+import entities.character.Character;
+import entities.skill.Skill;
 
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -31,6 +34,7 @@ public abstract class Attack extends Skill {
         System.out.println("💥" + actionPlayer.getName() +" " + hitActionList.get(ThreadLocalRandom.current().nextInt(hitActionList.size())));
         System.out.println("🩸 Sangue escorre... " + actionPlayer.getName() +  hitEffectList.get(ThreadLocalRandom.current().nextInt(hitEffectList.size())));
         System.out.println(" 😡🔪 " + passivePlayer.getName() + " " + answerVegeanceList.get(ThreadLocalRandom.current().nextInt(answerVegeanceList.size())));
-        System.out.println("🛡️ " + passivePlayer.getName() + " agora possui " + passivePlayer.getLife() + " de vida.");
+        System.out.println("🛡️ " + passivePlayer.getName() + " agora possui " + String.format("%.2f", passivePlayer.getLife() > 0 ? passivePlayer.getLife() : 0 ) + " de vida.");
+
     }
 }

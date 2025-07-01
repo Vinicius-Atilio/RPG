@@ -1,9 +1,15 @@
-package entities;
+package entities.defense;
+
+import entities.character.BuffEffect;
+import entities.character.Character;
+import entities.character.Effect;
 
 import java.util.Arrays;
 import java.util.List;
 
 public class AgilityDefense extends Defense {
+    private BuffEffect buffEffect = new BuffEffect();
+
 
     private static final List<String> actionList = Arrays.asList(
             " ativa uma esquiva ágil!",
@@ -18,16 +24,23 @@ public class AgilityDefense extends Defense {
         super(name, description, skillAction, cooldown, special);
     }
 
+    @Override
+    public void executeSelectedSkill(Character actionPlayer, Character passivePlayer) {
+        this.buffEffect.evasionEffect(actionPlayer);
+        System.out.println(actionPlayer.getName() + this.skillAction + passivePlayer.getName());
+        this.skillTypeAction(actionPlayer);
+    }
 
     public static AgilityDefense ofEvasion() {
         return new AgilityDefense("Evasão",
                 "Aumenta a esquiva por 1 turnos (não causa dano).",
-                "🏃‍♂️ Você se esquiva habilidosamente, tornando-se mais difícil de atingir.",
-                2, false);
+                "️ se esquiva habilidosamente, tornando-se mais difícil de atingir de ",
+                0, false);
     }
 
     @Override
     public void skillTypeAction(Character actionPlayer) {
         System.out.println("🏃‍♂️ " + actionPlayer.getName() + this.getSkillAction(actionList));
     }
+
 }

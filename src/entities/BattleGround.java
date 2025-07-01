@@ -1,11 +1,14 @@
 package entities;
 
+import entities.character.Character;
+import entities.skill.Skill;
+
 public class BattleGround {
-    private Character player1;
-    private Character player2;
+    private entities.character.Character player1;
+    private entities.character.Character player2;
     private int turn;
 
-    public BattleGround(Character player1, Character player2) {
+    public BattleGround(entities.character.Character player1, entities.character.Character player2) {
         if (player1 == null || player2 == null) {
             throw new IllegalArgumentException("Os jogadores são obrigatórios.");
         }
@@ -47,17 +50,17 @@ public class BattleGround {
         }
     }
 
-    private void verifyIfPlayerDied(Character player, Skill selectedSkill) {
+    private void verifyIfPlayerDied(entities.character.Character player, Skill selectedSkill) {
         if (player.getLife() <= 0) {
             player.setAlive(false);
             this.playerIsDied(player, selectedSkill);
         }
     }
 
-    private void playerIsDied(Character player, Skill selectedSkill) {
+    private void playerIsDied(entities.character.Character player, Skill selectedSkill) {
 
         System.out.println("💥 O " + selectedSkill.getName() + " atinge em cheio!");
-        System.out.println("❤️ " + player.getName() + " tinha apenas " + player.getLife() + " de vida restante...");
+        System.out.println("❤️ " + player.getName() + " tinha apenas " +  String.format("%.2f", player.getLife() > 0 ? player.getLife() : 0 ) + " de vida restante...");
 
         System.out.println("\n💀 Ele é derrubado com o impacto. Sua armadura racha e ele cai de joelhos.");
         System.out.println("🕯️ A chama da vida se apaga em seus olhos...");

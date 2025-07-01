@@ -1,4 +1,7 @@
-package entities;
+package entities.skill.ranged;
+
+import entities.skill.melee.Attack;
+import entities.character.Character;
 
 import java.util.Arrays;
 import java.util.List;

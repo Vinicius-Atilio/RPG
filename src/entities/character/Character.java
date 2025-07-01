@@ -1,5 +1,9 @@
-package entities;
+package entities.character;
 
+import entities.Inventory;
+import entities.Weapon;
+import entities.ally.Ally;
+import entities.skill.Skill;
 import enums.Race;
 import enums.Specialization;
 import enums.Type;
@@ -16,9 +20,11 @@ public class Character {
     private Attribute attribute;
     private Type type;
     private List<Skill> skills;
+    private StatusEffect statusEffect;
     private Weapon weapon;
     private Ally ally;
     private Inventory inventory;
+    private boolean immune;
     private double life;
     private boolean alive;
 
@@ -109,7 +115,9 @@ public class Character {
         };
     }
 
-    public void makeDefense(Character actionPlayer, Skill skill) {}
+    public void makeDefense(Character actionPlayer, Skill skill) {
+        skill.updateSkillCooldown();
+    }
 
     public void  evokeAlly() {
         this.ally = this.specialization.ally();
@@ -125,6 +133,18 @@ public class Character {
 
     public Ally getAlly() {
         return ally;
+    }
+
+    public void addEffect(StatusEffect statusEffect) {
+        this.statusEffect = statusEffect;
+    }
+
+    public void markAsImmune() {
+        this.immune = true;
+    }
+
+    public boolean canBeAttacked() {
+        return this.alive && !this.immune;
     }
 
 }

@@ -1,13 +1,17 @@
-package entities;
+package entities.defense;
+
+import entities.character.Character;
+import entities.skill.Skill;
 
 import java.util.concurrent.ThreadLocalRandom;
 
 public abstract class Defense extends Skill {
     private int defensePower;
 
+    public Defense() {super();}
+
     public Defense(String name, String description, String skillAction, int cooldown, boolean special) {
         super(name, description, skillAction, cooldown, special);
-        this.defensePower = defensePower;
     }
 
     public Defense(String name, String description, String skillAction, int cooldown, int defensePower, boolean special) {

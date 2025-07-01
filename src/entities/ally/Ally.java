@@ -1,4 +1,8 @@
-package entities;
+package entities.ally;
+
+import entities.character.Attribute;
+import entities.character.Character;
+import entities.skill.Skill;
 
 public abstract class Ally extends Skill {
     private Attribute attribute;

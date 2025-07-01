@@ -1,4 +1,6 @@
-package entities;
+package entities.defense;
+
+import entities.character.Character;
 
 import java.util.Arrays;
 import java.util.List;

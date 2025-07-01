@@ -1,4 +1,7 @@
-package entities;
+package entities.skill.ranged;
+
+import entities.character.Character;
+import entities.defense.Defense;
 
 import java.util.Arrays;
 import java.util.List;

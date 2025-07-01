@@ -1,4 +1,7 @@
-package entities;
+package entities.ally;
+
+import entities.character.Attribute;
+import entities.character.Character;
 
 import java.util.Arrays;
 import java.util.List;

@@ -1,6 +1,6 @@
 package builders;
 
-import entities.Character;
+import entities.character.Character;
 import entities.Inventory;
 import enums.Race;
 import enums.Specialization;

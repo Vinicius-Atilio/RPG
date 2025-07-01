@@ -1,5 +1,6 @@
 package entities;
 
+import entities.character.Attribute;
 import enums.WeaponType;
 
 public class Weapon {
