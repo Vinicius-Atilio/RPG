@@ -98,8 +98,14 @@ public class Character {
         return attribute;
     }
 
-    public void makeAttack(Character actionPlayer, int powerAttack) {
+    public boolean makeAttack(Character actionPlayer, Character passivePlayer, int powerAttack) {
+        if (passivePlayer.immune) {
+            System.out.printf("%s está imune a ataques, sob efeito de %s!%n", passivePlayer.getName(), this.statusEffect != null ? this.statusEffect.getName() : "imunidade");
+            return false;
+        }
+
         this.life -= this.attackPower(actionPlayer, powerAttack);
+        return true;
     }
 
     private double attackPower(Character actionPlayer, int powerAttack) {
@@ -131,12 +137,35 @@ public class Character {
         }
     }
 
-    public Ally getAlly() {
-        return ally;
-    }
-
     public void addEffect(StatusEffect statusEffect) {
         this.statusEffect = statusEffect;
+    }
+
+    public void applyEffect() {
+        if (this.statusEffect == null) {
+            System.out.println("Nenhum efeito ativo.");
+            return;
+        }
+
+        this.statusEffect.accept(this);
+    }
+
+    public void updateStatusEffect() {
+        if (this.statusEffect == null) {
+            return;
+        }
+
+        if (this.statusEffect.getTurnDuration() > 0) {
+            this.statusEffect.updateTurnDuration();
+            return;
+        }
+
+        System.out.println("O efeito " + this.statusEffect.getName() + " de " + this.name + " expirou.");
+        this.statusEffect = null;
+    }
+
+    public Ally getAlly() {
+        return ally;
     }
 
     public void markAsImmune() {
@@ -146,5 +175,4 @@ public class Character {
     public boolean canBeAttacked() {
         return this.alive && !this.immune;
     }
-
 }

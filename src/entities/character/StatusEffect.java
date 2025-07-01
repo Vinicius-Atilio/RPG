@@ -12,4 +12,29 @@ public class StatusEffect {
         this.turnDuration = turnDuration;
         this.characterConsumer = characterConsumer;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public String toString() {
+        return "StatusEffect{" +
+                "name='" + name + '\'' +
+                ", turnDuration=" + turnDuration +
+                ", characterConsumer=" + characterConsumer +
+                '}';
+    }
+
+    public void accept(Character character) {
+        characterConsumer.accept(character);
+    }
+
+    public int getTurnDuration() {
+        return turnDuration;
+    }
+
+    public void updateTurnDuration() {
+        this.turnDuration--;
+    }
 }

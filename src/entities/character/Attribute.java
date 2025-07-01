@@ -80,12 +80,4 @@ public class Attribute {
     public int getAgility() {
         return agility;
     }
-
-    public int getVigor() {
-        return vigor;
-    }
-
-    public int getMana() {
-        return mana;
-    }
 }

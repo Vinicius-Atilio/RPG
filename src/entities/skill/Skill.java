@@ -130,12 +130,12 @@ public abstract class Skill {
 
     public static List<Skill> ofHunter() {
         return Arrays.asList(
-//                StrengthRanged.ofPrecisionShot(),
-//                StrengthRanged.ofExplosiveTrap(),
-                AgilityDefense.ofEvasion());
-//                StrengthRanged.ofArrowRain(),
-//                StrengthRanged.ofPoisonArrow(),
-//                Animal.ofBeast());
+                StrengthRanged.ofPrecisionShot(),
+                StrengthRanged.ofExplosiveTrap(),
+                AgilityDefense.ofEvasion(),
+                StrengthRanged.ofArrowRain(),
+                StrengthRanged.ofPoisonArrow(),
+                Animal.ofBeast());
     }
 
     public void updateSkillCooldown() {
@@ -184,12 +184,8 @@ public abstract class Skill {
     public abstract void executeSelectedSkill(Character actionPlayer, Character passivePlayer);
     public abstract void skillTypeAction(Character actionPlayer);
     public abstract void skillAction(Character actionPlayer, Character passivePlayer);
-//    public abstract void applyBuff(Character targetPlayer);
-//    public abstract void applyDeBuff(Character targetPlayer);
-
 
     protected String getSkillAction(List<String> actionList) {
         return actionList.get(ThreadLocalRandom.current().nextInt(actionList.size()));
     }
-
 }

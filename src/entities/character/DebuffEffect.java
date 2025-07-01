@@ -5,4 +5,9 @@ public class DebuffEffect implements Effect{
     public void evasionEffect(Character character) {
 
     }
+
+    @Override
+    public void applyEffect(Character character) {
+
+    }
 }

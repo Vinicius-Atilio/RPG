@@ -30,6 +30,8 @@ public class BattleGround {
         this.turn++;
         this.player1.decreaseAllSkillsCd();
         this.player2.decreaseAllSkillsCd();
+        this.player1.updateStatusEffect();
+        this.player2.updateStatusEffect();
 
         if (this.player1.isAlive()) {
             this.player1.useAllyIfAlive();
