@@ -19,6 +19,12 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
+/**
+ * Classe Skill representa uma habilidade que pode ser utilizada por um personagem.
+ * Ela contém informações sobre o nome, descrição, tempo de recarga e ações associadas à habilidade.
+ * Intenção: Fornecer uma base para habilidades que podem ser usadas em combate, com diferentes tipos de ações e efeitos.
+ * Template Method: Define a estrutura básica de uma habilidade, permitindo que subclasses implementem ações específicas.
+ */
 public abstract class Skill {
     protected String name;
     protected String description;
