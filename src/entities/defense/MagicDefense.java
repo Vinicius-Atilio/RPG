@@ -7,7 +7,15 @@ import java.util.List;
 
 public class MagicDefense extends Defense {
 
-    private static final List<String> actionList = Arrays.asList(
+    private static final List<String> playerActionList = Arrays.asList(
+            " se abaixa e preparando uma barreira mágica de proteção! para se proteger de ",
+            " ergue suas mãos, concentrando-se em uma barreira mágica! para evitar o ataque de ",
+            " seus olhos brilham enquanto se prepara para conjurar uma barreira mágica! para absorver o ataque de ",
+            " começa a canalizar energia mágica para criar uma barreira protetora! para se defender de "
+    );
+
+
+    private static final List<String> skillActionList = Arrays.asList(
             " ativa uma barreira mágica de proteção!",
             " conjura um escudo mágico para bloquear ataques!",
             " invoca uma aura mágica defensiva!",
@@ -22,6 +30,12 @@ public class MagicDefense extends Defense {
         super(name, description, skillAction, cooldown, special);
     }
 
+    @Override
+    public void prepareSkillToAttack(Character player1, Character player2) {
+        System.out.println("\n🔮 " + player1.getName() + " " + this.getAction(playerActionList) + " " + this.getName());
+        this.executeSelectedSkill(player1, player2);
+    }
+
     public static MagicDefense ofArcaneBarrier() {
         return new MagicDefense("Barreira Arcana",
                 "Cria escudo mágico (não causa dano).",
@@ -31,7 +45,7 @@ public class MagicDefense extends Defense {
 
     @Override
     public void skillTypeAction(Character actionPlayer) {
-        System.out.println("🔮 " + actionPlayer.getName() + this.getSkillAction(actionList));
+        System.out.println("🔮 " + actionPlayer.getName() + this.getAction(skillActionList));
     }
 
 }

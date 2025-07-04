@@ -8,7 +8,21 @@ import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class MagicRanged extends Attack {
-    private static final List<String> actionList = Arrays.asList(
+    private static final List<String> playerActionList = Arrays.asList(
+            " ergue sua varinha mágica com determinação!",
+            " concentra sua energia mágica!",
+            " levanta as mãos para o céu, invocando poder arcano!",
+            " canaliza a essência mágica do universo!",
+            " levanta o cajado mágico, pronto para lançar um feitiço!",
+            " fecha os olhos, sentindo a energia mágica fluir!",
+            " invoca a magia ancestral com um gesto poderoso!",
+            " concentra-se profundamente, preparando um feitiço poderoso!",
+            " ergue o grimório, recitando palavras arcanas!",
+            " estende as mãos, convocando a magia do elemento!",
+            " invoca a força mágica com um grito de poder!"
+    );
+
+    private static final List<String> skillActionList = Arrays.asList(
             " conjura um feitiço poderoso!",
             " lança uma magia arcana!",
             " emite uma explosão de energia mágica!",
@@ -37,6 +51,12 @@ public class MagicRanged extends Attack {
         super(name, description, skillAction, cooldown, special);
     }
 
+    @Override
+    public void prepareSkillToAttack(Character player1, Character player2) {
+        System.out.println("\n🔮 " + player1.getName() + " " + this.getAction(playerActionList) + " " + this.getName());
+        this.executeSelectedSkill(player1, player2);
+    }
+
     public static MagicRanged ofParalyzingIce() {
         return new MagicRanged("Gelo Paralizante",
                 "Causa dano e reduz velocidade do inimigo.",
@@ -60,6 +80,6 @@ public class MagicRanged extends Attack {
 
     @Override
     public void skillTypeAction(Character actionPlayer) {
-        System.out.println("🔮 " + actionPlayer.getName() +  actionList.get(ThreadLocalRandom.current().nextInt(actionList.size())));
+        System.out.println("🔮 " + actionPlayer.getName() +  skillActionList.get(ThreadLocalRandom.current().nextInt(skillActionList.size())));
     }
 }

@@ -8,7 +8,20 @@ import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class StrengthRanged extends Attack {
-    private static final List<String> actionList = Arrays.asList(
+    private static final List<String> playerActionList = Arrays.asList(
+            " ergue seu arco com determinação!",
+            " concentra sua força para um tiro certeiro!",
+            " mira com precisão mortal!",
+            " prepara sua besta para um ataque devastador!",
+            " ajusta a mira, pronto para disparar!",
+            " puxa a corda do arco com firmeza!",
+            " posiciona-se estrategicamente, pronto para atacar!",
+            " respira fundo, focando na flecha!",
+            " levanta o arco, mirando no alvo!",
+            " ajusta a flecha, pronto para disparar!"
+    );
+
+    private static final List<String> skillActionList = Arrays.asList(
             " dispara uma flecha certeira!",
             " lança uma flecha explosiva!",
             " atira com precisão mortal!",
@@ -30,6 +43,12 @@ public class StrengthRanged extends Attack {
 
     public StrengthRanged(String name, String description, String skillAction, int cooldown, boolean special) {
         super(name, description, skillAction, cooldown, special);
+    }
+
+    @Override
+    public void prepareSkillToAttack(Character player1, Character player2) {
+        System.out.println("\n🏹 " + player1.getName() + " " + this.getAction(playerActionList) + " " + this.getName());
+        this.executeSelectedSkill(player1, player2);
     }
 
     public static StrengthRanged ofPrecisionShot() {
@@ -62,6 +81,6 @@ public class StrengthRanged extends Attack {
 
     @Override
     public void skillTypeAction(Character actionPlayer) {
-        System.out.println("🏹 " + actionPlayer.getName() + actionList.get(ThreadLocalRandom.current().nextInt(actionList.size())));
+        System.out.println("🏹 " + actionPlayer.getName() + skillActionList.get(ThreadLocalRandom.current().nextInt(skillActionList.size())));
     }
 }

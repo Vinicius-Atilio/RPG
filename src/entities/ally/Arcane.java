@@ -24,7 +24,12 @@ public class Arcane extends Ally {
     }
 
     @Override
+    public void prepareSkillToAttack(Character player1, Character player2) {
+
+    }
+
+    @Override
     public void skillTypeAction(Character actionPlayer) {
-        System.out.println("🔮 O aliado " + actionPlayer.getAlly().getName() + this.getSkillAction(actionList));
+        System.out.println("🔮 O aliado " + actionPlayer.getAlly().getName() + this.getAction(actionList));
     }
 }

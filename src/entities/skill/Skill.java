@@ -5,6 +5,7 @@ import entities.ally.Heavenly;
 import entities.ally.Animal;
 import entities.ally.Arcane;
 import entities.ally.Standard;
+import entities.skill.dynamic.Dynamic;
 import entities.skill.melee.Melee;
 import entities.defense.AgilityDefense;
 import entities.defense.HeavenlyDefense;
@@ -12,6 +13,7 @@ import entities.defense.MagicDefense;
 import entities.skill.ranged.MagicRanged;
 import entities.skill.ranged.StrengthDefense;
 import entities.skill.ranged.StrengthRanged;
+import entities.skill.support.Support;
 
 import java.util.Arrays;
 import java.util.List;
@@ -188,7 +190,7 @@ public abstract class Skill {
     public abstract void skillTypeAction(Character actionPlayer);
     public abstract void skillAction(Character actionPlayer, Character passivePlayer);
 
-    protected String getSkillAction(List<String> actionList) {
+    protected String getAction(List<String> actionList) {
         return actionList.get(ThreadLocalRandom.current().nextInt(actionList.size()));
     }
 }

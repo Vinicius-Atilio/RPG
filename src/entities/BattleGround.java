@@ -46,7 +46,7 @@ public class BattleGround {
         if (this.player2.isAlive()) {
             this.player2.useAllyIfAlive();
             Skill selectedSkill = this.player2.play();
-            selectedSkill.executeSelectedSkill(this.player2, this.player1);
+            selectedSkill.prepareSkillToAttack(this.player1, this.player2);
             selectedSkill.markAsCasted();
             verifyIfPlayerDied(this.player1, selectedSkill);
         }

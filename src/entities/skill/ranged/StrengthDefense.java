@@ -7,8 +7,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class StrengthDefense extends Defense {
-
-    private static final List<String> actionList = Arrays.asList(
+    private static final List<String> playerActionList = Arrays.asList(
             " assume uma postura defensiva!",
             " ergue seu escudo para bloquear o ataque!",
             " prepara-se para absorver o próximo golpe!",
@@ -17,8 +16,23 @@ public class StrengthDefense extends Defense {
             " fortalece sua defesa com determinação!"
     );
 
+    private static final List<String> skillActionList = Arrays.asList(
+            " grita enquanto se defende!",
+            " bloqueia o ataque com firmeza!",
+            " resiste ao impacto com bravura!",
+            " mantém a posição defensiva!",
+            " segura o escudo com força, enquanto o inimigo ataca!",
+            " responde ao ataque com uma defesa sólida!"
+    );
+
     public StrengthDefense(String name, String description, String skillAction, int cooldown, boolean special) {
         super(name, description, skillAction, cooldown, special);
+    }
+
+    @Override
+    public void prepareSkillToAttack(Character player1, Character player2) {
+        System.out.println("\n🛡️ " + player1.getName() + " " + this.getAction(playerActionList) + " " + this.getName());
+        this.executeSelectedSkill(player1, player2);
     }
 
     public static StrengthDefense ofDefensivePosture() {
@@ -30,6 +44,6 @@ public class StrengthDefense extends Defense {
 
     @Override
     public void skillTypeAction(Character actionPlayer) {
-        System.out.println("🛡️ " + actionPlayer.getName() + " se prepara para defender com força!");
+        System.out.println("🛡️ " + actionPlayer.getName() + this.getAction(skillActionList));
     }
 }

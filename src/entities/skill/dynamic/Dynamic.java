@@ -1,10 +1,16 @@
-package entities.skill;
+package entities.skill.dynamic;
 
 import entities.character.Character;
+import entities.skill.Skill;
 
 public class Dynamic extends Skill {
     public Dynamic(String name, String description, String skillAction, int cooldown, boolean special) {
         super(name, description, skillAction, cooldown, special);
+    }
+
+    @Override
+    public void prepareSkillToAttack(Character player1, Character player2) {
+
     }
 
     @Override

@@ -1,11 +1,17 @@
-package entities.skill;
+package entities.skill.support;
 
 import entities.character.Character;
+import entities.skill.Skill;
 
 public class Support extends Skill {
 
     public Support(String name, String description, String skillAction, int cooldown, boolean special) {
         super(name, description, skillAction, cooldown, special);
+    }
+
+    @Override
+    public void prepareSkillToAttack(Character player1, Character player2) {
+
     }
 
     @Override

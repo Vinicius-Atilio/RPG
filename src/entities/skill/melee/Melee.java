@@ -43,7 +43,7 @@ public class Melee extends Attack {
 
     @Override
     public void prepareSkillToAttack(Character player1, Character player2) {
-        System.out.println("\n⚔️ " + player1.getName() + " " + this.getSkillAction(playerActionList) + " " + this.getName());
+        System.out.println("\n⚔️ " + player1.getName() + " " + this.getAction(playerActionList) + " " + this.getName());
         this.executeSelectedSkill(player1, player2);
     }
 
@@ -91,6 +91,6 @@ public class Melee extends Attack {
     @Override
     public void skillTypeAction(Character actionPlayer) {
         System.out.println("⚔️ " + actionPlayer.getName() +
-                this.getSkillAction(skillActionList));
+                this.getAction(skillActionList));
     }
 }

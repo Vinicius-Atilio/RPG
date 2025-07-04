@@ -11,6 +11,12 @@ public class HeavenlyDefense extends Defense {
         super(name, description, skillAction, cooldown, special);
     }
 
+    @Override
+    public void prepareSkillToAttack(Character player1, Character player2) {
+        System.out.println("\n✨ " + player1.getName() + " ativa a habilidade: " + this.getName());
+        this.executeSelectedSkill(player1, player2);
+    }
+
     private static final List<String> actionList = Arrays.asList(
             " ativa uma barreira divina de proteção!",
             " invoca um escudo celestial para se proteger!",
@@ -23,7 +29,7 @@ public class HeavenlyDefense extends Defense {
 
     @Override
     public void skillTypeAction(Character actionPlayer) {
-        System.out.println("✨ " + actionPlayer.getName() +  this.getSkillAction(actionList));
+        System.out.println("✨ " + actionPlayer.getName() +  this.getAction(actionList));
     }
 
     public static HeavenlyDefense ofDivineShield() {
