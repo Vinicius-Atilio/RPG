@@ -1,7 +1,6 @@
 package entities.character;
 
 public class BuffEffect implements Effect {
-
     @Override
     public void applyEffect(Character character) {
         character.applyEffect();

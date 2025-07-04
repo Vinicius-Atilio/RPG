@@ -7,9 +7,21 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
+/**
+ * Classe Melee representa uma habilidade de ataque corpo a corpo.
+ * Ela estende a classe Attack e implementa as ações específicas de ataque corpo a corpo.
+ */
 public class Melee extends Attack {
-    private boolean stunned;
-    private static final List<String> actionList = Arrays.asList(
+    private static final List<String> playerActionList = Arrays.asList(
+            " corre em direção ao inimigo com determinação!",
+            " se aproxima do inimigo com um olhar feroz!",
+            " avança com um ataque poderoso!",
+            " pula em direção ao inimigo com um golpe devastador!",
+            " com agilidade, se aproxima do inimigo!",
+            " grita e avança com um ataque furioso!"
+    );
+
+    private static final List<String> skillActionList = Arrays.asList(
             " ergue sua espada com determinação!",
             " avança com um grito de guerra!",
             " desfere um golpe poderoso!",
@@ -29,13 +41,18 @@ public class Melee extends Attack {
         super(name, description, skillAction, cooldown, special);
     }
 
+    @Override
+    public void prepareSkillToAttack(Character player1, Character player2) {
+        System.out.println("\n⚔️ " + player1.getName() + " " + this.getSkillAction(playerActionList) + " " + this.getName());
+        this.executeSelectedSkill(player1, player2);
+    }
+
     public Melee(String name, String description, String skillAction, int cooldown, int attackPower, boolean special) {
         super(name, description, skillAction, cooldown, attackPower, special);
     }
 
-    public Melee(String name, String description, String skillAction, int cooldown, boolean special, boolean stunned) {
-        super(name, description, skillAction, cooldown, special);
-        this.stunned = stunned;
+    public Melee(String name, String description, String skillAction, int cooldown, boolean stunned, boolean special) {
+        super(name, description, skillAction, cooldown, stunned, special);
     }
 
     public static Melee ofHeavyAttack() {
@@ -74,6 +91,6 @@ public class Melee extends Attack {
     @Override
     public void skillTypeAction(Character actionPlayer) {
         System.out.println("⚔️ " + actionPlayer.getName() +
-                this.getSkillAction(actionList));
+                this.getSkillAction(skillActionList));
     }
 }

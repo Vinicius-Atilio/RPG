@@ -157,11 +157,13 @@ public class Character {
 
         if (this.statusEffect.getTurnDuration() > 0) {
             this.statusEffect.updateTurnDuration();
+            System.out.println(this.statusEffect.getTurnDuration() + " turnos restantes do efeito " + this.statusEffect.getName() + " de " + this.name + ".");
             return;
         }
 
         System.out.println("O efeito " + this.statusEffect.getName() + " de " + this.name + " expirou.");
         this.statusEffect = null;
+        this.immune = false;
     }
 
     public Ally getAlly() {

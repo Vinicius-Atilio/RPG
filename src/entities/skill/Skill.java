@@ -25,6 +25,7 @@ public abstract class Skill {
     protected boolean casted;
     protected boolean special;
     protected String skillAction;
+    private boolean stunned;
 
     protected static final List<String> voiceActionList = Arrays.asList(
             "Sinta o peso da minha lâmina!\" - grita enquanto executa ",
@@ -78,16 +79,6 @@ public abstract class Skill {
             "A vingança é sua única opção!"
     );
 
-    protected static final List<String> supportActionList = Arrays.asList(
-            " invoca uma bênção de luz!",
-            " ativa um escudo divino!",
-            " convoca um aliado poderoso!",
-            " emite uma aura de proteção!",
-            " fortalece seu companheiro com bênçãos!",
-            " cura as feridas do aliado!",
-            " protege o aliado com uma barreira mágica!"
-    );
-
     public Skill() {}
 
     protected Skill(String name, String description, String skillAction, int cooldown, boolean special) {
@@ -98,6 +89,17 @@ public abstract class Skill {
         this.currentCooldown = cooldown;
         this.casted = false;
         this.special = special;
+    }
+
+    public Skill(String name, String description, String skillAction, int cooldown, boolean stunned, boolean special) {
+        this.name = name;
+        this.description = description;
+        this.skillAction = skillAction;
+        this.cooldown = cooldown;
+        this.currentCooldown = cooldown;
+        this.casted = false;
+        this.special = special;
+        this.stunned = stunned;
     }
 
     public static List<Skill> ofWarrior() {
@@ -181,6 +183,7 @@ public abstract class Skill {
         return this instanceof Support;
     }
 
+    public abstract void prepareSkillToAttack(Character player1, Character player2);
     public abstract void executeSelectedSkill(Character actionPlayer, Character passivePlayer);
     public abstract void skillTypeAction(Character actionPlayer);
     public abstract void skillAction(Character actionPlayer, Character passivePlayer);

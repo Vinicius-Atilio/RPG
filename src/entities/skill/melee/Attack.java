@@ -19,6 +19,12 @@ public abstract class Attack extends Skill {
         this.powerAttack = powerAttack;
     }
 
+    protected Attack(String name, String description, String skillAction,
+                     int cooldown, boolean stunned, boolean special) {
+        super(name, description, skillAction, cooldown, stunned, special);
+    }
+
+
     @Override
     public void executeSelectedSkill(Character actionPlayer, Character passivePlayer) {
         boolean isAttacked = passivePlayer.makeAttack(actionPlayer, passivePlayer, this.powerAttack);
