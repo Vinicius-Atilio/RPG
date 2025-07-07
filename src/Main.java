@@ -8,6 +8,9 @@ public class Main {
         Character player1 = new CharacterBuilder().withSpecialization(Specialization.Hunter).build();
         Character player2 = new CharacterBuilder().build();
 
+        System.out.println("🛡️ " + player1.getName() );
+        System.out.println("🛡️ " + player2.getName() );
+
         BattleGround battle = new BattleGround(player1, player2);
         battle.welcome();
 

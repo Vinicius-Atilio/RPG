@@ -20,9 +20,9 @@ public abstract class Defense extends Skill {
     }
 
     @Override
-    public void executeSelectedSkill(Character actionPlayer, Character passivePlayer) {
-        passivePlayer.makeDefense(actionPlayer, this);
-        this.skillAction(actionPlayer, passivePlayer);
+    public void executeSelectedSkill(Character activePlayer, Character passivePlayer) {
+        passivePlayer.makeDefense(activePlayer, this);
+        this.skillAction(activePlayer, passivePlayer);
     }
 
     @Override

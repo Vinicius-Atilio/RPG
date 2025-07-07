@@ -29,10 +29,10 @@ public abstract class Ally extends Skill {
     }
 
     @Override
-    public void executeSelectedSkill(Character actionPlayer, Character passivePlayer) {
-        System.out.println("\n" + actionPlayer.getName() + " evoca o aliado: " + this.name);
-        actionPlayer.evokeAlly();
-        this.skillTypeAction(actionPlayer);
+    public void executeSelectedSkill(Character activePlayer, Character passivePlayer) {
+        System.out.println("\n" + activePlayer.getName() + " evoca o aliado: " + this.name);
+        activePlayer.evokeAlly();
+        this.skillTypeAction(activePlayer);
         System.out.println("A atenção de " + passivePlayer.getName() + " foi desviada para " + this.name + "!");
     }
 

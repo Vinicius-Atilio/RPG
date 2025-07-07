@@ -14,7 +14,7 @@ public class Dynamic extends Skill {
     }
 
     @Override
-    public void executeSelectedSkill(entities.character.Character actionPlayer, entities.character.Character passivePlayer) {
+    public void executeSelectedSkill(entities.character.Character activePlayer, entities.character.Character passivePlayer) {
 
     }
 

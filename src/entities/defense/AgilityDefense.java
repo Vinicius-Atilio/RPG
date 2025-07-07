@@ -2,7 +2,7 @@ package entities.defense;
 
 import entities.character.BuffEffect;
 import entities.character.Character;
-
+import entities.character.StatusEffect;
 import java.util.Arrays;
 import java.util.List;
 
@@ -39,16 +39,16 @@ public class AgilityDefense extends Defense {
     }
 
     @Override
-    public void executeSelectedSkill(Character actionPlayer, Character passivePlayer) {
-        this.buffEffect.evasionEffect(actionPlayer);
-        this.buffEffect.applyEffect(actionPlayer);
-        System.out.println(actionPlayer.getName() + this.skillAction + passivePlayer.getName());
-        this.skillTypeAction(actionPlayer);
+    public void executeSelectedSkill(Character activePlayer, Character passivePlayer) {
+        this.buffEffect.addEffect(activePlayer);
+        this.buffEffect.applyEffect(activePlayer,  StatusEffect.ofEvasion());
+        System.out.println(activePlayer.getName() + this.skillAction + passivePlayer.getName());
+        this.skillTypeAction(activePlayer);
     }
 
     public static AgilityDefense ofEvasion() {
         return new AgilityDefense("Evasão",
-                "Aumenta a esquiva por 1 turnos (não causa dano).",
+                "Aumenta a esquiva por 2 turnos (não causa dano).",
                 "️ se esquiva habilidosamente, tornando-se mais difícil de ser atingido por ",
                 3, false);
     }

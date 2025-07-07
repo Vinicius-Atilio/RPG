@@ -98,7 +98,7 @@ public class Character {
         return attribute;
     }
 
-    public boolean makeAttack(Character actionPlayer, Character passivePlayer, int powerAttack) {
+    public boolean receiveAttack(Character actionPlayer, Character passivePlayer, int powerAttack) {
         if (passivePlayer.immune) {
             System.out.printf("%s está imune a ataques, sob efeito de %s!%n", passivePlayer.getName(), this.statusEffect != null ? this.statusEffect.getName() : "imunidade");
             return false;

@@ -192,7 +192,7 @@ public abstract class Skill {
     }
 
     public abstract void prepareSkillToAttack(Character player1, Character player2);
-    public abstract void executeSelectedSkill(Character actionPlayer, Character passivePlayer);
+    public abstract void executeSelectedSkill(Character activePlayer, Character passivePlayer);
     public abstract void skillTypeAction(Character actionPlayer);
     public abstract void skillAction(Character actionPlayer, Character passivePlayer);
 

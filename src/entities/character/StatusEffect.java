@@ -13,6 +13,10 @@ public class StatusEffect {
         this.characterConsumer = characterConsumer;
     }
 
+    public static StatusEffect ofEvasion() {
+        return new StatusEffect("Evasão", 2, Character::markAsImmune);
+    }
+
     public String getName() {
         return name;
     }

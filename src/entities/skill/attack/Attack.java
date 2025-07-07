@@ -1,4 +1,4 @@
-package entities.skill.melee;
+package entities.skill.attack;
 
 import entities.character.Character;
 import entities.skill.Skill;
@@ -26,13 +26,13 @@ public abstract class Attack extends Skill {
 
 
     @Override
-    public void executeSelectedSkill(Character actionPlayer, Character passivePlayer) {
-        boolean isAttacked = passivePlayer.makeAttack(actionPlayer, passivePlayer, this.powerAttack);
+    public void executeSelectedSkill(Character activePlayer, Character passivePlayer) {
+        boolean isAttacked = passivePlayer.receiveAttack(activePlayer, passivePlayer, this.powerAttack);
         if (isAttacked) {
-            this.skillAction(actionPlayer, passivePlayer);
+            this.skillAction(activePlayer, passivePlayer);
         } else {
-            System.out.println("\n" + actionPlayer.getName() + " não conseguiu atacar " + passivePlayer.getName() + " com a habilidade: " + this.name);
-            System.out.println("😞 " + actionPlayer.getName() + " " + answerVegeanceList.get(ThreadLocalRandom.current().nextInt(answerVegeanceList.size())));
+            System.out.println("\n" + activePlayer.getName() + " não conseguiu atacar " + passivePlayer.getName() + " com a habilidade: " + this.name);
+            System.out.println("😞 " + activePlayer.getName() + " " + answerVegeanceList.get(ThreadLocalRandom.current().nextInt(answerVegeanceList.size())));
         }
     }
 
@@ -43,7 +43,7 @@ public abstract class Attack extends Skill {
         this.skillTypeAction(actionPlayer);
         System.out.println("💢" + actionPlayer.getName() + " " + voiceActionList.get(ThreadLocalRandom.current().nextInt(voiceActionList.size())));
         System.out.println("💥" + actionPlayer.getName() +" " + hitActionList.get(ThreadLocalRandom.current().nextInt(hitActionList.size())));
-        System.out.println("🩸 Sangue escorre... " + actionPlayer.getName() +  hitEffectList.get(ThreadLocalRandom.current().nextInt(hitEffectList.size())));
+        System.out.println("🩸 Sangue escorre... " + passivePlayer.getName() +  hitEffectList.get(ThreadLocalRandom.current().nextInt(hitEffectList.size())));
         System.out.println(" 😡🔪 " + passivePlayer.getName() + " " + answerVegeanceList.get(ThreadLocalRandom.current().nextInt(answerVegeanceList.size())));
         System.out.println("🛡️ " + passivePlayer.getName() + " agora possui " + String.format("%.2f", passivePlayer.getLife() > 0 ? passivePlayer.getLife() : 0 ) + " de vida.");
 

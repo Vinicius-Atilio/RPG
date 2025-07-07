@@ -2,6 +2,7 @@ package entities.skill.melee;
 
 import entities.character.Character;
 import entities.skill.Skill;
+import entities.skill.attack.Attack;
 
 import java.util.Arrays;
 import java.util.List;
@@ -42,9 +43,9 @@ public class Melee extends Attack {
     }
 
     @Override
-    public void prepareSkillToAttack(Character player1, Character player2) {
-        System.out.println("\n⚔️ " + player1.getName() + " " + this.getAction(playerActionList) + " " + this.getName());
-        this.executeSelectedSkill(player1, player2);
+    public void prepareSkillToAttack(Character activePlayer, Character passivePlayer) {
+        System.out.println("\n⚔️ " + activePlayer.getName() + " " + this.getAction(playerActionList) + " " + this.getName());
+        this.executeSelectedSkill(activePlayer, passivePlayer);
     }
 
     public Melee(String name, String description, String skillAction, int cooldown, int attackPower, boolean special) {

@@ -1,6 +1,6 @@
 package entities.skill.ranged;
 
-import entities.skill.melee.Attack;
+import entities.skill.attack.Attack;
 import entities.character.Character;
 
 import java.util.Arrays;
