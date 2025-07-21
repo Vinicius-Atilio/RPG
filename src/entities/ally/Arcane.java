@@ -2,6 +2,7 @@ package entities.ally;
 
 import entities.character.Attribute;
 import entities.character.Character;
+import entities.character.OriginalAttribute;
 
 import java.util.Arrays;
 import java.util.List;
@@ -20,11 +21,11 @@ public class Arcane extends Ally {
     public static Arcane ofMystic() {
         return new Arcane("Arcano Místico",
                 "Um aliado que conjura feitiços poderosos para ajudar na batalha",
-                4,  Attribute.ofMystic());
+                4,  OriginalAttribute.ofMystic());
     }
 
     @Override
-    public void prepareSkillToAttack(Character player1, Character player2) {
+    public void prepareSkillToAttack(Character activePlayer, Character passivePlayer) {
 
     }
 

@@ -7,11 +7,12 @@ import entities.ally.Arcane;
 import entities.ally.Standard;
 import entities.skill.dynamic.Dynamic;
 import entities.skill.melee.Melee;
-import entities.defense.AgilityDefense;
+import entities.defense.EvasionDefense;
 import entities.defense.HeavenlyDefense;
 import entities.defense.MagicDefense;
 import entities.skill.ranged.MagicRanged;
-import entities.skill.ranged.StrengthDefense;
+import entities.defense.StrengthDefense;
+import entities.skill.ranged.PoisonArrow;
 import entities.skill.ranged.StrengthRanged;
 import entities.skill.support.Support;
 
@@ -142,9 +143,9 @@ public abstract class Skill {
         return Arrays.asList(
                 StrengthRanged.ofPrecisionShot(),
                 StrengthRanged.ofExplosiveTrap(),
-                AgilityDefense.ofEvasion(),
+                EvasionDefense.ofEvasion(),
                 StrengthRanged.ofArrowRain(),
-                StrengthRanged.ofPoisonArrow(),
+                PoisonArrow.ofPoisonArrow(),
                 Animal.ofBeast());
     }
 
@@ -191,7 +192,7 @@ public abstract class Skill {
         return this instanceof Support;
     }
 
-    public abstract void prepareSkillToAttack(Character player1, Character player2);
+    public abstract void prepareSkillToAttack(Character activePlayer, Character passivePlayer);
     public abstract void executeSelectedSkill(Character activePlayer, Character passivePlayer);
     public abstract void skillTypeAction(Character actionPlayer);
     public abstract void skillAction(Character actionPlayer, Character passivePlayer);

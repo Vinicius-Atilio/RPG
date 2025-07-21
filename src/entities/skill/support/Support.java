@@ -10,7 +10,7 @@ public class Support extends Skill {
     }
 
     @Override
-    public void prepareSkillToAttack(Character player1, Character player2) {
+    public void prepareSkillToAttack(Character activePlayer, Character passivePlayer) {
 
     }
 

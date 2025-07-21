@@ -17,6 +17,10 @@ public class StatusEffect {
         return new StatusEffect("Evasão", 2, Character::markAsImmune);
     }
 
+    public static StatusEffect ofPoisonArrow() {
+        return new StatusEffect("Flecha Envenenada", 2, Character::makePoisoned);
+    }
+
     public String getName() {
         return name;
     }

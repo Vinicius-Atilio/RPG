@@ -2,6 +2,7 @@ package entities.ally;
 
 import entities.character.Attribute;
 import entities.character.Character;
+import entities.character.OriginalAttribute;
 
 import java.util.Arrays;
 import java.util.List;
@@ -21,11 +22,11 @@ public class Animal extends Ally {
     public static Animal ofBeast() {
         return new Animal("Fera Companheira",
                 "Um aliado animal que traz força e agilidade para a batalha",
-                4,  Attribute.ofBeast());
+                4,  OriginalAttribute.ofBeast());
     }
 
     @Override
-    public void prepareSkillToAttack(Character player1, Character player2) {
+    public void prepareSkillToAttack(Character activePlayer, Character passivePlayer) {
 
     }
 

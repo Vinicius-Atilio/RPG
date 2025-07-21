@@ -6,13 +6,15 @@ package entities.character;
  * Visitor Pattern: Permite que o efeito de buff seja aplicado a diferentes tipos de personagens.
  */
 public class BuffEffect implements Effect {
+
     @Override
-    public void addEffect(Character character) {
-        character.applyEffect();
+    public void addEffect(Character character, StatusEffect statusEffect) {
+        character.addEffect(statusEffect);
     }
 
     @Override
-    public void applyEffect(Character character, StatusEffect statusEffect) {
-        character.addEffect(statusEffect);
+    public void applyEffect(Character character) {
+        character.applyEffect();
     }
+
 }

@@ -27,7 +27,7 @@ public abstract class Attack extends Skill {
 
     @Override
     public void executeSelectedSkill(Character activePlayer, Character passivePlayer) {
-        boolean isAttacked = passivePlayer.receiveAttack(activePlayer, passivePlayer, this.powerAttack);
+        boolean isAttacked = passivePlayer.receiveAttack(activePlayer, this.powerAttack);
         if (isAttacked) {
             this.skillAction(activePlayer, passivePlayer);
         } else {

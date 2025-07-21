@@ -50,8 +50,7 @@ public class CharacterBuilder {
 
     public Character build() {
         return new Character(getString(), this.race, this.specialization, this.specialization.attribute(),
-                this.specialization.type(), this.specialization.skills(), this.specialization.weapon(),
-                new Inventory(new ArrayList<>()));
+                this.specialization.skills(), this.specialization.weapon(), new Inventory(new ArrayList<>()));
     }
 
     private String getString() {

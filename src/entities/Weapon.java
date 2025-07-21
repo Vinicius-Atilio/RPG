@@ -1,6 +1,7 @@
 package entities;
 
 import entities.character.Attribute;
+import entities.character.OriginalAttribute;
 import enums.WeaponType;
 
 public class Weapon {
@@ -20,29 +21,25 @@ public class Weapon {
     public static Weapon ofHeavySteelSword() {
         return new Weapon("Espada de Aço Pesado",
                 "Uma lâmina robusta e balanceada, feita para combates diretos.",
-                new Attribute(3, 0, 1, 1, 0, 1),
-                1.2);
+               OriginalAttribute.ofHeavySteelSword(), 1.2);
     }
 
     public static Weapon ofAncestralArcaneStaff() {
         return new Weapon("Cajado Arcano Ancestral",
                 "Um cajado canalizador de magia pura, usado para feitiços complexos.",
-                new Attribute(0, 3, 1, 1, 2, 0),
-                1.1);
+                OriginalAttribute.ofAncestralArcaneStaff(), 1.1);
     }
 
     public static Weapon ofHammerDivineLight() {
         return new Weapon("Martelo da Luz Divina",
                 "Uma arma sagrada que combina força bruta com energia protetora.",
-                new Attribute(2, 0, 0, 1, 2, 2),
-               1.4);
+               OriginalAttribute.ofHammerDivineLight(), 1.4);
     }
 
     public static Weapon ofElvenPrecisionBow() {
         return new Weapon("Arco de Precisão Élfico",
                 "Um arco leve e preciso, feito com madeira encantada, perfeito para ataques rápidos.",
-                new Attribute(2, 0, 3, 1, 0, 1),
-               1.5);
+                OriginalAttribute.ofElvenPrecisionBow(), 1.5);
     }
 
     public Attribute getAttribute() {

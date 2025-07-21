@@ -12,9 +12,9 @@ public class HeavenlyDefense extends Defense {
     }
 
     @Override
-    public void prepareSkillToAttack(Character player1, Character player2) {
-        System.out.println("\n✨ " + player1.getName() + " ativa a habilidade: " + this.getName());
-        this.executeSelectedSkill(player1, player2);
+    public void prepareSkillToAttack(Character activePlayer, Character passivePlayer) {
+        System.out.println("\n✨ " + activePlayer.getName() + " ativa a habilidade: " + this.getName());
+        this.executeSelectedSkill(activePlayer, passivePlayer);
     }
 
     private static final List<String> actionList = Arrays.asList(

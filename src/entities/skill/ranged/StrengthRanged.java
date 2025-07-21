@@ -72,12 +72,12 @@ public class StrengthRanged extends Attack {
                 3, true);
     }
 
-    public static StrengthRanged ofPoisonArrow() {
-        return new StrengthRanged("Flecha Envenenada",
-                "Aplica veneno que causa dano contínuo por 2 turnos.",
-                "☠️ A flecha envenenada atinge o inimigo, causando dano ao longo do tempo!",
-                2, false);
-    }
+//    public static StrengthRanged ofPoisonArrow() {
+//        return new StrengthRanged("Flecha Envenenada",
+//                "Aplica veneno que causa dano contínuo por 2 turnos.",
+//                "☠️ A flecha envenenada atinge o inimigo, causando dano ao longo do tempo!",
+//                2, false);
+//    }
 
     @Override
     public void skillTypeAction(Character actionPlayer) {

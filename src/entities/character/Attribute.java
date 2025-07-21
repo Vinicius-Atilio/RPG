@@ -1,14 +1,17 @@
 package entities.character;
 
-public class Attribute {
-    private int strength;
-    private int intelligence;
-    private int agility;
-    private int vigor;
-    private int mana;
-    private int defense;
+public abstract class Attribute {
+    protected double life;
+    protected int strength;
+    protected int intelligence;
+    protected int agility;
+    protected int vigor;
+    protected int mana;
+    protected int defense;
+
 
     public Attribute(int strength, int intelligence, int agility, int vigor, int mana, int defense) {
+        this.life = 100;
         this.strength = strength;
         this.intelligence = intelligence;
         this.agility = agility;
@@ -16,32 +19,6 @@ public class Attribute {
         this.mana = mana;
         this.defense = defense;
     }
-
-    public static Attribute ofWarrior() {
-        return new Attribute(9, 2, 4, 9, 2, 8);
-    }
-
-    public static Attribute ofWarStandard() {
-        return new Attribute(0, 1,1,1,0,1);
-    }
-
-    public static Attribute ofMystic() {return new Attribute(1, 8,5,2,7,2);}
-
-    public static Attribute ofMage() {
-        return new Attribute(2, 10, 4, 3, 9, 2);
-    }
-
-    public static Attribute ofPaladin() {
-        return new Attribute(7, 5, 4, 8, 5, 7);
-    }
-
-    public static Attribute ofHunter() {
-        return new Attribute(4, 4, 9, 4, 3, 3);
-    }
-
-    public static Attribute ofGuardian() {return new Attribute(3, 3,2,6,2,8);}
-
-    public static Attribute ofBeast() {return new Attribute(5, 2,8,4,1,3);}
 
     public void update(Attribute attribute) {
         if (attribute == null) return;
@@ -65,6 +42,10 @@ public class Attribute {
                 '}';
     }
 
+    public double getLife() {
+        return life;
+    }
+
     public int getStrength() {
         return strength;
     }
@@ -80,4 +61,17 @@ public class Attribute {
     public int getAgility() {
         return agility;
     }
+
+    abstract double calculateDamage(Character actionPlayer, Character passivePlayer, int activeSKillPowerAttack);
+
+    public int getVigor() {
+        return vigor;
+    }
+
+    public int getMana() {
+        return mana;
+    }
+
+    public abstract void receiveDamage(double value);
+    public abstract void receiveEffect(String name);
 }

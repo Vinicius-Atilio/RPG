@@ -6,8 +6,8 @@ import entities.character.StatusEffect;
 import java.util.Arrays;
 import java.util.List;
 
-public class AgilityDefense extends Defense {
-    private BuffEffect buffEffect = new BuffEffect();
+public class EvasionDefense extends Defense {
+    private final BuffEffect buffEffect = new BuffEffect();
 
     private static final List<String> playerActionList = Arrays.asList(
             " se prepara para esquivar de ",
@@ -28,26 +28,26 @@ public class AgilityDefense extends Defense {
             " realiza um salto ágil, esquivando-se de ataques!"
     );
 
-    public AgilityDefense(String name, String description, String skillAction, int cooldown, boolean special) {
+    public EvasionDefense(String name, String description, String skillAction, int cooldown, boolean special) {
         super(name, description, skillAction, cooldown, special);
     }
 
     @Override
-    public void prepareSkillToAttack(Character player1, Character player2) {
-        System.out.println("\n🤸 " + player1.getName() + this.getAction(playerActionList) + this.getName());
-        this.executeSelectedSkill(player1, player2);
+    public void prepareSkillToAttack(Character activePlayer, Character passivePlayer) {
+        System.out.println("\n🤸 " + activePlayer.getName() + this.getAction(playerActionList) + this.getName());
+        this.executeSelectedSkill(activePlayer, passivePlayer);
     }
 
     @Override
     public void executeSelectedSkill(Character activePlayer, Character passivePlayer) {
-        this.buffEffect.addEffect(activePlayer);
-        this.buffEffect.applyEffect(activePlayer,  StatusEffect.ofEvasion());
+        this.buffEffect.addEffect(activePlayer,  StatusEffect.ofEvasion());
+        this.buffEffect.applyEffect(activePlayer);
         System.out.println(activePlayer.getName() + this.skillAction + passivePlayer.getName());
         this.skillTypeAction(activePlayer);
     }
 
-    public static AgilityDefense ofEvasion() {
-        return new AgilityDefense("Evasão",
+    public static EvasionDefense ofEvasion() {
+        return new EvasionDefense("Evasão",
                 "Aumenta a esquiva por 2 turnos (não causa dano).",
                 "️ se esquiva habilidosamente, tornando-se mais difícil de ser atingido por ",
                 3, false);

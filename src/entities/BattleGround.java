@@ -19,7 +19,7 @@ public class BattleGround {
     }
 
     public boolean isGameOver() {
-        return this.player1.isAlive() && this.player2.isAlive();
+        return !this.player1.isAlive() || !this.player2.isAlive();
     }
 
     public void nextTurn() {
@@ -27,11 +27,11 @@ public class BattleGround {
         System.out.println("\n⏳ A tensão cresce durante a batalha...");
         System.out.println();
 
+
         this.turn++;
-        this.player1.decreaseAllSkillsCd();
-        this.player2.decreaseAllSkillsCd();
-        this.player1.updateStatusEffect();
-        this.player2.updateStatusEffect();
+
+        this.player1.prepareToPlay();
+        this.player2.prepareToPlay();
 
         if (this.player1.isAlive()) {
             this.player1.useAllyIfAlive();
@@ -53,8 +53,9 @@ public class BattleGround {
     }
 
     private void verifyIfPlayerDied(entities.character.Character player, Skill selectedSkill) {
-        if (player.getLife() <= 0) {
-            player.setAlive(false);
+        System.out.println(" time to die? " + player.timeToDie());
+        if (player.timeToDie()) {
+            player.makeDeath();
             this.playerIsDied(player, selectedSkill);
         }
     }

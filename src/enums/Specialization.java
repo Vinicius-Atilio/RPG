@@ -3,28 +3,27 @@ package enums;
 import entities.*;
 import entities.ally.*;
 import entities.character.Attribute;
+import entities.character.OriginalAttribute;
 import entities.skill.Skill;
 
 import java.util.List;
 
 public enum Specialization {
-    Warrior(Skill.ofWarrior(), Attribute.ofWarrior(), Standard.ofWar(), Weapon.ofHeavySteelSword() , Type.Melee),
-    Mage(Skill.ofMage(), Attribute.ofMage(), Arcane.ofMystic(), Weapon.ofAncestralArcaneStaff(), Type.Ranged),
-    Hunter(Skill.ofHunter(), Attribute.ofPaladin(), Animal.ofBeast(), Weapon.ofElvenPrecisionBow(), Type.Ranged),
-    Paladin(Skill.ofPaladin(), Attribute.ofHunter(), Heavenly.ofGuardian(), Weapon.ofHammerDivineLight(), Type.Melee);
+    Warrior(Skill.ofWarrior(), OriginalAttribute.ofWarrior(), Standard.ofWar(), Weapon.ofHeavySteelSword()),
+    Mage(Skill.ofMage(), OriginalAttribute.ofMage(), Arcane.ofMystic(), Weapon.ofAncestralArcaneStaff()),
+    Hunter(Skill.ofHunter(), OriginalAttribute.ofPaladin(), Animal.ofBeast(), Weapon.ofElvenPrecisionBow()),
+    Paladin(Skill.ofPaladin(), OriginalAttribute.ofHunter(), Heavenly.ofGuardian(), Weapon.ofHammerDivineLight());
 
     private List<Skill> skills;
     private Attribute attribute;
-    private Type type;
     private Ally ally;
     private Weapon weapon;
 
-    Specialization(List<Skill> skills, Attribute attribute, Ally ally, Weapon weapon, Type type) {
+    Specialization(List<Skill> skills, Attribute attribute, Ally ally, Weapon weapon) {
         this.skills = skills;
         this.attribute = attribute;
         this.ally = ally;
         this.weapon = weapon;
-        this.type = type;
     }
 
     public List<Skill> skills() {
@@ -33,10 +32,6 @@ public enum Specialization {
 
     public Attribute attribute() {
         return attribute;
-    }
-
-    public Type type() {
-        return type;
     }
 
     public Ally ally() {
