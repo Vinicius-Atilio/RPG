@@ -8,6 +8,7 @@ public abstract class Attribute {
     protected int vigor;
     protected int mana;
     protected int defense;
+    protected int temporallyShield;
 
 
     public Attribute(int strength, int intelligence, int agility, int vigor, int mana, int defense) {
