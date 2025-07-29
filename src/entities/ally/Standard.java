@@ -2,7 +2,8 @@ package entities.ally;
 
 import entities.character.Attribute;
 import entities.character.Character;
-import entities.character.OriginalAttribute;
+import entities.state.OriginalState;
+import entities.state.State;
 
 import java.util.Arrays;
 import java.util.List;
@@ -15,14 +16,14 @@ public class Standard extends Ally {
             " exibe o estandarte com bravura, unindo os aliados!"
     );
 
-    public Standard(String name, String description, int cooldown, Attribute attribute) {
-        super(name, description, cooldown, attribute);
+    public Standard(String name, String description, int cooldown, State state) {
+        super(name, description, cooldown, state);
     }
 
     public static Standard ofWar() {
         return new Standard("Estandarte de Guerra",
                 "Estandarte usado em batalha para fortalecer seu alidado",
-                4,  OriginalAttribute.ofWarStandard());
+                4,  OriginalState.ofWarStandard());
     }
 
     @Override

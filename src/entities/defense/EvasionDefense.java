@@ -1,8 +1,8 @@
 package entities.defense;
 
-import entities.character.BuffEffect;
+import entities.effect.BuffEffect;
 import entities.character.Character;
-import entities.character.StatusEffect;
+import entities.effect.StatusEffect;
 import java.util.Arrays;
 import java.util.List;
 

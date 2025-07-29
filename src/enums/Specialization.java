@@ -2,26 +2,26 @@ package enums;
 
 import entities.*;
 import entities.ally.*;
-import entities.character.Attribute;
-import entities.character.OriginalAttribute;
+import entities.state.OriginalState;
 import entities.skill.Skill;
+import entities.state.State;
 
 import java.util.List;
 
 public enum Specialization {
-    Warrior(Skill.ofWarrior(), OriginalAttribute.ofWarrior(), Standard.ofWar(), Weapon.ofHeavySteelSword()),
-    Mage(Skill.ofMage(), OriginalAttribute.ofMage(), Arcane.ofMystic(), Weapon.ofAncestralArcaneStaff()),
-    Hunter(Skill.ofHunter(), OriginalAttribute.ofPaladin(), Animal.ofBeast(), Weapon.ofElvenPrecisionBow()),
-    Paladin(Skill.ofPaladin(), OriginalAttribute.ofHunter(), Heavenly.ofGuardian(), Weapon.ofHammerDivineLight());
+    Warrior(Skill.ofWarrior(), OriginalState.ofWarrior(), Standard.ofWar(), Weapon.ofHeavySteelSword()),
+    Mage(Skill.ofMage(), OriginalState.ofMage(), Arcane.ofMystic(), Weapon.ofAncestralArcaneStaff()),
+    Hunter(Skill.ofHunter(), OriginalState.ofPaladin(), Animal.ofBeast(), Weapon.ofElvenPrecisionBow()),
+    Paladin(Skill.ofPaladin(), OriginalState.ofHunter(), Heavenly.ofGuardian(), Weapon.ofHammerDivineLight());
 
     private List<Skill> skills;
-    private Attribute attribute;
+    private State state;
     private Ally ally;
     private Weapon weapon;
 
-    Specialization(List<Skill> skills, Attribute attribute, Ally ally, Weapon weapon) {
+    Specialization(List<Skill> skills, State state, Ally ally, Weapon weapon) {
         this.skills = skills;
-        this.attribute = attribute;
+        this.state = state;
         this.ally = ally;
         this.weapon = weapon;
     }
@@ -30,8 +30,13 @@ public enum Specialization {
         return skills;
     }
 
-    public Attribute attribute() {
-        return attribute;
+    //alterar para recuperar o estado original com a vida atualizada
+    public State state() {
+        return state;
+    }
+
+    public State state(double life) {
+        return this.state.withLife(life);
     }
 
     public Ally ally() {

@@ -1,10 +1,10 @@
 package entities.skill.ranged;
 
 import entities.character.Character;
-import entities.character.DebuffEffect;
-import entities.character.StatusEffect;
+import entities.effect.DebuffEffect;
+import entities.effect.StatusEffect;
 
-public class PoisonArrow extends Ranged {
+public class PoisonArrow extends StrengthRanged {
     private final DebuffEffect buffEffect = new DebuffEffect();
 
     protected PoisonArrow(String name, String description, String skillAction, int cooldown, boolean special) {

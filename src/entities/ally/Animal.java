@@ -2,7 +2,8 @@ package entities.ally;
 
 import entities.character.Attribute;
 import entities.character.Character;
-import entities.character.OriginalAttribute;
+import entities.state.OriginalState;
+import entities.state.State;
 
 import java.util.Arrays;
 import java.util.List;
@@ -15,14 +16,14 @@ public class Animal extends Ally {
             " ruge ferozmente antes de atacar!"
     );
 
-    public Animal(String name, String description, int cooldown, Attribute attribute) {
-        super(name, description, cooldown, attribute);
+    public Animal(String name, String description, int cooldown, State state) {
+        super(name, description, cooldown, state);
     }
 
     public static Animal ofBeast() {
         return new Animal("Fera Companheira",
                 "Um aliado animal que traz força e agilidade para a batalha",
-                4,  OriginalAttribute.ofBeast());
+                4,  OriginalState.ofBeast());
     }
 
     @Override

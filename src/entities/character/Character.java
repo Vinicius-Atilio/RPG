@@ -3,9 +3,9 @@ package entities.character;
 import entities.Inventory;
 import entities.Weapon;
 import entities.ally.Ally;
+import entities.effect.StatusEffect;
 import entities.skill.Skill;
-import entities.state.AliveState;
-import entities.state.State;
+import entities.state.*;
 import enums.Race;
 import enums.Specialization;
 
@@ -19,7 +19,6 @@ public class Character {
     private String name;
     private Race race;
     private Specialization specialization;
-    private Attribute attribute;
     private List<Skill> skills;
     private StatusEffect statusEffect;
     private Weapon weapon;
@@ -28,29 +27,28 @@ public class Character {
     private State state;
     private boolean immune;
 
-    public Character(String name, Race race, Specialization specialization, Attribute attribute, List<Skill> skills, Weapon weapon, Inventory inventory) {
+    public Character(String name, Race race, Specialization specialization, State state, List<Skill> skills, Weapon weapon, Inventory inventory) {
         this.id = new BigInteger(128, new SecureRandom());
         this.name = name;
         this.race = race;
         this.specialization = specialization;
-        this.attribute = attribute;
         this.skills = skills;
         this.weapon = weapon;
         this.inventory = inventory;
-        this.state = new AliveState();
+        this.state = OriginalState.ofState(state);
 
         if (this.weapon != null) {
-            this.attribute.update(this.weapon.getAttribute());
+            this.state.update(this.weapon.getState());
         }
     }
 
-    public Character(String name, Attribute attribute) {
+    public Character(String name, State state) {
         this.name = name;
-        this.attribute = attribute;
+        this.state = state;
     }
 
     public boolean timeToDie() {
-        return this.attribute.getLife() <= 0;
+        return this.state.getLife() <= 0;
     }
 
     public boolean isAlive() {
@@ -62,7 +60,7 @@ public class Character {
     }
 
     public double getLife() {
-        return this.attribute.getLife();
+        return this.state.getLife();
     }
 
     public void prepareToPlay() {
@@ -80,32 +78,19 @@ public class Character {
         return play();
     }
 
-    public void decreaseAllSkillsCd() {
-    }
-
-    public Attribute getAttribute() {
-        return attribute;
-    }
-
-    public boolean receiveAttack(Character actionPlayer, int activeSKillPowerAttack) {
-        if (this.immune) {
-            System.out.printf("%s está imune a ataques, sob efeito de %s!%n", this.name, this.statusEffect != null ? this.statusEffect.getName() : "imunidade");
-            return false;
-        }
-
-        this.attribute.receiveDamage(this.attackPower(actionPlayer, activeSKillPowerAttack));
-        return true;
+    public void receiveDamage(Character actionPlayer, int activeSKillPowerAttack, Skill skill) {
+        this.state.receiveDamage(actionPlayer, this, this.attackPower(actionPlayer, activeSKillPowerAttack), skill, this.statusEffect);
     }
 
     public double attackPower(Character actionPlayer, int activeSKillPowerAttack) {
-        return this.attribute.calculateDamage(actionPlayer, this, activeSKillPowerAttack);
+        return this.state.calculateDamage(actionPlayer, this, activeSKillPowerAttack);
     }
 
     public int getMainAttribute() {
         return switch (this.specialization) {
-            case Warrior, Paladin -> this.attribute.getStrength();
-            case Mage -> this.attribute.getIntelligence();
-            case Hunter -> this.attribute.getAgility();
+            case Warrior, Paladin -> this.state.getStrength();
+            case Mage -> this.state.getIntelligence();
+            case Hunter -> this.state.getAgility();
         };
     }
 
@@ -120,7 +105,7 @@ public class Character {
     public void useAllyIfAlive() {
         if (this.ally != null && this.ally.isAlive()) {
             if (this.ally.isSupport()) {
-                this.attribute.update(this.ally.getAttribute());
+                this.state.update(this.ally.getState());
             }
         }
     }
@@ -144,32 +129,37 @@ public class Character {
         }
 
         if (this.statusEffect.getTurnDuration() > 0) {
-            this.attribute.receiveEffect(this.name); // Aplicando o efeito do status
+            this.state.receiveEffect(this.name); // Aplicando o efeito do status
+            if (this.state.getLife() <= 0) {
+                System.out.println(this.name + " morreu devido ao efeito " + this.statusEffect.getName() + ".");
+                this.makeDeath();
+                return;
+            }
+
             this.statusEffect.updateTurnDuration();
-            System.out.println(this.statusEffect.getTurnDuration() + " turnos restantes do efeito " + this.statusEffect.getName() + " de " + this.name + ".");
+            System.out.println(this.statusEffect.getTurnDuration() + " turnos restantes do efeito " + this.statusEffect.getName() + " em " + this.name + ".");
             return;
         }
 
         System.out.println("O efeito " + this.statusEffect.getName() + " de " + this.name + " expirou.");
         this.statusEffect = null;
-        this.attribute = this.specialization.attribute(); // Resetando os atributos para o padrão da especialização
-//        this.immune = false; //TODO ENVIAR PARA O STATE
+        this.state = this.specialization.state(this.state.getLife()); // Resetando os atributos para o padrão da especialização
     }
 
     public Ally getAlly() {
         return ally;
     }
 
-    public void markAsImmune() {
-        this.immune = true;
+    public void makeImmune() {
+        this.state = ImmuneState.of(this.state);
     }
 
     public void makePoisoned() {
-        this.attribute = PoisonedAttribute.of(this.attribute);
+        this.state = PoisonedState.of(this.state);
     }
 
-    public boolean canBeAttacked() {
-        return this.isAlive() && !this.immune;
+    public void makeEvasion() {
+        this.state = EvasionState.of(this.state);
     }
 
     public void makeDeath() {
@@ -185,15 +175,15 @@ public class Character {
     }
 
     public int originalDefenseValue() {
-        return this.attribute.getDefense();
+        return this.state.getDefense();
     }
 
     public int poisonedDefenseValue() {
-        return this.attribute.getDefense() - (int) (this.attribute.getDefense() * 0.1);
+        return this.state.getDefense() - (int) (this.state.getDefense() * 0.1);
     }
 
     public int tiredDefenseValue() {
-        return this.attribute.getDefense() - (int) (this.attribute.getDefense() * 0.5);
+        return this.state.getDefense() - (int) (this.state.getDefense() * 0.5);
     }
 
     public BigInteger getId() {
@@ -239,12 +229,12 @@ public class Character {
                 ", name='" + name + '\'' +
                 ", race=" + race +
                 ", specialization=" + specialization +
-                ", attribute=" + attribute +
+                ", attribute=" + state +
                 ", skills=" + skills +
                 ", weapon=" + weapon +
                 ", ally=" + ally +
                 ", inventory=" + inventory +
-                ", life=" + this.attribute.getLife() +
+                ", life=" + this.state.getLife() +
                 '}';
     }
 }

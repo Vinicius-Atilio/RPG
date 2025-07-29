@@ -1,17 +1,17 @@
 package entities.ally;
 
-import entities.character.Attribute;
 import entities.character.Character;
 import entities.skill.Skill;
+import entities.state.State;
 
 public abstract class Ally extends Skill {
-    private Attribute attribute;
+    private State state;
     private int life;
     private boolean alive;
 
-    public Ally(String name, String description, int cooldown, Attribute attribute) {
+    public Ally(String name, String description, int cooldown, State state) {
         super(name, description, null, cooldown, false);
-        this.attribute = attribute;
+        this.state = state;
         this.life = 50;
         this.alive = true;
     }
@@ -24,8 +24,8 @@ public abstract class Ally extends Skill {
         return alive;
     }
 
-    public Attribute getAttribute() {
-        return attribute;
+    public State getState() {
+        return state;
     }
 
     @Override

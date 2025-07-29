@@ -27,13 +27,7 @@ public abstract class Attack extends Skill {
 
     @Override
     public void executeSelectedSkill(Character activePlayer, Character passivePlayer) {
-        boolean isAttacked = passivePlayer.receiveAttack(activePlayer, this.powerAttack);
-        if (isAttacked) {
-            this.skillAction(activePlayer, passivePlayer);
-        } else {
-            System.out.println("\n" + activePlayer.getName() + " não conseguiu atacar " + passivePlayer.getName() + " com a habilidade: " + this.name);
-            System.out.println("😞 " + activePlayer.getName() + " " + answerVegeanceList.get(ThreadLocalRandom.current().nextInt(answerVegeanceList.size())));
-        }
+        passivePlayer.receiveDamage(activePlayer, this.powerAttack, this);
     }
 
     @Override

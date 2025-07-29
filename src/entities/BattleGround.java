@@ -53,7 +53,6 @@ public class BattleGround {
     }
 
     private void verifyIfPlayerDied(entities.character.Character player, Skill selectedSkill) {
-        System.out.println(" time to die? " + player.timeToDie());
         if (player.timeToDie()) {
             player.makeDeath();
             this.playerIsDied(player, selectedSkill);

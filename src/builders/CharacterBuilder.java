@@ -49,7 +49,7 @@ public class CharacterBuilder {
     }
 
     public Character build() {
-        return new Character(getString(), this.race, this.specialization, this.specialization.attribute(),
+        return new Character(getString(), this.race, this.specialization, this.specialization.state(),
                 this.specialization.skills(), this.specialization.weapon(), new Inventory(new ArrayList<>()));
     }
 

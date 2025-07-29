@@ -21,16 +21,6 @@ public abstract class Attribute {
         this.defense = defense;
     }
 
-    public void update(Attribute attribute) {
-        if (attribute == null) return;
-        this.strength += attribute.strength;
-        this.intelligence += attribute.intelligence;
-        this.agility += attribute.agility;
-        this.vigor += attribute.vigor;
-        this.mana += attribute.mana;
-        this.defense += attribute.defense;
-    }
-
     @Override
     public String toString() {
         return "Attribute{" +

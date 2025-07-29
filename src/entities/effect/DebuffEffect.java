@@ -1,10 +1,12 @@
-package entities.character;
+package entities.effect;
 
+
+import entities.character.Character;
 
 public class DebuffEffect implements Effect {
 
     @Override
-    public void applyEffect(Character character) {
+    public void applyEffect(entities.character.Character character) {
         character.applyEffect();
     }
 

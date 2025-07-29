@@ -1,4 +1,7 @@
-package entities.character;
+package entities.effect;
+
+import entities.character.Character;
+
 /**
  * Classe BuffEffect representa um efeito de buff que pode ser aplicado a um personagem.
  * Ela implementa a interface Effect e define o comportamento do efeito de buff.
@@ -8,7 +11,7 @@ package entities.character;
 public class BuffEffect implements Effect {
 
     @Override
-    public void addEffect(Character character, StatusEffect statusEffect) {
+    public void addEffect(entities.character.Character character, StatusEffect statusEffect) {
         character.addEffect(statusEffect);
     }
 

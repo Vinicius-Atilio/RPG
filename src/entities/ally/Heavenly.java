@@ -2,7 +2,8 @@ package entities.ally;
 
 import entities.character.Attribute;
 import entities.character.Character;
-import entities.character.OriginalAttribute;
+import entities.state.OriginalState;
+import entities.state.State;
 
 import java.util.Arrays;
 import java.util.List;
@@ -17,13 +18,13 @@ public class Heavenly  extends Ally {
     );
 
 
-    public Heavenly(String name, String description, int cooldown, Attribute attribute) {
-        super(name, description, cooldown, attribute);
+    public Heavenly(String name, String description, int cooldown, State state) {
+        super(name, description, cooldown, state);
     }
 
     public static Heavenly ofGuardian() {
         return new Heavenly("Divino", "Um aliado celestial que traz bênçãos e proteção",
-                4, OriginalAttribute.ofGuardian());
+                4, OriginalState.ofGuardian());
     }
 
     @Override
