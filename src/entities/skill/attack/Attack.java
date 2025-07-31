@@ -24,6 +24,11 @@ public abstract class Attack extends Skill {
         super(name, description, skillAction, cooldown, stunned, special);
     }
 
+    public Attack(String name, String description, String skillAction, int cooldown, int i, boolean special, boolean stunned) {
+        super(name, description, skillAction, cooldown, i, special, stunned);
+        this.powerAttack = i;
+    }
+
 
     @Override
     public void executeSelectedSkill(Character activePlayer, Character passivePlayer) {

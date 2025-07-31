@@ -1,4 +1,4 @@
-package entities.skill.ranged;
+package entities.skill.mage;
 
 import entities.skill.attack.Attack;
 import entities.character.Character;

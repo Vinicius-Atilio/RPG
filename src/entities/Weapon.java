@@ -39,7 +39,7 @@ public class Weapon {
     public static Weapon ofElvenPrecisionBow() {
         return new Weapon("Arco de Precisão Élfico",
                 "Um arco leve e preciso, feito com madeira encantada, perfeito para ataques rápidos.",
-                OriginalState.ofElvenPrecisionBow(), 1.5);
+                OriginalState.ofElvenPrecisionBow(), 2.5);
     }
 
     public State getState() {

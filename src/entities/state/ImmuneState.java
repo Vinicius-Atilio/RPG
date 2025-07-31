@@ -26,9 +26,14 @@ public class ImmuneState extends State {
     }
 
     @Override
-    public void receiveDamage(Character actionPlayer, Character passivePlayer, double value, Skill skill, StatusEffect statusEffect) {
-        System.out.printf(" Está imune a ataques, sob efeito de %s!%n", statusEffect.getName());
+    public void receiveDamage(Character actionPlayer, Character passivePlayer, double value, Skill skill) {
+        System.out.printf(" Está imune a ataques, sob efeito de %s!%n");
     }
+
+    @Override
+    public void receiveDamage(double value, Character passivePlayer, String effectName) {
+    }
+
 
     @Override
     public void receiveEffect(String name) {
@@ -42,7 +47,7 @@ public class ImmuneState extends State {
 
     @Override
     public boolean isAlive() {
-        return false;
+        return this.life > 0;
     }
 
     @Override
@@ -59,5 +64,15 @@ public class ImmuneState extends State {
     public State withLife(double life) {
         this.life = life;
         return this;
+    }
+
+    @Override
+    public void stateCountDown(Character actionPlayer, State state) {
+    }
+
+    @Override
+    public String toString() {
+        String stateName = "Immune State";
+        return "ImmuneState{" + stateName + '}';
     }
 }

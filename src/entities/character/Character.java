@@ -11,6 +11,7 @@ import enums.Specialization;
 
 import java.math.BigInteger;
 import java.security.SecureRandom;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -20,7 +21,7 @@ public class Character {
     private Race race;
     private Specialization specialization;
     private List<Skill> skills;
-    private StatusEffect statusEffect;
+    private List<StatusEffect> effects;
     private Weapon weapon;
     private Ally ally;
     private Inventory inventory;
@@ -36,6 +37,7 @@ public class Character {
         this.weapon = weapon;
         this.inventory = inventory;
         this.state = OriginalState.ofState(state);
+        this.effects = new ArrayList<>();
 
         if (this.weapon != null) {
             this.state.update(this.weapon.getState());
@@ -47,10 +49,6 @@ public class Character {
         this.state = state;
     }
 
-    public boolean timeToDie() {
-        return this.state.getLife() <= 0;
-    }
-
     public boolean isAlive() {
         return this.state.isAlive();
     }
@@ -59,14 +57,21 @@ public class Character {
         return name;
     }
 
-    public double getLife() {
-        return this.state.getLife();
-    }
-
     public void prepareToPlay() {
+        System.out.println("Estado atual de " + this.name + ": " + this.state.toString());
+        this.state.stateCountDown(this, this.specialization.state(this.state.getLife()));
+
+        this.applyEffect();
         this.skills.forEach(Skill::updateSkillCooldown);
 
-        this.updateStatusEffect();
+        if (this.effects == null || this.effects.isEmpty()) {
+            System.out.println("Nenhum efeito ativo em " + this.name + ".");
+            return;
+        }
+
+        for (StatusEffect effect : new ArrayList<>(this.effects)) {
+            effect.updateTurnDuration(this, effect.getName());
+        }
     }
 
     public Skill play() {
@@ -79,11 +84,12 @@ public class Character {
     }
 
     public void receiveDamage(Character actionPlayer, int activeSKillPowerAttack, Skill skill) {
-        this.state.receiveDamage(actionPlayer, this, this.attackPower(actionPlayer, activeSKillPowerAttack), skill, this.statusEffect);
-    }
-
-    public double attackPower(Character actionPlayer, int activeSKillPowerAttack) {
-        return this.state.calculateDamage(actionPlayer, this, activeSKillPowerAttack);
+        this.state.receiveDamage(actionPlayer,
+                this,
+                this.state.calculateDamage(actionPlayer,
+                        this,
+                        activeSKillPowerAttack),
+                skill);
     }
 
     public int getMainAttribute() {
@@ -111,39 +117,35 @@ public class Character {
     }
 
     public void addEffect(StatusEffect statusEffect) {
-        this.statusEffect = statusEffect;
+        this.effects.add(statusEffect);
     }
 
     public void applyEffect() {
-        if (this.statusEffect == null) {
+        if (this.effects == null || this.effects.isEmpty()) {
             System.out.println("Nenhum efeito ativo.");
             return;
         }
 
-        this.statusEffect.accept(this);
+        // Verifica se o efeito já está ativo
+        for (StatusEffect effect : this.effects) {
+            if (!effect.isActive() && this.effects.stream().noneMatch(e -> e.getId().equals(effect.getId()))) {
+                // Evita que o mesmo efeito seja aplicado mais de uma vez
+                System.out.println("Efeito " + effect.getName() + " aplicado a " + this.name + ".");
+                effect.accept(this); // cuidado: se aqui adicionar outro efeito, ainda pode estourar
+                effect.makeActive();
+            }
+        }
+
     }
 
-    private void updateStatusEffect() {
-        if (this.statusEffect == null) {
-            return;
-        }
+    public double getLife() {
+        return this.state.getLife();
+    }
 
-        if (this.statusEffect.getTurnDuration() > 0) {
-            this.state.receiveEffect(this.name); // Aplicando o efeito do status
-            if (this.state.getLife() <= 0) {
-                System.out.println(this.name + " morreu devido ao efeito " + this.statusEffect.getName() + ".");
-                this.makeDeath();
-                return;
-            }
 
-            this.statusEffect.updateTurnDuration();
-            System.out.println(this.statusEffect.getTurnDuration() + " turnos restantes do efeito " + this.statusEffect.getName() + " em " + this.name + ".");
-            return;
-        }
-
-        System.out.println("O efeito " + this.statusEffect.getName() + " de " + this.name + " expirou.");
-        this.statusEffect = null;
-        this.state = this.specialization.state(this.state.getLife()); // Resetando os atributos para o padrão da especialização
+    public void receiveEffect(double value, String effectName) {
+        System.out.println("O jogador " + this.name + " está sob efeito de " + effectName + " Vida reduzida em 5%." + " Vida atual: " + String.format("%.2f",  this.getLife() ));
+        this.state.receiveDamage(value, this, effectName);
     }
 
     public Ally getAlly() {
@@ -154,11 +156,7 @@ public class Character {
         this.state = ImmuneState.of(this.state);
     }
 
-    public void makePoisoned() {
-        this.state = PoisonedState.of(this.state);
-    }
-
-    public void makeEvasion() {
+    public void changeStateToEvasion() {
         this.state = EvasionState.of(this.state);
     }
 
@@ -202,10 +200,6 @@ public class Character {
         return skills;
     }
 
-    public StatusEffect getStatusEffect() {
-        return statusEffect;
-    }
-
     public Weapon getWeapon() {
         return weapon;
     }
@@ -234,7 +228,11 @@ public class Character {
                 ", weapon=" + weapon +
                 ", ally=" + ally +
                 ", inventory=" + inventory +
-                ", life=" + this.state.getLife() +
+                ", life=" + this.state.isAlive() +
                 '}';
+    }
+
+    public void removeEffect(StatusEffect statusEffect) {
+        this.effects.remove(statusEffect);
     }
 }

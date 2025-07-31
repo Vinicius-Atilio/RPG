@@ -1,8 +1,6 @@
 package entities.state;
 
-import entities.character.Attribute;
 import entities.character.Character;
-import entities.effect.StatusEffect;
 import entities.skill.Skill;
 
 public abstract class State {
@@ -14,10 +12,7 @@ public abstract class State {
     protected int mana;
     protected int defense;
     protected int temporallyShield;
-
-    public State(double life) {
-        this.life = life;
-    }
+    protected int stateDuration;
 
     public State(double life, int strength, int intelligence, int agility, int vigor, int mana, int defense) {
         this.life = life;
@@ -82,7 +77,8 @@ public abstract class State {
         return mana;
     }
 
-    public abstract void receiveDamage(Character actionPlayer, Character passivePlayer, double value, Skill skill, StatusEffect statusEffect);
+    public abstract void receiveDamage(Character actionPlayer, Character passivePlayer, double value, Skill skill);
+    public abstract void receiveDamage(double value, Character passivePlayer, String effectName);
     public abstract void receiveEffect(String name);
 
     public abstract void onDeath(Character character);
@@ -92,4 +88,5 @@ public abstract class State {
     public abstract double calculateDefense();
 
     public abstract State withLife(double life);
+    public abstract void stateCountDown(Character actionPlayer, State state);
 }

@@ -33,6 +33,8 @@ public class BattleGround {
         this.player1.prepareToPlay();
         this.player2.prepareToPlay();
 
+        System.out.println(" Vida do guerreiro " + this.player2.getLife() + " nome " + this.player2.getName());
+
         if (this.player1.isAlive()) {
             this.player1.useAllyIfAlive();
             Skill selectedSkill = this.player1.play();
@@ -53,7 +55,7 @@ public class BattleGround {
     }
 
     private void verifyIfPlayerDied(entities.character.Character player, Skill selectedSkill) {
-        if (player.timeToDie()) {
+        if (!player.isAlive()) {
             player.makeDeath();
             this.playerIsDied(player, selectedSkill);
         }

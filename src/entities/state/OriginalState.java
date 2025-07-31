@@ -1,10 +1,10 @@
 package entities.state;
 
 import entities.character.Character;
-import entities.effect.StatusEffect;
 import entities.skill.Skill;
 
 public class OriginalState extends State {
+
     public OriginalState(double life, int strength, int intelligence, int agility, int vigor, int mana, int defense) {
         super(life, strength, intelligence, agility, vigor, mana, defense);
     }
@@ -15,9 +15,21 @@ public class OriginalState extends State {
     }
 
     @Override
-    public void receiveDamage(Character actionPlayer, Character passivePlayer, double value, Skill skill, StatusEffect statusEffect) {
+    public void receiveDamage(Character actionPlayer, Character passivePlayer, double value, Skill skill) {
+        if (value > 0) {
+            System.out.println("😤 " + passivePlayer.getName() + " recebeu o dano de " + value + " de " + actionPlayer.getName() + "!");
+            this.life -= value;
+            skill.skillAction(actionPlayer, passivePlayer);
+            return;
+        }
+
+        System.out.println("😱 " + passivePlayer.getName() + " conseguiu se defender do ataque de " + actionPlayer.getName() + "!");
+    }
+
+    @Override
+    public void receiveDamage(double value, Character passivePlayer, String effectName) {
         this.life -= value;
-        skill.skillAction(actionPlayer, passivePlayer);
+        System.out.printf("😤 %s recebeu o dano de %.2f devido ao efeito %s!%n", passivePlayer.getName(), value, effectName);
     }
 
     @Override
@@ -30,7 +42,7 @@ public class OriginalState extends State {
 
     @Override
     public boolean isAlive() {
-        return true;
+        return this.life > 0;
     }
 
     @Override
@@ -42,6 +54,10 @@ public class OriginalState extends State {
     public State withLife(double life) {
         this.life = life;
         return this;
+    }
+
+    @Override
+    public void stateCountDown(Character actionPlayer, State state) {
     }
 
     public static OriginalState ofState(State state) {
@@ -100,4 +116,10 @@ public class OriginalState extends State {
         return new OriginalState(50, 2, 0, 3, 1, 0, 1);
     }
 
+
+    @Override
+    public String toString() {
+        String stateName = "Original State";
+        return "OriginalState{" + stateName + '}';
+    }
 }

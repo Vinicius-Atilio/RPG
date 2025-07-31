@@ -34,7 +34,16 @@ public class DeadState extends State {
     }
 
     @Override
-    public void receiveDamage(Character actionPlayer, Character passivePlayer, double value, Skill skill, StatusEffect statusEffect) {
+    public void stateCountDown(Character actionPlayer, State state) {
+    }
+
+    @Override
+    public void receiveDamage(Character actionPlayer, Character passivePlayer, double value, Skill skill) {
+
+    }
+
+    @Override
+    public void receiveDamage(double value, Character passivePlayer, String effectName) {
 
     }
 
@@ -57,5 +66,11 @@ public class DeadState extends State {
     @Override
     public boolean isAlive() {
         return false;
+    }
+
+    @Override
+    public String toString() {
+        String stateName = "Dead State";
+        return "DeadState{" + stateName + '}';
     }
 }

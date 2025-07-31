@@ -56,25 +56,7 @@ public class Melee extends Attack {
         super(name, description, skillAction, cooldown, stunned, special);
     }
 
-    public static Melee ofHeavyAttack() {
-        return new Melee("Golpe Pesado",
-                "Ataque com dano físico aumentado.",
-                "🌪️ O som do aço corta o vento... ",
-                1, 1, false);
-    }
 
-    public static Melee ofIunge() {
-        return new Melee("Investida",
-                "Avança até o inimigo, causa dano e chance de atordoar.",
-                "🏃‍♂️ Avança rapidamente em direção ao inimigo, causando dano e tentando atordoá-lo!", 2, false,
-                ThreadLocalRandom.current().nextBoolean());
-    }
-
-    public static Melee ofBattlefieldWrath() {
-        return new Melee("Ira do Campo de Batalha (especial)",
-                "Aumenta o dano físico por 3 turnos.",
-                "💥Você sente uma fúria incontrolável tomar conta do campo de batalha!", 3, 5, true);
-    }
 
     public static Melee ofHolyBlow() {
         return new Melee("Golpe Sagrado",

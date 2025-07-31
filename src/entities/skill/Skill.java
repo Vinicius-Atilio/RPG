@@ -6,15 +6,17 @@ import entities.ally.Animal;
 import entities.ally.Arcane;
 import entities.ally.Standard;
 import entities.skill.dynamic.Dynamic;
+import entities.skill.hunter.*;
 import entities.skill.melee.Melee;
 import entities.defense.EvasionDefense;
 import entities.defense.HeavenlyDefense;
 import entities.defense.MagicDefense;
-import entities.skill.ranged.MagicRanged;
+import entities.skill.mage.MagicRanged;
 import entities.defense.StrengthDefense;
-import entities.skill.ranged.PoisonArrow;
-import entities.skill.ranged.StrengthRanged;
 import entities.skill.support.Support;
+import entities.skill.warrior.BattlefieldWrath;
+import entities.skill.warrior.HeavyAttack;
+import entities.skill.warrior.Lunge;
 
 import java.util.Arrays;
 import java.util.List;
@@ -111,12 +113,23 @@ public abstract class Skill {
         this.stunned = stunned;
     }
 
+    public Skill(String name, String description, String skillAction, int cooldown, int i, boolean special, boolean stunned) {
+        this.name = name;
+        this.description = description;
+        this.skillAction = skillAction;
+        this.cooldown = cooldown;
+        this.currentCooldown = cooldown;
+        this.casted = false;
+        this.special = special;
+        this.stunned = stunned;
+    }
+
     public static List<Skill> ofWarrior() {
         return Arrays.asList(
-                Melee.ofHeavyAttack(),
-                Melee.ofIunge(),
+                HeavyAttack.ofHeavyAttack(),
+                Lunge.ofLunge(),
                 StrengthDefense.ofDefensivePosture(),
-                Melee.ofBattlefieldWrath(),
+                BattlefieldWrath.ofBattlefieldWrath(),
                 Standard.ofWar());
     }
 
@@ -141,10 +154,10 @@ public abstract class Skill {
 
     public static List<Skill> ofHunter() {
         return Arrays.asList(
-                StrengthRanged.ofPrecisionShot(),
-                StrengthRanged.ofExplosiveTrap(),
+                PrecisionShot.ofPrecisionShot(),
+                ExplosiveTrap.ofExplosiveTrap(),
                 EvasionDefense.ofEvasion(),
-                StrengthRanged.ofArrowRain(),
+                ArrowRain.ofArrowRain(),
                 PoisonArrow.ofPoisonArrow(),
                 Animal.ofBeast());
     }

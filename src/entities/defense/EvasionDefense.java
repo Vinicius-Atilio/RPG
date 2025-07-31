@@ -2,7 +2,7 @@ package entities.defense;
 
 import entities.effect.BuffEffect;
 import entities.character.Character;
-import entities.effect.StatusEffect;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -40,8 +40,8 @@ public class EvasionDefense extends Defense {
 
     @Override
     public void executeSelectedSkill(Character activePlayer, Character passivePlayer) {
-        this.buffEffect.addEffect(activePlayer,  StatusEffect.ofEvasion());
-        this.buffEffect.applyEffect(activePlayer);
+//        this.buffEffect.addEffect(activePlayer,  StatusEffect.ofEvasion());
+        activePlayer.changeStateToEvasion();
         System.out.println(activePlayer.getName() + this.skillAction + passivePlayer.getName());
         this.skillTypeAction(activePlayer);
     }

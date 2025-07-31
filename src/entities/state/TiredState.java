@@ -27,9 +27,18 @@ public class TiredState extends State {
     }
 
     @Override
-    public void receiveDamage(Character actionPlayer, Character passivePlayer, double value, Skill skill, StatusEffect statusEffect) {
+    public void stateCountDown(Character actionPlayer, State state) {
+
+    }
+
+    @Override
+    public void receiveDamage(Character actionPlayer, Character passivePlayer, double value, Skill skill) {
         this.life -= value * 1.2; // Aumenta o dano recebido por cansaço
         skill.skillAction(actionPlayer, passivePlayer);
+    }
+
+    @Override
+    public void receiveDamage(double value, Character passivePlayer, String effectName) {
     }
 
     @Override
@@ -42,6 +51,12 @@ public class TiredState extends State {
 
     @Override
     public boolean isAlive() {
-        return true;
+        return this.life > 0;
+    }
+
+    @Override
+    public String toString() {
+        String stateName = "Tired State";
+        return "TiredState{" + stateName + '}';
     }
 }

@@ -16,8 +16,8 @@ public class BuffEffect implements Effect {
     }
 
     @Override
-    public void applyEffect(Character character) {
-        character.applyEffect();
+    public double damage(Character character) {
+        return 0;
     }
 
 }
