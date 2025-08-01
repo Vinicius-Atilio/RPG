@@ -24,6 +24,17 @@ public abstract class State {
         this.defense = defense;
     }
 
+    public State(double life, int strength, int intelligence, int agility, int vigor, int mana, int defense, int stateDuration) {
+        this.life = life;
+        this.strength = strength;
+        this.intelligence = intelligence;
+        this.agility = agility;
+        this.vigor = vigor;
+        this.mana = mana;
+        this.defense = defense;
+        this.stateDuration = stateDuration;
+    }
+
     public void update(State state) {
         if (state == null) return;
         this.strength += state.strength;

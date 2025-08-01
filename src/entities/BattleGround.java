@@ -27,13 +27,10 @@ public class BattleGround {
         System.out.println("\n⏳ A tensão cresce durante a batalha...");
         System.out.println();
 
-
         this.turn++;
 
         this.player1.prepareToPlay();
         this.player2.prepareToPlay();
-
-        System.out.println(" Vida do guerreiro " + this.player2.getLife() + " nome " + this.player2.getName());
 
         if (this.player1.isAlive()) {
             this.player1.useAllyIfAlive();

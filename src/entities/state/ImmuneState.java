@@ -1,7 +1,6 @@
 package entities.state;
 
 import entities.character.Character;
-import entities.effect.StatusEffect;
 import entities.skill.Skill;
 
 public class ImmuneState extends State {

@@ -8,13 +8,13 @@ import entities.ally.Standard;
 import entities.skill.dynamic.Dynamic;
 import entities.skill.hunter.*;
 import entities.skill.melee.Melee;
-import entities.defense.EvasionDefense;
+import entities.skill.hunter.EvasionDefense;
 import entities.defense.HeavenlyDefense;
 import entities.defense.MagicDefense;
 import entities.skill.mage.MagicRanged;
-import entities.defense.StrengthDefense;
 import entities.skill.support.Support;
 import entities.skill.warrior.BattlefieldWrath;
+import entities.skill.warrior.DefensivePosture;
 import entities.skill.warrior.HeavyAttack;
 import entities.skill.warrior.Lunge;
 
@@ -128,7 +128,7 @@ public abstract class Skill {
         return Arrays.asList(
                 HeavyAttack.ofHeavyAttack(),
                 Lunge.ofLunge(),
-                StrengthDefense.ofDefensivePosture(),
+                DefensivePosture.ofDefensivePosture(),
                 BattlefieldWrath.ofBattlefieldWrath(),
                 Standard.ofWar());
     }

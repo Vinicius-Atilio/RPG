@@ -26,7 +26,7 @@ public class PoisonArrow extends Attack {
     public void prepareSkillToAttack(Character activePlayer, Character passivePlayer) {
         System.out.println();
         System.out.println("╔════════════════════════════════════════════════════════╗");
-        System.out.println("║            🏹 PREPARAÇÃO: FLECHA ENVENENADA           ║");
+        System.out.println("║          ⏳ 🧪 🏹 PREPARAÇÃO: FLECHA ENVENENADA         ║");
         System.out.println("╚════════════════════════════════════════════════════════╝");
         System.out.println();
         System.out.println("🖐️ Ele desliza os dedos sobre a aljava, puxando uma flecha negra...");
@@ -36,7 +36,6 @@ public class PoisonArrow extends Attack {
         System.out.println("🌫️ Uma leve fumaça escapa da ponta... o veneno está instável.");
         System.out.println("🎯 O alvo está na mira...");
         System.out.println("🔥 Flecha envenenada PRONTA PARA DISPARO!");
-        System.out.println("═══════════════════════════════════════════════════════════");
         System.out.println();
         System.out.println(this.description);
         System.out.println(this.skillAction);

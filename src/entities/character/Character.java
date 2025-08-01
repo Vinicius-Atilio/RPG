@@ -58,20 +58,9 @@ public class Character {
     }
 
     public void prepareToPlay() {
-        System.out.println("Estado atual de " + this.name + ": " + this.state.toString());
         this.state.stateCountDown(this, this.specialization.state(this.state.getLife()));
-
         this.applyEffect();
         this.skills.forEach(Skill::updateSkillCooldown);
-
-        if (this.effects == null || this.effects.isEmpty()) {
-            System.out.println("Nenhum efeito ativo em " + this.name + ".");
-            return;
-        }
-
-        for (StatusEffect effect : new ArrayList<>(this.effects)) {
-            effect.updateTurnDuration(this, effect.getName());
-        }
     }
 
     public Skill play() {
@@ -122,16 +111,19 @@ public class Character {
 
     public void applyEffect() {
         if (this.effects == null || this.effects.isEmpty()) {
-            System.out.println("Nenhum efeito ativo.");
             return;
         }
 
-        // Verifica se o efeito já está ativo
+        // Atualiza a duração dos efeitos ativos
+        for (StatusEffect effect : new ArrayList<>(this.effects)) {
+            effect.updateTurnDuration(this, effect.getName());
+        }
+
+        // Verifica se algum efeito foi adicionado e ainda nao esta ativo
         for (StatusEffect effect : this.effects) {
             if (!effect.isActive() && this.effects.stream().noneMatch(e -> e.getId().equals(effect.getId()))) {
-                // Evita que o mesmo efeito seja aplicado mais de uma vez
                 System.out.println("Efeito " + effect.getName() + " aplicado a " + this.name + ".");
-                effect.accept(this); // cuidado: se aqui adicionar outro efeito, ainda pode estourar
+                effect.accept(this);
                 effect.makeActive();
             }
         }
@@ -158,6 +150,10 @@ public class Character {
 
     public void changeStateToEvasion() {
         this.state = EvasionState.of(this.state);
+    }
+
+    public void changeStateToDefensive() {
+        this.state = DefensiveState.of(this.state);
     }
 
     public void makeDeath() {
