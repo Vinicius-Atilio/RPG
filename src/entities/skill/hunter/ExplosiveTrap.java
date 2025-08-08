@@ -1,19 +1,21 @@
 package entities.skill.hunter;
 
+import entities.BattleGround;
+import entities.ally.Ally;
 import entities.character.Character;
 import entities.skill.attack.Attack;
 
-public class ExplosiveTrap extends Attack {
+public class ExplosiveTrap extends Trap {
 
-    protected ExplosiveTrap(String name, String description, String skillAction, int cooldown, boolean special) {
-        super(name, description, skillAction, cooldown, special);
+    protected ExplosiveTrap(String name, String description, String skillAction, int cooldown) {
+        super(name, description, skillAction, cooldown);
     }
 
     @Override
-    public void prepareSkillToAttack(Character activePlayer, Character passivePlayer) {
+    public void prepareSkillToExecute(Character activePlayer, Character passivePlayer, BattleGround battleGround) {
         System.out.println();
         System.out.println("╔══════════════════════════════════════════════════════╗");
-        System.out.println("║       💣 PREPARAÇÃO: ARMADILHA EXPLOSIVA BANUK       ║");
+        System.out.println("║              💣 PREPARAÇÃO: ARMADILHA EXPLOSIVA BANUK                ║");
         System.out.println("╚══════════════════════════════════════════════════════╝");
         System.out.println();
         System.out.println("👣 O caçador ajoelha silenciosamente no solo congelado...");
@@ -24,14 +26,20 @@ public class ExplosiveTrap extends Attack {
     }
 
     @Override
-    public void skillTypeAction(Character actionPlayer) {
-
+    public void skillTypeAction(Character activePlayer, Character passivePlayer, BattleGround battleGround) {
+        System.out.println();
+        System.out.println("╔══════════════════════════════════════════════════════╗");
+        System.out.println("║                                  💣 ARMADILHA EXPLOSIVA ATIVADA!                 ║");
+        System.out.println("╚══════════════════════════════════════════════════════╝");
+        System.out.println();
+        System.out.println("💥 " + activePlayer.getName() + " instala a armadilha explosiva com maestria!");
+        System.out.println("⚠️ " + passivePlayer.getName() + " não percebe o perigo iminente...");
     }
 
     public static ExplosiveTrap ofExplosiveTrap() {
         return new ExplosiveTrap("Armadilha Explosiva",
                 "Instala armadilha que explode ao ser acionada.",
                 "💣 Uma armadilha mortal é colocada no campo de batalha!",
-                2, false);
+                2);
     }
 }

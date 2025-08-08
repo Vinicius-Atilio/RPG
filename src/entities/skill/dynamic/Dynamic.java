@@ -1,5 +1,6 @@
 package entities.skill.dynamic;
 
+import entities.BattleGround;
 import entities.character.Character;
 import entities.skill.Skill;
 
@@ -9,22 +10,22 @@ public class Dynamic extends Skill {
     }
 
     @Override
-    public void prepareSkillToAttack(Character activePlayer, Character passivePlayer) {
+    public void prepareSkillToExecute(Character activePlayer, Character passivePlayer, BattleGround battleGround) {
 
     }
 
     @Override
-    public void executeSelectedSkill(entities.character.Character activePlayer, entities.character.Character passivePlayer) {
+    public void executeSelectedSkill(Character activePlayer, Character passivePlayer, BattleGround battleGround) {
 
     }
 
     @Override
-    public void skillTypeAction(entities.character.Character actionPlayer) {
+    public void skillTypeAction(Character activePlayer, Character passivePlayer, BattleGround battleGround) {
 
     }
 
     @Override
-    public void skillAction(entities.character.Character actionPlayer, Character passivePlayer) {
+    public void skillAction(entities.character.Character activePlayer, Character passivePlayer) {
 
     }
 

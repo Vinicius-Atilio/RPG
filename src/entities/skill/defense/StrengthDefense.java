@@ -1,5 +1,6 @@
-package entities.defense;
+package entities.skill.defense;
 
+import entities.BattleGround;
 import entities.character.Character;
 
 import java.util.Arrays;
@@ -29,7 +30,7 @@ public class StrengthDefense extends Defense {
     }
 
     @Override
-    public void prepareSkillToAttack(Character activePlayer, Character passivePlayer) {
+    public void prepareSkillToExecute(Character activePlayer, Character passivePlayer, BattleGround battleGround) {
         System.out.println("\n🛡️ " + activePlayer.getName() + " " + this.getAction(playerActionList) + " " + this.getName());
         this.executeSelectedSkill(activePlayer, passivePlayer);
     }
@@ -42,7 +43,7 @@ public class StrengthDefense extends Defense {
     }
 
     @Override
-    public void skillTypeAction(Character actionPlayer) {
-        System.out.println("🛡️ " + actionPlayer.getName() + this.getAction(skillActionList));
+    public void skillTypeAction(Character activePlayer, Character passivePlayer, BattleGround battleGround) {
+        System.out.println("🛡️ " + activePlayer.getName() + this.getAction(skillActionList));
     }
 }

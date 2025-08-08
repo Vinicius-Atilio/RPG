@@ -1,17 +1,19 @@
 package entities.skill;
 
+import entities.BattleGround;
 import entities.character.Character;
-import entities.ally.Heavenly;
-import entities.ally.Animal;
-import entities.ally.Arcane;
-import entities.ally.Standard;
+import entities.skill.paladin.HeavenlyGuardian;
+import entities.skill.hunter.Animal;
+import entities.skill.mage.Arcane;
+import entities.skill.warrior.Standard;
 import entities.skill.dynamic.Dynamic;
 import entities.skill.hunter.*;
-import entities.skill.melee.Melee;
+import entities.skill.mage.*;
 import entities.skill.hunter.EvasionDefense;
-import entities.defense.HeavenlyDefense;
-import entities.defense.MagicDefense;
-import entities.skill.mage.MagicRanged;
+import entities.skill.paladin.DivineShield;
+import entities.skill.paladin.BlessingLight;
+import entities.skill.paladin.HolyBlow;
+import entities.skill.paladin.JusticeHammer;
 import entities.skill.support.Support;
 import entities.skill.warrior.BattlefieldWrath;
 import entities.skill.warrior.DefensivePosture;
@@ -34,7 +36,6 @@ public abstract class Skill {
     protected int cooldown;
     protected int currentCooldown;
     protected boolean casted;
-    protected boolean special;
     protected String skillAction;
     private boolean stunned;
 
@@ -92,36 +93,22 @@ public abstract class Skill {
 
     public Skill() {}
 
-    protected Skill(String name, String description, String skillAction, int cooldown, boolean special) {
+    protected Skill(String name, String description, String skillAction, int cooldown) {
         this.name = name;
         this.description = description;
         this.skillAction = skillAction;
         this.cooldown = cooldown;
         this.currentCooldown = cooldown;
         this.casted = false;
-        this.special = special;
     }
 
-    public Skill(String name, String description, String skillAction, int cooldown, boolean stunned, boolean special) {
+    public Skill(String name, String description, String skillAction, int cooldown, int i) {
         this.name = name;
         this.description = description;
         this.skillAction = skillAction;
         this.cooldown = cooldown;
         this.currentCooldown = cooldown;
         this.casted = false;
-        this.special = special;
-        this.stunned = stunned;
-    }
-
-    public Skill(String name, String description, String skillAction, int cooldown, int i, boolean special, boolean stunned) {
-        this.name = name;
-        this.description = description;
-        this.skillAction = skillAction;
-        this.cooldown = cooldown;
-        this.currentCooldown = cooldown;
-        this.casted = false;
-        this.special = special;
-        this.stunned = stunned;
     }
 
     public static List<Skill> ofWarrior() {
@@ -135,21 +122,21 @@ public abstract class Skill {
 
     public static List<Skill> ofMage() {
         return Arrays.asList(
-                MagicRanged.ofFireBall(),
-                MagicRanged.ofParalyzingIce(),
-                MagicDefense.ofArcaneBarrier(),
+                FireBall.ofFireBall(),
+                ParalyzingIce.ofParalyzingIce(),
+                ArcaneBarrier.ofArcaneBarrier(),
                 Dynamic.ofArcaneAmplificationOrCurseOfWeakness(),
-                MagicRanged.ofElementalStorm(),
+                ElementalStorm.ofElementalStorm(),
                 Arcane.ofMystic());
     }
 
     public static List<Skill> ofPaladin() {
         return Arrays.asList(
-                Melee.ofHolyBlow(),
-                Support.ofBlessingOfLight(),
-                HeavenlyDefense.ofDivineShield(),
-                Melee.ofJusticeHammer(),
-                Heavenly.ofGuardian());
+                HolyBlow.ofHolyBlow(),
+                BlessingLight.ofBlessingLight(),
+                DivineShield.ofDivineShield(),
+                JusticeHammer.ofJusticeHammer(),
+                HeavenlyGuardian.ofGuardian());
     }
 
     public static List<Skill> ofHunter() {
@@ -205,10 +192,12 @@ public abstract class Skill {
         return this instanceof Support;
     }
 
-    public abstract void prepareSkillToAttack(Character activePlayer, Character passivePlayer);
+    public abstract void prepareSkillToExecute(Character activePlayer, Character passivePlayer, BattleGround battleGround);
     public abstract void executeSelectedSkill(Character activePlayer, Character passivePlayer);
-    public abstract void skillTypeAction(Character actionPlayer);
-    public abstract void skillAction(Character actionPlayer, Character passivePlayer);
+    public abstract void executeSelectedSkill(Character activePlayer, Character passivePlayer, BattleGround battleGround);
+    public abstract void skillTypeAction(Character activePlayer, Character passivePlayer);
+    public abstract void skillTypeAction(Character activePlayer, Character passivePlayer, BattleGround battleGround);
+    public abstract void skillEffectAction(Character activePlayer, Character passivePlayer);
 
     protected String getAction(List<String> actionList) {
         return actionList.get(ThreadLocalRandom.current().nextInt(actionList.size()));

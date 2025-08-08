@@ -15,36 +15,42 @@ public class BattlefieldWrath extends Attack {
             "Um rugido bestial ecoa — o campo de batalha pertence a você agora."
     );
 
-    public BattlefieldWrath(String name, String description, String skillAction, int cooldown, int powerAttack, boolean special) {
-        super(name, description, skillAction, cooldown, powerAttack, special);
+    public BattlefieldWrath(String name, String description, String skillAction, int cooldown, int powerAttack) {
+        super(name, description, skillAction, cooldown, powerAttack);
     }
 
     @Override
-    public void prepareSkillToAttack(Character activePlayer, Character passivePlayer) {
+    public void executeSelectedSkill(Character activePlayer, Character passivePlayer) {
         System.out.println();
         System.out.println("╔════════════════════════════════════════════════════════════════════════════╗");
-        System.out.println("║     🔥 ESPECIAL ATIVADO: IRA DO CAMPO DE BATALHA TOMBA O EQUILÍBRIO!      ║");
+        System.out.println("║             🔥 ESPECIAL ATIVADO: IRA DO CAMPO DE BATALHA TOMBA O EQUILÍBRIO!                    ║");
         System.out.println("╚════════════════════════════════════════════════════════════════════════════╝");
         System.out.println();
         System.out.println("😡 " + activePlayer.getName() + " crava os pés na terra, soltando um rugido que ecoa pela arena!");
         System.out.println("🌪️ Uma aura vermelha flamejante envolve seu corpo — sua respiração fica pesada...");
+        System.out.println("🔥 Sua pele queima com a energia da fúria — você sente o poder crescendo dentro de você!");
+        System.out.println(passivePlayer.getName() + " observa, aterrorizado, enquanto a fúria toma conta do campo de batalha!");
         System.out.println("🔺 A fúria o domina! Por 3 turnos, seu poder de ataque será brutalmente amplificado!");
         System.out.println("⚠️ No entanto... sua defesa está reduzida enquanto a fúria consome sua razão!");
         System.out.println();
         System.out.println(this.description);
         System.out.println(this.skillAction);
-        this.executeSelectedSkill(activePlayer, passivePlayer);
+        System.out.println();
     }
 
     @Override
-    public void skillTypeAction(Character actionPlayer) {
+    public void skillTypeAction(Character activePlayer, Character passivePlayer) {
+        activePlayer.changeStatusToWrath();
         System.out.println();
         System.out.println("╔════════════════════════════════════════════════════════════════════════════╗");
-        System.out.println("║      🌟 HABILIDADE ESPECIAL ATIVADA: IRA DO CAMPO DE BATALHA (ESPECIAL)    ║");
+        System.out.println("║             🌟 HABILIDADE ESPECIAL ATIVADA: IRA DO CAMPO DE BATALHA (ESPECIAL)                 ║");
         System.out.println("╚════════════════════════════════════════════════════════════════════════════╝");
         System.out.println();
-        System.out.println("🔥 " + actionPlayer.getName() + " entra em estado de pura determinação!");
+        System.out.println("🔥 " + activePlayer.getName() + " entra em estado de furia!");
+        System.out.println("💥 " + activePlayer.getName() + " sente a força do campo de batalha pulsando em suas veias!");
+        System.out.println("⚔️ O ataque queima a pele dos seus inimigos!");
         System.out.println("💢 " + this.getAction(skillActionList));
+        passivePlayer.receiveSpecialDamage(activePlayer, this.powerAttack, this);
         System.out.println("🛡️ Efeitos colaterais serão aplicados pelos próximos turnos.");
         System.out.println();
     }
@@ -52,6 +58,8 @@ public class BattlefieldWrath extends Attack {
     public static BattlefieldWrath ofBattlefieldWrath() {
         return new BattlefieldWrath("Ira do Campo de Batalha (especial)",
                 "Aumenta o dano físico por 3 turnos. Defesa reduzida.",
-                "💥 Você sente uma fúria incontrolável tomar conta do campo de batalha!", 3, 5, true);
+                "💥 Você sente uma fúria incontrolável tomar conta do campo de batalha!",
+                3,
+                5);
     }
 }

@@ -1,50 +1,60 @@
 package entities.skill.attack;
 
+import entities.BattleGround;
 import entities.character.Character;
 import entities.skill.Skill;
 
 import java.util.concurrent.ThreadLocalRandom;
 
 public abstract class Attack extends Skill {
-    private int powerAttack;
+    protected int powerAttack;
 
     protected Attack(String name, String description, String skillAction,
-                     int cooldown, boolean special) {
-        super(name, description, skillAction, cooldown, special);
+                     int cooldown) {
+        super(name, description, skillAction, cooldown);
     }
 
     protected Attack(String name, String description, String skillAction,
-                     int cooldown, int powerAttack, boolean special) {
-        super(name, description, skillAction, cooldown, special);
+                     int cooldown, int powerAttack) {
+        super(name, description, skillAction, cooldown);
         this.powerAttack = powerAttack;
     }
 
-    protected Attack(String name, String description, String skillAction,
-                     int cooldown, boolean stunned, boolean special) {
-        super(name, description, skillAction, cooldown, stunned, special);
-    }
+    @Override
+    public void prepareSkillToExecute(Character activePlayer, Character passivePlayer, BattleGround battleGround) {
+        System.out.println();
+        System.out.println("╔════════════════════════════════════════════════════════════════╗");
+        System.out.println("║        ⚔️ PREPARANDO HABILIDADE DE ATAQUE: " + this.name + "                          ║");
+        System.out.println("╚════════════════════════════════════════════════════════════════╝");
+        System.out.println();
+        System.out.println("🔄 " + activePlayer.getName() + " se prepara para atacar " + passivePlayer.getName() + " no campo de batalha!");
+        System.out.println("🗡️ O ambiente fica tenso enquanto o ataque é preparado...");
+        System.out.println("⚡ Energia e determinação se acumulam para o golpe decisivo!");
 
-    public Attack(String name, String description, String skillAction, int cooldown, int i, boolean special, boolean stunned) {
-        super(name, description, skillAction, cooldown, i, special, stunned);
-        this.powerAttack = i;
-    }
+        this.executeSelectedSkill(activePlayer, passivePlayer);
+        this.skillTypeAction(activePlayer, passivePlayer);
 
+        System.out.println(" ❤️ Vida atual de " + passivePlayer.getName() + ": " + String.format("%.2f", Math.max(passivePlayer.getLife(), 0)) );
+        System.out.println();
+    }
 
     @Override
-    public void executeSelectedSkill(Character activePlayer, Character passivePlayer) {
-        passivePlayer.receiveDamage(activePlayer, this.powerAttack, this);
+    public void executeSelectedSkill(Character activePlayer, Character passivePlayer, BattleGround battleGround) {
+        throw new UnsupportedOperationException("This skill does not use BattleGround context.");
     }
 
     @Override
-    public void skillAction(Character actionPlayer, Character passivePlayer) {
-        System.out.println("\n" + actionPlayer.getName() + " Ataca com a sua a habilidade: " + this.name);
-        System.out.println(this.description);
-        this.skillTypeAction(actionPlayer);
-        System.out.println("💢" + actionPlayer.getName() + " " + voiceActionList.get(ThreadLocalRandom.current().nextInt(voiceActionList.size())));
-        System.out.println("💥" + actionPlayer.getName() +" " + hitActionList.get(ThreadLocalRandom.current().nextInt(hitActionList.size())));
-        System.out.println("🩸 Sangue escorre... " + passivePlayer.getName() +  hitEffectList.get(ThreadLocalRandom.current().nextInt(hitEffectList.size())));
+    public void skillTypeAction(Character activePlayer, Character passivePlayer, BattleGround battleGround) {
+        throw new UnsupportedOperationException("This skill does not use BattleGround context.");
+    }
+
+    @Override
+    public void skillEffectAction(Character activePlayer, Character passivePlayer) {
+        System.out.println();
+        System.out.println("💢" + activePlayer.getName() + " " + voiceActionList.get(ThreadLocalRandom.current().nextInt(voiceActionList.size())));
+        System.out.println("💥" + activePlayer.getName() +" " + hitActionList.get(ThreadLocalRandom.current().nextInt(hitActionList.size())));
+        System.out.println(passivePlayer.getName() +  hitEffectList.get(ThreadLocalRandom.current().nextInt(hitEffectList.size())));
         System.out.println(" 😡🔪 " + passivePlayer.getName() + " " + answerVegeanceList.get(ThreadLocalRandom.current().nextInt(answerVegeanceList.size())));
-        System.out.println("🛡️ " + passivePlayer.getName() + " agora possui " + String.format("%.2f", passivePlayer.getLife() > 0 ? passivePlayer.getLife() : 0 ) + " de vida.");
-
+        System.out.println();
     }
 }

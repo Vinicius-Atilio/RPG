@@ -1,39 +1,49 @@
 package entities.skill.hunter;
 
+import entities.BattleGround;
 import entities.character.Character;
 import entities.skill.attack.Attack;
 
 public class PrecisionShot extends Attack {
-    protected PrecisionShot(String name, String description, String skillAction, int cooldown, boolean special) {
-        super(name, description, skillAction, cooldown, special);
+    protected PrecisionShot(String name, String description, String skillAction, int cooldown) {
+        super(name, description, skillAction, cooldown);
     }
 
     @Override
-    public void prepareSkillToAttack(Character activePlayer, Character passivePlayer) {
+    public void executeSelectedSkill(Character activePlayer, Character passivePlayer) {
         System.out.println();
         System.out.println("╔══════════════════════════════════════════════════════╗");
-        System.out.println("║        🎯 TÉCNICA: DISPARO PRECISO BANUK ELITE        ║");
+        System.out.println("║                        🎯 TÉCNICA: DISPARO PRECISO BANUK ELITE             ║");
         System.out.println("╚══════════════════════════════════════════════════════╝");
         System.out.println();
-        System.out.println("👤 O caçador desacelera a respiração... tudo ao redor silencia.");
-        System.out.println("👁️ Seus olhos fixam o ponto fraco do seu alvo — núcleo exposto...");
+        System.out.println("👤 O " + activePlayer.getName() + " desacelera a respiração... tudo ao redor silencia.");
+        System.out.println("👁️ Seus olhos fixam o ponto fraco do " + passivePlayer.getName() + " — núcleo exposto...");
         System.out.println("🏹 Ele tensiona o arco lentamente... a flecha se alinha com perfeição.");
         System.out.println("⏱️ [Concentração Máxima] — o tempo parece parar por um segundo...");
         System.out.println();
         System.out.println(this.description);
         System.out.println(this.skillAction);
-        this.executeSelectedSkill(activePlayer, passivePlayer);
+        System.out.println();
     }
 
     @Override
-    public void skillTypeAction(Character actionPlayer) {
-
+    public void skillTypeAction(Character activePlayer, Character passivePlayer) {
+        System.out.println();
+        System.out.println("╔══════════════════════════════════════════════════════╗");
+        System.out.println("║              🎯️ HABILIDADE ATIVADA: DISPARO PRECISO (ATAQUE)      ║");
+        System.out.println("╚══════════════════════════════════════════════════════╝");
+        System.out.println();
+        System.out.println("🏹 " + activePlayer.getName() + " dispara uma flecha certeira!");
+        System.out.println(passivePlayer.getName() + " observa enquanto o tempo parece desacelerar...");
+        System.out.println(passivePlayer.getName() + " a flecha está vindo em sua direção!!");
+        passivePlayer.receiveDamage(activePlayer, this.powerAttack, this);
+        System.out.println();
     }
 
     public static PrecisionShot ofPrecisionShot() {
         return new PrecisionShot("Disparo Preciso",
                 "Ataque com alto dano crítico.",
                 "🎯 Um tiro certeiro atinge o ponto fraco do inimigo!",
-                1, false);
+                1);
     }
 }

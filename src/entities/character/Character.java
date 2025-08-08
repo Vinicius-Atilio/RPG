@@ -4,6 +4,7 @@ import entities.Inventory;
 import entities.Weapon;
 import entities.ally.Ally;
 import entities.effect.StatusEffect;
+import entities.observer.BattleObserver;
 import entities.skill.Skill;
 import entities.state.*;
 import enums.Race;
@@ -15,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class Character {
+public class Character  implements BattleObserver {
     private BigInteger id;
     private String name;
     private Race race;
@@ -72,13 +73,30 @@ public class Character {
         return play();
     }
 
-    public void receiveDamage(Character actionPlayer, int activeSKillPowerAttack, Skill skill) {
-        this.state.receiveDamage(actionPlayer,
+    public void receiveDamage(Character activePlayer, int activeSKillPowerAttack, Skill skill) {
+        var damage = this.state.calculateDamage(activePlayer, this, activeSKillPowerAttack);
+        if (damage <= 0) {
+            System.out.println("😱 " + this.name + " conseguiu se defender do ataque de " + activePlayer.getName() + "!");
+            return;
+        }
+
+        this.state.receiveDamage(activePlayer,
                 this,
-                this.state.calculateDamage(actionPlayer,
-                        this,
-                        activeSKillPowerAttack),
+                damage,
                 skill);
+
+        System.out.println("😤 " + this.name+ " recebeu o dano de " + String.format("%.2f", damage) + " de " + activePlayer.getName() + "!");
+        skill.skillEffectAction(activePlayer, this);
+    }
+
+    public void receiveSpecialDamage(Character activePlayer, int activeSKillPowerAttack, Skill skill) {
+        if (this.ally.isAlive()) {
+            this.ally.receiveDamage(activePlayer, this, activeSKillPowerAttack, skill);
+            this.receiveDamage(activePlayer, activeSKillPowerAttack, skill);
+            return;
+        }
+
+        this.receiveDamage(activePlayer, activeSKillPowerAttack, skill);
     }
 
     public int getMainAttribute() {
@@ -93,10 +111,8 @@ public class Character {
         skill.updateSkillCooldown();
     }
 
-    public void  evokeAlly() {
-        this.ally = this.specialization.ally();
-    }
 
+    // Método para usar o aliado se ele estiver vivo
     public void useAllyIfAlive() {
         if (this.ally != null && this.ally.isAlive()) {
             if (this.ally.isSupport()) {
@@ -148,12 +164,16 @@ public class Character {
         this.state = ImmuneState.of(this.state);
     }
 
+    public void changeStateToStunned() {
+        this.state = StunnedState.of(this.state);
+    }
+
     public void changeStateToEvasion() {
         this.state = EvasionState.of(this.state);
     }
 
     public void changeStateToDefensive() {
-        this.state = DefensiveState.of(this.state);
+
     }
 
     public void makeDeath() {
@@ -230,5 +250,50 @@ public class Character {
 
     public void removeEffect(StatusEffect statusEffect) {
         this.effects.remove(statusEffect);
+    }
+
+    public void makeSupport(Character passivePlayer, Skill support) {
+
+    }
+
+    @Override
+    public void onAllyInvoked(Ally ally) {
+        this.ally = ally;
+    }
+
+    @Override
+    public void onAddObserver(BattleObserver observer) {
+
+    }
+
+    @Override
+    public void onNotifyObserver(Ally ally) {
+        System.out.println("👤 " + this.name + " diz: Um aliado chegou! " + ally.getName() + " e está no campo de batalha .");
+    }
+
+    public void changeStatusToWrath() {
+    }
+
+    public int getDefense() {
+        return this.state.getDefense();
+    }
+
+    public boolean isAllyAlive() {
+        return this.ally != null && this.ally.isAlive();
+    }
+
+    public void buffAlly() {
+
+    }
+
+    public void buffStateBy(Ally ally) {
+        this.state.update(ally.getState());
+    }
+
+    public void removeBuffStateBy(Ally ally) {
+        this.state.update(OriginalState.ofState(ally.getState()));
+    }
+
+    public void changeStateToParalyzed() {
     }
 }

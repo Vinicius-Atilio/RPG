@@ -11,19 +11,16 @@ public class OriginalState extends State {
 
     @Override
     public double calculateDamage(Character actionPlayer, Character passivePlayer, int activeSKillPowerAttack) {
-        return (actionPlayer.getMainAttribute() * actionPlayer.weaponFactor()) + (activeSKillPowerAttack - passivePlayer.originalDefenseValue());
+        double damage = (actionPlayer.getMainAttribute() * actionPlayer.weaponFactor()) + (activeSKillPowerAttack - passivePlayer.originalDefenseValue());
+        return Math.max(damage, 0);
     }
 
     @Override
     public void receiveDamage(Character actionPlayer, Character passivePlayer, double value, Skill skill) {
-        if (value > 0) {
-            System.out.println("😤 " + passivePlayer.getName() + " recebeu o dano de " + String.format("%.2f", value) + " de " + actionPlayer.getName() + "!");
-            this.life -= value;
-            skill.skillAction(actionPlayer, passivePlayer);
-            return;
-        }
+        this.life -= value;
+        skill.skillAction(actionPlayer, passivePlayer);
 
-        System.out.println("😱 " + passivePlayer.getName() + " conseguiu se defender do ataque de " + actionPlayer.getName() + "!");
+//        System.out.println("😱 " + passivePlayer.getName() + " conseguiu se defender do ataque de " + actionPlayer.getName() + "!");
     }
 
     @Override
@@ -73,7 +70,7 @@ public class OriginalState extends State {
     }
 
     public static OriginalState ofWarrior() {
-        return new OriginalState(50, 9, 2, 4, 9, 2, 8);
+        return new OriginalState(30, 9, 2, 4, 9, 2, 8);
     }
 
     public static OriginalState ofWarStandard() {
@@ -91,7 +88,7 @@ public class OriginalState extends State {
     }
 
     public static OriginalState ofHunter() {
-        return new OriginalState(50, 4, 4, 9, 4, 3, 3);
+        return new OriginalState(30, 4, 4, 9, 4, 3, 3);
     }
 
     public static OriginalState ofGuardian() {return new OriginalState(50, 3, 3,2,6,2,8);}

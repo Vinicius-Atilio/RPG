@@ -1,27 +1,20 @@
 package entities.ally;
 
+import entities.BattleGround;
 import entities.character.Character;
 import entities.skill.Skill;
 import entities.state.State;
 
 public abstract class Ally extends Skill {
     private State state;
-    private int life;
-    private boolean alive;
 
     public Ally(String name, String description, int cooldown, State state) {
-        super(name, description, null, cooldown, false);
+        super(name, description, null, cooldown);
         this.state = state;
-        this.life = 50;
-        this.alive = true;
-    }
-
-    public void markAsAlive() {
-        this.alive = true;
     }
 
     public boolean isAlive() {
-        return alive;
+        return this.state.isAlive();
     }
 
     public State getState() {
@@ -29,17 +22,46 @@ public abstract class Ally extends Skill {
     }
 
     @Override
-    public void executeSelectedSkill(Character activePlayer, Character passivePlayer) {
-        System.out.println("\n" + activePlayer.getName() + " evoca o aliado: " + this.name);
-        activePlayer.evokeAlly();
-        this.skillTypeAction(activePlayer);
-        System.out.println("A atenção de " + passivePlayer.getName() + " foi desviada para " + this.name + "!");
+    public void prepareSkillToExecute(Character activePlayer, Character passivePlayer, BattleGround battleGround) {
+        System.out.println();
+        System.out.println("╔════════════════════════════════════════════════════════════════╗");
+        System.out.println("║                 🛡️ PREPARANDO EVOCAÇÃO DO ALIADO: " + this.getName() + "          ║");
+        System.out.println("╚════════════════════════════════════════════════════════════════╝");
+        System.out.println();
+        System.out.println("🔄 " + activePlayer.getName() + " se prepara para invocar o aliado " + this.name + " no campo de batalha!");
+        System.out.println("⚔️ O aliado se posiciona, pronto para ajudar na batalha!");
+
+        this.executeSelectedSkill(activePlayer, passivePlayer, battleGround);
+        this.skillTypeAction(activePlayer, passivePlayer, battleGround);
+
+        System.out.println(" ❤️ Vida atual do aliado " + this.name + ": " + String.format("%.2f", Math.max(passivePlayer.getLife(), 0)) );
+        System.out.println();
     }
 
     @Override
-    public void skillAction(Character actionPlayer, Character passivePlayer) {
-        System.out.println("\n" + actionPlayer.getName() + " convoca " + this.getName() + " para a batalha!");
-        System.out.println(this.description);
-        this.skillTypeAction(actionPlayer);
+    public void skillEffectAction(Character activePlayer, Character passivePlayer) {
+
     }
+
+    public void receiveDamage(Character actionPlayer, Character passivePlayer, int activeSKillPowerAttack, Skill skill) {
+        this.state.receiveDamage(actionPlayer,
+                passivePlayer,
+                this.state.calculateDamage(
+                        actionPlayer,
+                        passivePlayer,
+                        activeSKillPowerAttack),
+                skill);
+    }
+
+    @Override
+    public void executeSelectedSkill(Character activePlayer, Character passivePlayer) {
+        throw new UnsupportedOperationException("This skill must use BattleGround context.");
+    }
+
+    @Override
+    public void skillTypeAction(Character activePlayer, Character passivePlayer) {
+        throw new UnsupportedOperationException("This skill must use BattleGround context.");
+    }
+
+    public abstract String getIcon();
 }
