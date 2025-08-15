@@ -11,11 +11,7 @@ public class BeastAttack extends AllyAttack {
 
     @Override
     public void executeSelectedSkill(Ally ally, Character activePlayer, Character passivePlayer) {
-        System.out.println();
-        System.out.println("╔══════════════════════════════════════════════════════════════╗");
-        System.out.println("║                  🐾 ALIADO: ATAQUE DA FERA                   ║");
-        System.out.println("╚══════════════════════════════════════════════════════════════╝");
-        System.out.println();
+        printSkillBox("🐾 ALIADO: ATAQUE DA FERA");
         System.out.println(activePlayer.getName() + " ordena a fera companheira a atacar " + passivePlayer.getName() + "!");
         System.out.println("A fera salta sobre o inimigo, dilacerando-o com suas garras afiadas!");
         System.out.println("⚔️ " + activePlayer.getName() + " executa o ataque da fera com precisão!");
@@ -27,11 +23,7 @@ public class BeastAttack extends AllyAttack {
 
     @Override
     public void skillTypeAction(Ally ally, Character activePlayer, Character passivePlayer) {
-        System.out.println();
-        System.out.println("╔══════════════════════════════════════════════════════════════╗");
-        System.out.println("║                  🐾 FERA COMPANHEIRA ATACA                   ║");
-        System.out.println("╚══════════════════════════════════════════════════════════════╝");
-        System.out.println();
+        printSkillBox("🐾 FERA COMPANHEIRA ATACA");
         System.out.println(activePlayer.getName() + " ordena a fera companheira a atacar " + passivePlayer.getName() + "!");
         System.out.println("A fera salta sobre o " + passivePlayer.getName() + ", dilacerando-o com suas garras afiadas!");
         System.out.println("⚔️ " + activePlayer.getName() + " executa o ataque da fera com precisão!");
@@ -53,5 +45,4 @@ public class BeastAttack extends AllyAttack {
                 0
         );
     }
-
 }

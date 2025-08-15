@@ -46,11 +46,7 @@ public class Beast extends Ally {
 
     @Override
     public void executeSelectedSkill(Character activePlayer, Character passivePlayer, BattleGround battleGround) {
-        System.out.println();
-        System.out.println("╔════════════════════════════════════════════════════════════════╗");
-        System.out.println("║              🐺 PREPARANDO FERA COMPANHEIRA                    ║");
-        System.out.println("╚════════════════════════════════════════════════════════════════╝");
-        System.out.println();
+        printSkillBox("🐺 PREPARANDO FERA COMPANHEIRA");
         System.out.println(activePlayer.getName() + " chama sua fera companheira para a batalha!");
         System.out.println(activePlayer.getName() + " assobia e a fera aparece rapidamente ao seu lado!");
         System.out.println("⚔️ " + activePlayer.getName() + " se prepara para posicionar sua fera companheira no campo de batalha!");
@@ -62,11 +58,7 @@ public class Beast extends Ally {
 
     @Override
     public void skillTypeAction(Character activePlayer, Character passivePlayer, BattleGround battleGround) {
-        System.out.println();
-        System.out.println("╔════════════════════════════════════════════════════════════════╗");
-        System.out.println("║                   🐾 FERA COMPANHEIRA ATIVADA                  ║");
-        System.out.println("╚════════════════════════════════════════════════════════════════╝");
-        System.out.println();
+        printSkillBox("🐾 FERA COMPANHEIRA ATIVADA");
         System.out.println("🤝 " + activePlayer.getName() + " invocou o aliado " + this.name + " para lutar ao seu lado!");
         System.out.println("🐾 O aliado de " + activePlayer.getName() + this.getAction(actionList));
         System.out.println("💪 A fera companheira está pronta para atacar e ajudar na batalha!");
@@ -78,7 +70,7 @@ public class Beast extends Ally {
         return new Beast("Fera Companheira",
                 "Um aliado animal que traz força e agilidade para a batalha",
                 "🐺 Fera Companheira está lutando por seu mestre na batalha!.",
-                4,
+                1,
                 OriginalState.ofBeast(),
                 ofBeast(),
                 1.5,

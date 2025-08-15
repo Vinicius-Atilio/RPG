@@ -1,6 +1,5 @@
 package entities.skill.hunter;
 
-import entities.BattleGround;
 import entities.character.Character;
 import entities.skill.attack.Attack;
 
@@ -11,11 +10,7 @@ public class ArrowRain extends Attack {
 
     @Override
     public void executeSelectedSkill(Character activePlayer, Character passivePlayer) {
-        System.out.println();
-        System.out.println("╔════════════════════════════════════════════════════════════════╗");
-        System.out.println("║                ☄️ ATAQUE ESPECIAL: CHUVA DE FLECHAS BANUK INVOCADA            ║");
-        System.out.println("╚════════════════════════════════════════════════════════════════╝");
-        System.out.println();
+        printSkillBox("☄️ ATAQUE ESPECIAL: CHUVA DE FLECHAS BANUK INVOCADA");
         System.out.println("🌫️ O céu escurece enquanto o " +activePlayer.getName()+ " finca seus pés no solo...");
         System.out.println("🧿 " + activePlayer.getName() + " ergue o arco em direção ao céu — seus olhos brilham com foco absoluto.");
         System.out.println("🔁 Em um movimento rápido, ele dispara várias flechas para o alto, uma após a outra...");
@@ -31,11 +26,7 @@ public class ArrowRain extends Attack {
 
     @Override
     public void skillTypeAction(Character activePlayer, Character passivePlayer) {
-        System.out.println();
-        System.out.println("╔════════════════════════════════════════════════════════════════╗");
-        System.out.println("║ 🌟️ HABILIDADE ESPECIAL ATIVADA: CHUVA DE FLECHAS BANUK (ESPECIAL)    ║");
-        System.out.println("╚════════════════════════════════════════════════════════════════╝");
-        System.out.println();
+        printSkillBox("🌟️ HABILIDADE ESPECIAL ATIVADA: CHUVA DE FLECHAS BANUK (ESPECIAL)");
         System.out.println("🏹 " + activePlayer.getName() + " ergue o arco aos céus, invocando uma tempestade de flechas!");
         System.out.println("☁️ Nuvens densas se formam — a tensão paira no ar...");
         System.out.println("🌪️ O som cortante das flechas anuncia o caos iminente!");

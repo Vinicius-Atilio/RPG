@@ -9,7 +9,7 @@ import entities.skill.hunter.ally.BeastHeal;
 import entities.skill.paladin.HeavenlyGuardian;
 import entities.skill.hunter.ally.Beast;
 import entities.skill.mage.Arcane;
-import entities.skill.warrior.WarStandard;
+import entities.skill.warrior.ally.WarStandard;
 import entities.skill.hunter.*;
 import entities.skill.mage.*;
 import entities.skill.hunter.EvasionDefense;
@@ -34,6 +34,8 @@ import java.util.concurrent.ThreadLocalRandom;
  * Template Method: Define a estrutura básica de uma habilidade, permitindo que subclasses implementem ações específicas.
  */
 public abstract class Skill {
+    private static final int BOX_WIDTH = 70;
+
     protected String name;
     protected String description;
     protected int cooldown;
@@ -235,7 +237,22 @@ public abstract class Skill {
         return skillAction;
     }
 
+    public boolean isCasted() {
+        return casted;
+    }
+
     public int getActiveSkillPowerAttack() {
         return activeSkillPowerAttack;
+    }
+
+    protected void printSkillBox(String skillTitle) {
+        String border = "╔" + "═".repeat(BOX_WIDTH) + "╗";
+        String bottom = "╚" + "═".repeat(BOX_WIDTH) + "╝";
+        int padding = (BOX_WIDTH - skillTitle.length()) / 2;
+        String line = "║" + " ".repeat(padding) + skillTitle + " ".repeat(BOX_WIDTH - skillTitle.length() - padding) + "║";
+        System.out.println(border);
+        System.out.println(line);
+        System.out.println(bottom);
+        System.out.println();
     }
 }

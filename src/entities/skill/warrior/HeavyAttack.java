@@ -12,11 +12,7 @@ public class HeavyAttack extends Attack {
 
     @Override
     public void executeSelectedSkill(Character activePlayer, Character passivePlayer) {
-        System.out.println();
-        System.out.println("╔════════════════════════════════════════════════════════════════╗");
-        System.out.println("║    💥 HABILIDADE: GOLPE PESADO DESFERIDO PELO GUERREIRO        ║");
-        System.out.println("╚════════════════════════════════════════════════════════════════╝");
-        System.out.println();
+        printSkillBox("💥 HABILIDADE SELECIONADA: GOLPE PESADO DESFERIDO PELO GUERREIRO");
         System.out.println("🧍‍♂️ O guerreiro firma os pés no chão, o peso de sua armadura ressoa no campo...");
         System.out.println("🗡️ Ele empunha sua arma com ambas as mãos, canalizando toda sua força no próximo movimento.");
         System.out.println("🌬️ Um silêncio denso domina o ambiente... o ar parece tremer ao redor da lâmina.");

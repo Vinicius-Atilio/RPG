@@ -1,11 +1,10 @@
-package entities.skill.warrior;
+package entities.skill.warrior.ally;
 
 import entities.BattleGround;
 import entities.ally.Ally;
 import entities.character.Character;
 import entities.observer.BattleObserver;
 import entities.skill.Skill;
-import entities.skill.ally.AllySupport;
 import entities.state.OriginalState;
 import entities.state.State;
 
@@ -33,7 +32,7 @@ public class WarStandard extends Ally {
         return new WarStandard("Estandarte de Guerra",
                 "Estandarte usado em batalha para fortalecer seu alidado",
                 "🏴 Estandarte de Guerra está fortalecendo o guerreiro com sua presença no campo de batalha!.",
-                4,
+                1,
                 OriginalState.ofWarStandard(),
                 1.1,
                 1.1);
@@ -41,11 +40,7 @@ public class WarStandard extends Ally {
 
     @Override
     public void executeSelectedSkill(Character activePlayer, Character passivePlayer, BattleGround battleGround) {
-        System.out.println();
-        System.out.println("╔════════════════════════════════════════════════════════════════╗");
-        System.out.println("║                  🏴 ALIADO: ESTANDARTE DE GUERRA               ║");
-        System.out.println("╚════════════════════════════════════════════════════════════════╝");
-        System.out.println();
+        printSkillBox("🏴 ALIADO: ESTANDARTE DE GUERRA");
         System.out.println(activePlayer.getName() + "Levanta um estandarte com uma bandeira vermelha vibrante!");
         System.out.println(activePlayer.getName() + " segura firmemente o estandarte de guerra!");
         System.out.println("⚔️ " + activePlayer.getName() + " se prepara para posicionar o estandarte de guerra no campo de batalha!");
@@ -57,11 +52,7 @@ public class WarStandard extends Ally {
     @Override
     public void skillTypeAction(Character activePlayer, Character passivePlayer, BattleGround battleGround) {
         this.allyObserver.onAllyUpdateState(this);
-        System.out.println();
-        System.out.println("╔════════════════════════════════════════════════════════════════╗");
-        System.out.println("║                 🏴 ESTANDARTE DE GUERRA ATIVADO                ║");
-        System.out.println("╚════════════════════════════════════════════════════════════════╝");
-        System.out.println();
+        printSkillBox("🏴 ESTANDARTE DE GUERRA ATIVADO");
         System.out.println("✨ " + activePlayer.getName() + this.getAction(actionList));
         System.out.println("💪 Os aliados sentem-se fortalecidos e motivados para a batalha!");
         System.out.println(passivePlayer.getName() + " observa o estandarte com respeito e determinação.");

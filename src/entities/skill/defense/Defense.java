@@ -17,11 +17,7 @@ public abstract class Defense extends Skill {
 
     @Override
     public void prepareSkillToExecute(Character activePlayer, Character passivePlayer, BattleGround battleGround) {
-        System.out.println();
-        System.out.println("╔════════════════════════════════════════════════════════════════╗");
-        System.out.println("║      🛡️ PREPARANDO HABILIDADE DE DEFESA: " + this.name + "     ║");
-        System.out.println("╚════════════════════════════════════════════════════════════════╝");
-        System.out.println();
+        printSkillBox("🛡️ PREPARANDO HABILIDADE DE DEFESA: " + this.name);
         System.out.println("🔄 " + activePlayer.getName() + " prepara-se para se defender de " + passivePlayer.getName() + "!");
         System.out.println("🛡️ A atmosfera fica tensa enquanto a defesa é preparada...");
         System.out.println();

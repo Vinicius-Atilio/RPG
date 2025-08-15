@@ -21,11 +21,7 @@ public abstract class Trap extends Skill {
 
     @Override
     public void prepareSkillToExecute(Character activePlayer, Character passivePlayer, BattleGround battleGround) {
-        System.out.println();
-        System.out.println("╔════════════════════════════════════════════════════════════════╗");
-        System.out.println("║            🪤 PREPARANDO ARMADILHA: " + this.name + "          ║");
-        System.out.println("╚════════════════════════════════════════════════════════════════╝");
-        System.out.println();
+        printSkillBox("🪤 PREPARANDO ARMADILHA: " + this.name);
         System.out.println("🔄 " + activePlayer.getName() + " se prepara para instalar a armadilha contra " + passivePlayer.getName() + " no campo de batalha!");
         System.out.println("🪤 O ambiente fica tenso enquanto a armadilha é preparada...");
         System.out.println("⚡ Energia e determinação se acumulam para o golpe decisivo!");
@@ -39,11 +35,7 @@ public abstract class Trap extends Skill {
 
     @Override
     public void skillEffectAction(Character activePlayer, Character passivePlayer) {
-        System.out.println();
-        System.out.println("╔══════════════════════════════════════════════════════╗");
-        System.out.println("║         💣 ARMADILHA: " + this.name + " EXPLODIU!    ║");
-        System.out.println("╚══════════════════════════════════════════════════════╝");
-        System.out.println();
+        printSkillBox("💣 ARMADILHA: " + this.name + " EXPLODIU!");
         System.out.println("💥 " + activePlayer.getName() + " ACERTA SEU ALVO!");
         System.out.println("A armadilha explode causando " + this.damage + " de dano a " + passivePlayer.getName() + "!");
         System.out.println("⚠️ " + passivePlayer.getName() + " não percebeu o perigo iminente e foi pego de surpresa!");
@@ -59,7 +51,7 @@ public abstract class Trap extends Skill {
             return false;
         }
 
-        return this.random.nextInt(101) >= 90;
+        return this.random.nextInt(101) >= 1;
     }
 
     public void applyDamage() {

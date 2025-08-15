@@ -21,11 +21,7 @@ public class BattlefieldWrath extends Attack {
 
     @Override
     public void executeSelectedSkill(Character activePlayer, Character passivePlayer) {
-        System.out.println();
-        System.out.println("╔════════════════════════════════════════════════════════════════════════════╗");
-        System.out.println("║             🔥 ESPECIAL ATIVADO: IRA DO CAMPO DE BATALHA TOMBA O EQUILÍBRIO!                    ║");
-        System.out.println("╚════════════════════════════════════════════════════════════════════════════╝");
-        System.out.println();
+        printSkillBox("🌟 ESPECIAL SELECIADO: IRA DO CAMPO DE BATALHA TOMBA O EQUILÍBRIO!");
         System.out.println("😡 " + activePlayer.getName() + " crava os pés na terra, soltando um rugido que ecoa pela arena!");
         System.out.println("🌪️ Uma aura vermelha flamejante envolve seu corpo — sua respiração fica pesada...");
         System.out.println("🔥 Sua pele queima com a energia da fúria — você sente o poder crescendo dentro de você!");
@@ -41,11 +37,7 @@ public class BattlefieldWrath extends Attack {
     @Override
     public void skillTypeAction(Character activePlayer, Character passivePlayer) {
         activePlayer.changeStatusToWrath();
-        System.out.println();
-        System.out.println("╔════════════════════════════════════════════════════════════════════════════╗");
-        System.out.println("║             🌟 HABILIDADE ESPECIAL ATIVADA: IRA DO CAMPO DE BATALHA (ESPECIAL)                 ║");
-        System.out.println("╚════════════════════════════════════════════════════════════════════════════╝");
-        System.out.println();
+        printSkillBox("🌟 HABILIDADE ESPECIAL ATIVADA: IRA DO CAMPO DE BATALHA (ESPECIAL)");
         System.out.println("🔥 " + activePlayer.getName() + " entra em estado de furia!");
         System.out.println("💥 " + activePlayer.getName() + " sente a força do campo de batalha pulsando em suas veias!");
         System.out.println("⚔️ O ataque queima a pele dos seus inimigos!");

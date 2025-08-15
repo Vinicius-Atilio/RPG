@@ -11,11 +11,7 @@ public class BeastHeal extends AllySupport {
 
     @Override
     public void executeSelectedSkill(Ally ally, Character activePlayer, Character passivePlayer) {
-        System.out.println();
-        System.out.println("╔══════════════════════════════════════════════════════════════╗");
-        System.out.println("║                  🐾 ALIADO: CURA DA FERA                     ║");
-        System.out.println("╚══════════════════════════════════════════════════════════════╝");
-        System.out.println();
+        printSkillBox(" 🐾 ALIADO: CURA DA FERA");
         System.out.println(activePlayer.getName() + " ordena a fera companheira a curar " + passivePlayer.getName() + "!");
         System.out.println("A fera usa suas habilidades naturais para restaurar parte da vida do aliado.");
         System.out.println("💚 " + activePlayer.getName() + " executa a cura da fera com sucesso!");
@@ -27,11 +23,7 @@ public class BeastHeal extends AllySupport {
 
     @Override
     public void skillTypeAction(Ally ally, Character activePlayer, Character passivePlayer) {
-        System.out.println();
-        System.out.println("╔══════════════════════════════════════════════════════════════╗");
-        System.out.println("║                  🐾 FERA COMPANHEIRA CURA                    ║");
-        System.out.println("╚══════════════════════════════════════════════════════════════╝");
-        System.out.println();
+        printSkillBox(" 🐾 FERA COMPANHEIRA CURA");
         System.out.println(activePlayer.getName() + " ordena a fera companheira a curar " + passivePlayer.getName() + "!");
         System.out.println("A fera usa suas habilidades naturais para restaurar parte da vida do aliado.");
         System.out.println("💚 " + activePlayer.getName() + " executa a cura da fera com sucesso!");

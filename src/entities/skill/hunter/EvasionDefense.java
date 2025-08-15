@@ -37,10 +37,7 @@ public class EvasionDefense extends Defense {
     @Override
     public void executeSelectedSkill(Character activePlayer, Character passivePlayer) {
         System.out.println("\n🤸 " + activePlayer.getName() + this.getAction(playerActionList) + this.getName());
-        System.out.println("╔════════════════════════════════════════════════════════════════════╗");
-        System.out.println("║                                           🎯 SE POSICIONA PARA: Evasão                                               ║");
-        System.out.println("╚════════════════════════════════════════════════════════════════════╝");
-        System.out.println();
+        printSkillBox("🎯 SE POSICIONA PARA: Evasão");
         System.out.println("👣 " + activePlayer.getName() + " analisa o terreno ao seu redor...");
         System.out.println("🪶 Seus pés se movem com leveza sobre a terra, como se não deixassem pegadas.");
         System.out.println("🎯 Ele se prepara para esquivar de qualquer golpe que vier de " + passivePlayer.getName() + "!");
@@ -54,12 +51,7 @@ public class EvasionDefense extends Defense {
     @Override
     public void skillTypeAction(Character activePlayer, Character passivePlayer) {
         activePlayer.changeStateToEvasion();
-        System.out.println();
-        System.out.println("╔════════════════════════════════════════════════════════════════════╗");
-        System.out.println("║          🪶 HABILIDADE DEFENSIVA ATIVADA: EVASÃO                                                        ║");
-        System.out.println("╚════════════════════════════════════════════════════════════════════╝");
-        System.out.println();
-
+        printSkillBox("🪶 HABILIDADE DEFENSIVA ATIVADA: EVASÃO");
         System.out.println("🎯 " + activePlayer.getName() + " desaparece em um movimento ágil.");
         System.out.println("🏃‍♂️ " + activePlayer.getName() + this.getAction(actionList));
         System.out.println("🕸️ As tentativas de ataque tornam-se inúteis — ele se move como uma sombra.");

@@ -89,11 +89,16 @@ public class BattleGround implements BattleObserver {
         this.player1.onTurnStart();
         this.player2.onTurnStart();
         if (this.hasTraps()) {
+            List<Trap> trapsToRemove = new ArrayList<>();
+
             for (Trap trap : this.traps) {
                 if (trap.canBeExplode()) {
                     this.onTrapActivated(trap);
+                    trapsToRemove.add(trap);
                 }
             }
+
+            this.traps.removeAll(trapsToRemove);
         }
 
         if (this.hasAllies()) {
@@ -131,9 +136,7 @@ public class BattleGround implements BattleObserver {
         System.out.println("🪤 Armadilha ativada: " + trap.getName());
         trap.skillEffectAction(this.player1, this.player2);
         trap.applyDamage();
-        if (this.traps != null) {
-            this.traps.remove(trap);
-        }
+        trap.markAsCasted();
     }
 
     @Override

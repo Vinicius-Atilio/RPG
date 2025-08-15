@@ -5,7 +5,7 @@ import entities.ally.*;
 import entities.skill.hunter.ally.Beast;
 import entities.skill.mage.Arcane;
 import entities.skill.paladin.HeavenlyGuardian;
-import entities.skill.warrior.WarStandard;
+import entities.skill.warrior.ally.WarStandard;
 import entities.state.OriginalState;
 import entities.skill.Skill;
 import entities.state.State;
@@ -15,8 +15,8 @@ import java.util.List;
 public enum Specialization {
     Warrior(Skill.ofWarrior(), OriginalState.ofWarrior(), WarStandard.ofWarriorAlly(), Weapon.ofHeavySteelSword()),
     Mage(Skill.ofMage(), OriginalState.ofMage(), Arcane.ofMageAlly(), Weapon.ofAncestralArcaneStaff()),
-    Hunter(Skill.ofHunter(), OriginalState.ofPaladin(), Beast.ofHunterAlly(), Weapon.ofElvenPrecisionBow()),
-    Paladin(Skill.ofPaladin(), OriginalState.ofHunter(), HeavenlyGuardian.ofPaladinAlly(), Weapon.ofHammerDivineLight());
+    Hunter(Skill.ofHunter(), OriginalState.ofHunter(), Beast.ofHunterAlly(), Weapon.ofElvenPrecisionBow()),
+    Paladin(Skill.ofPaladin(), OriginalState.ofPaladin(), HeavenlyGuardian.ofPaladinAlly(), Weapon.ofHammerDivineLight());
 
     private List<Skill> skills;
     private State state;

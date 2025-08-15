@@ -1,6 +1,5 @@
 package entities.skill.warrior;
 
-import entities.BattleGround;
 import entities.character.Character;
 import entities.skill.defense.Defense;
 
@@ -11,12 +10,7 @@ public class DefensivePosture extends Defense {
 
     @Override
     public void executeSelectedSkill(Character activePlayer, Character passivePlayer) {
-        System.out.println();
-        System.out.println("╔════════════════════════════════════════════════════════════════════╗");
-        System.out.println("║                  ⏳ SE PREPARA PARA ATIVAR POSTURA DEFENSIVA 🛡️                                ║");
-        System.out.println("╚════════════════════════════════════════════════════════════════════╝");
-        System.out.println();
-
+        printSkillBox("⏳ SE PREPARA PARA ATIVAR POSTURA DEFENSIVA 🛡️");
         System.out.println("🧭 " + activePlayer.getName() + " fixa o olhar em seu alvo...");
         System.out.println("📣 Você sente que algo poderoso está por vir!");
         System.out.println("🔋 A energia ao redor começa a se concentrar...");
@@ -29,11 +23,7 @@ public class DefensivePosture extends Defense {
     @Override
     public void skillTypeAction(Character activePlayer, Character passivePlayer) {
         activePlayer.changeStateToDefensive();
-        System.out.println();
-        System.out.println("╔════════════════════════════════════════════════════════════════════╗");
-        System.out.println("║                  🛡️ HABILIDADE ATIVADA: POSTURA DEFENSIVA                                             ║");
-        System.out.println("╚════════════════════════════════════════════════════════════════════╝");
-        System.out.println();
+        printSkillBox("🛡️ HABILIDADE ATIVADA: POSTURA DEFENSIVA");
         System.out.println("🧍 " + activePlayer.getName() + " firma os pés no chão com autoridade.");
         System.out.println("🛡️ Ele ergue seu escudo e se posiciona com precisão inabalável.");
         System.out.println("🔔 Tudo ao redor parece desacelerar... ele se torna um muro intransponível.");

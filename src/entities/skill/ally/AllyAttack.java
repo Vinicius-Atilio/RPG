@@ -16,11 +16,7 @@ public abstract class AllyAttack extends Ally {
 
     @Override
     public void prepareSkillToExecute(Ally ally, BattleObserver allyObserver, BattleObserver enemyObserver, BattleObserver battleGroundObserver) {
-        System.out.println();
-        System.out.println("╔════════════════════════════════════════════════════════════════╗");
-        System.out.println("║      🛡️ PREPARANDO ATAQUE DO ALIADO: " + this.getName() + "    ║");
-        System.out.println("╚════════════════════════════════════════════════════════════════╝");
-        System.out.println();
+        printSkillBox("🛡️ PREPARANDO ATAQUE DO ALIADO: " + this.name);
         System.out.println("🔄 " + ally.getName() + " se prepara para atacar com " + this.name + " no campo de batalha!");
 
         this.executeSelectedSkill(ally, allyObserver.getObserver(), enemyObserver.getObserver());

@@ -37,11 +37,7 @@ public abstract class Ally extends Skill {
 
     @Override
     public void prepareSkillToExecute(Character activePlayer, Character passivePlayer, BattleGround battleGround) {
-        System.out.println();
-        System.out.println("╔════════════════════════════════════════════════════════════════╗");
-        System.out.println("║   🛡️ PREPARANDO EVOCAÇÃO DO ALIADO: " + this.getName() + "     ║");
-        System.out.println("╚════════════════════════════════════════════════════════════════╝");
-        System.out.println();
+        printSkillBox("🛡️ PREPARANDO EVOCAÇÃO DO ALIADO: " + this.name);
         System.out.println("🔄 " + activePlayer.getName() + " se prepara para invocar o aliado " + this.name + " no campo de batalha!");
         System.out.println("⚔️ O aliado se posiciona, pronto para ajudar na batalha!");
 

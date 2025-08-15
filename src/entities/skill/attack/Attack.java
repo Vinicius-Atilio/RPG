@@ -24,11 +24,7 @@ public abstract class Attack extends Skill {
 
     @Override
     public void prepareSkillToExecute(Character activePlayer, Character passivePlayer, BattleGround battleGround) {
-        System.out.println();
-        System.out.println("╔════════════════════════════════════════════════════════════════╗");
-        System.out.println("║        ⚔️ PREPARANDO HABILIDADE DE ATAQUE: " + this.name + "   ║");
-        System.out.println("╚════════════════════════════════════════════════════════════════╝");
-        System.out.println();
+        printSkillBox( "⚔️ PREPARANDO HABILIDADE DE ATAQUE: " + this.name);
         System.out.println("🔄 " + activePlayer.getName() + " se prepara para atacar " + passivePlayer.getName() + " no campo de batalha!");
         System.out.println("🗡️ O ambiente fica tenso enquanto o ataque é preparado...");
         System.out.println("⚡ Energia e determinação se acumulam para o golpe decisivo!");

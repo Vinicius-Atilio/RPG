@@ -29,11 +29,7 @@ public class Lunge extends Attack {
 
     @Override
     public void executeSelectedSkill(Character activePlayer, Character passivePlayer) {
-        System.out.println();
-        System.out.println("╔════════════════════════════════════════════════════════════════╗");
-        System.out.println("║                               🚨 HABILIDADE: INVESTIDA RELÂMPAGO                                    ║");
-        System.out.println("╚════════════════════════════════════════════════════════════════╝");
-        System.out.println();
+        printSkillBox("🚨 HABILIDADE: INVESTIDA RELÂMPAGO");
         System.out.println("🏃‍♂️ " + activePlayer.getName() + " abaixa a postura e se lança com fúria sobre " + passivePlayer.getName() + "!");
         System.out.println("💨 A poeira se levanta enquanto ele rasga o campo em velocidade absurda!");
         System.out.println("💥 O Impacto no corpo e da lâmina estremecera o alvo!");
@@ -45,11 +41,7 @@ public class Lunge extends Attack {
 
     @Override
     public void skillTypeAction(Character activePlayer, Character passivePlayer) {
-        System.out.println();
-        System.out.println("╔════════════════════════════════════════════════════════════════════╗");
-        System.out.println("║            ⚡ HABILIDADE: INVESTIDA RELÂMPAGO EXECUTADA PELO GUERREIRO             ║");
-        System.out.println("╚════════════════════════════════════════════════════════════════════╝");
-        System.out.println();
+        printSkillBox("⚡ HABILIDADE: INVESTIDA RELÂMPAGO EXECUTADA PELO GUERREIRO");
         System.out.println("🏃‍♂️ " + activePlayer.getName() + " abaixa a postura e dispara como um trovão em direção ao inimigo!");
         System.out.println("💢 " + this.getAction(skillActionList));
         System.out.println("💨 O chão treme sob seus pés enquanto ele corta o campo em velocidade feroz!");

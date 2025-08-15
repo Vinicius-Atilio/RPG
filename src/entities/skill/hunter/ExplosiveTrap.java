@@ -1,9 +1,7 @@
 package entities.skill.hunter;
 
 import entities.BattleGround;
-import entities.ally.Ally;
 import entities.character.Character;
-import entities.observer.BattleObserver;
 import entities.skill.attack.Trap;
 
 public class ExplosiveTrap extends Trap {
@@ -13,11 +11,7 @@ public class ExplosiveTrap extends Trap {
 
     @Override
     public void executeSelectedSkill(Character activePlayer, Character passivePlayer, BattleGround battleGround) {
-        System.out.println();
-        System.out.println("╔══════════════════════════════════════════════════════╗");
-        System.out.println("║       💣 PREPARAÇÃO: ARMADILHA EXPLOSIVA BANUK       ║");
-        System.out.println("╚══════════════════════════════════════════════════════╝");
-        System.out.println();
+        printSkillBox("💣 PREPARAÇÃO: ARMADILHA EXPLOSIVA BANUK");
         System.out.println("👣 O caçador ajoelha silenciosamente no solo congelado...");
         System.out.println("🧰 Ele retira uma carga instável da bolsa e um detonador artesanal.");
         System.out.println("🛠️ Posiciona a carga entre pedras e folhas, conectando os fios com precisão...");
@@ -27,11 +21,7 @@ public class ExplosiveTrap extends Trap {
 
     @Override
     public void skillTypeAction(Character activePlayer, Character passivePlayer, BattleGround battleGround) {
-        System.out.println();
-        System.out.println("╔══════════════════════════════════════════════════════╗");
-        System.out.println("║           💣 ARMADILHA EXPLOSIVA ATIVADA!            ║");
-        System.out.println("╚══════════════════════════════════════════════════════╝");
-        System.out.println();
+        printSkillBox("💣 ARMADILHA EXPLOSIVA ATIVADA!");
         System.out.println("💥 " + activePlayer.getName() + " instala a armadilha explosiva com maestria!");
         System.out.println("Alvo selecionado: " + passivePlayer.getName() + ".");
         System.out.println("⚠️ " + passivePlayer.getName() + " não percebe o perigo iminente...");
@@ -41,7 +31,7 @@ public class ExplosiveTrap extends Trap {
         return new ExplosiveTrap("Armadilha Explosiva",
                 "Instala armadilha que explode ao ser acionada.",
                 "💣 Uma armadilha mortal é colocada no campo de batalha!",
-                2,
+                1,
                 30);
     }
 }

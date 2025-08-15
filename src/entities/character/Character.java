@@ -92,7 +92,7 @@ public class Character implements BattleObserver {
     }
 
     public void receiveSpecialDamage(Character activePlayer, int activeSKillPowerAttack, Skill skill) {
-        if (this.ally.isAlive()) {
+        if (this.ally != null && this.ally.isAlive()) {
             this.ally.receiveDamage(activePlayer, this, activeSKillPowerAttack, skill);
             this.receiveDamage(activePlayer, activeSKillPowerAttack, skill);
             return;

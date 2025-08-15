@@ -15,11 +15,7 @@ public abstract class AllySupport extends Ally {
 
     @Override
     public void prepareSkillToExecute(Ally ally, BattleObserver allyObserver, BattleObserver enemyObserver, BattleObserver battleGroundObserver) {
-        System.out.println();
-        System.out.println("╔════════════════════════════════════════════════════════════════╗");
-        System.out.println("║      🛡️ PREPARANDO SUPORTE DO ALIADO: " + this.getName() + "   ║");
-        System.out.println("╚════════════════════════════════════════════════════════════════╝");
-        System.out.println();
+        printSkillBox(" 🛡️ PREPARANDO SUPORTE DO ALIADO: " + this.name);
         System.out.println("🔄 " + ally.getName() + " se prepara para fornecer suporte ao seu invocador " + allyObserver.getObserver().getName() + " no campo de batalha!");
 
         this.executeSelectedSkill(ally, allyObserver.getObserver(), enemyObserver.getObserver());
