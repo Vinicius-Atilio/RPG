@@ -1,8 +1,9 @@
 package entities.state;
 
+import entities.ally.Ally;
 import entities.character.Character;
-import entities.effect.StatusEffect;
 import entities.skill.Skill;
+import entities.skill.attack.Trap;
 
 public class TiredState extends State {
     public TiredState(int life, int strength, int intelligence, int agility, int vigor, int mana, int defense) {
@@ -13,6 +14,16 @@ public class TiredState extends State {
     public double calculateDamage(entities.character.Character actionPlayer, entities.character.Character passivePlayer, int activeSKillPowerAttack) {
         System.out.println("O jogador " + passivePlayer.getName() + " está cansado! Dano aumentado.");
         return (actionPlayer.getMainAttribute() * actionPlayer.weaponFactor()) + (activeSKillPowerAttack - passivePlayer.tiredDefenseValue());
+    }
+
+    @Override
+    public double calculateAllyDamage(Ally ally, Skill skill, Character actionPlayer, Character passivePlayer) {
+        return 0;
+    }
+
+    @Override
+    public double calculateAllyHeal(Ally ally, Skill skill, Character actionPlayer) {
+        return 0;
     }
 
     @Override
@@ -32,13 +43,23 @@ public class TiredState extends State {
     }
 
     @Override
+    public void receiveHeal(double value) {
+
+    }
+
+    @Override
     public void receiveDamage(Character actionPlayer, Character passivePlayer, double value, Skill skill) {
         this.life -= value * 1.2; // Aumenta o dano recebido por cansaço
-        skill.skillAction(actionPlayer, passivePlayer);
+        skill.skillEffectAction(actionPlayer, passivePlayer);
     }
 
     @Override
     public void receiveDamage(double value, Character passivePlayer, String effectName) {
+    }
+
+    @Override
+    public void receiveDamage(Trap trap) {
+
     }
 
     @Override

@@ -1,7 +1,9 @@
 package entities.skill.defense;
 
 import entities.BattleGround;
+import entities.ally.Ally;
 import entities.character.Character;
+import entities.observer.BattleObserver;
 import entities.skill.Skill;
 
 public abstract class Defense extends Skill {
@@ -13,16 +15,11 @@ public abstract class Defense extends Skill {
         super(name, description, skillAction, cooldown);
     }
 
-    public Defense(String name, String description, String skillAction, int cooldown, int defensePower) {
-        super(name, description, skillAction, cooldown);
-        this.defensePower = defensePower;
-    }
-
     @Override
     public void prepareSkillToExecute(Character activePlayer, Character passivePlayer, BattleGround battleGround) {
         System.out.println();
         System.out.println("╔════════════════════════════════════════════════════════════════╗");
-        System.out.println("║                        🛡️ PREPARANDO HABILIDADE DE DEFESA: " + this.name + "           ║");
+        System.out.println("║      🛡️ PREPARANDO HABILIDADE DE DEFESA: " + this.name + "     ║");
         System.out.println("╚════════════════════════════════════════════════════════════════╝");
         System.out.println();
         System.out.println("🔄 " + activePlayer.getName() + " prepara-se para se defender de " + passivePlayer.getName() + "!");
@@ -32,22 +29,48 @@ public abstract class Defense extends Skill {
         this.executeSelectedSkill(activePlayer, passivePlayer);
         this.skillTypeAction(activePlayer, passivePlayer);
 
-        System.out.println("🛡️ Defesa atual de " + activePlayer.getName() + ": " + String.format("%.2f", Math.max(activePlayer.getDefense(), 0)));
+        System.out.println("🛡️ Defesa atual de " + activePlayer.getName() + ": " + activePlayer.getDefense());
         System.out.println();
     }
 
     @Override
     public void skillEffectAction(Character activePlayer, Character passivePlayer) {
-
     }
 
     @Override
     public void executeSelectedSkill(Character activePlayer, Character passivePlayer, BattleGround battleGround) {
-        throw new UnsupportedOperationException("This skill does not use BattleGround context.");
+        validateContext();
     }
-
     @Override
     public void skillTypeAction(Character activePlayer, Character passivePlayer, BattleGround battleGround) {
-        throw new UnsupportedOperationException("This skill does not use BattleGround context.");
+        validateContext();
+    }
+    @Override
+    public void prepareSkillToExecute(Ally ally, BattleObserver allyObserver, BattleObserver battleGroundObserver) {
+        validateContext();
+    }
+    @Override
+    public void prepareSkillToExecute(Ally ally, BattleObserver allyObserver, BattleObserver enemyObserver, BattleObserver battleGroundObserver) {
+        validateContext();
+    }
+    @Override
+    public void executeSelectedSkill(Ally ally, Character activePlayer, Character passivePlayer) {
+        validateContext();
+    }
+    @Override
+    public void skillTypeAction(Ally ally, Character activePlayer, Character passivePlayer) {
+        validateContext();
+    }
+    @Override
+    public void skillEffectAction(Ally ally, Character activePlayer, Character passivePlayer) {
+        validateContext();
+    }
+    @Override
+    public void executeSelectedSkill(Character activePlayer, Character passivePlayer) {
+        validateContext();
+    }
+    @Override
+    public void skillTypeAction(Character activePlayer, Character passivePlayer) {
+        validateContext();
     }
 }

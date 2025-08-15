@@ -8,7 +8,6 @@ import java.util.Arrays;
 import java.util.List;
 
 public class DivineShield extends Defense {
-
     private static final List<String> actionList = Arrays.asList(
             " ativa uma barreira divina de proteção!",
             " invoca um escudo celestial para se proteger!",
@@ -18,7 +17,6 @@ public class DivineShield extends Defense {
             " emite um brilho sagrado que repele os inimigos!",
             "usa a luz sagrada para proteger a si ou a um aliado!"
     );
-
 
     public DivineShield(String name, String description, String skillAction, int cooldown, boolean special) {
         super(name, description, skillAction, cooldown);

@@ -1,7 +1,9 @@
 package entities.skill.support;
 
 import entities.BattleGround;
+import entities.ally.Ally;
 import entities.character.Character;
+import entities.observer.BattleObserver;
 import entities.skill.Skill;
 
 import java.util.concurrent.ThreadLocalRandom;
@@ -16,7 +18,7 @@ public abstract class Support extends Skill {
     public void prepareSkillToExecute(Character activePlayer, Character passivePlayer, BattleGround battleGround) {
         System.out.println();
         System.out.println("╔════════════════════════════════════════════════════════════════╗");
-        System.out.println("║                  ⚡ PREPARANDO HABILIDADE DE SUPORTE: " + this.name + "                 ║");
+        System.out.println("║      ⚡ PREPARANDO HABILIDADE DE SUPORTE: " + this.name + "     ║");
         System.out.println("╚════════════════════════════════════════════════════════════════╝");
         System.out.println();
         System.out.println("🔄 " + activePlayer.getName() + " se prepara para usar uma habilidade de suporte!");
@@ -28,16 +30,36 @@ public abstract class Support extends Skill {
     }
 
     @Override
-    public void executeSelectedSkill(Character activePlayer, Character passivePlayer, BattleGround battleGround) {
-        throw new UnsupportedOperationException("This skill does not use BattleGround context.");
+    public void skillEffectAction(Character activePlayer, Character passivePlayer) {
     }
 
+    @Override
+    public void executeSelectedSkill(Character activePlayer, Character passivePlayer, BattleGround battleGround) {
+        validateContext();
+    }
     @Override
     public void skillTypeAction(Character activePlayer, Character passivePlayer, BattleGround battleGround) {
-        throw new UnsupportedOperationException("This skill does not use BattleGround context.");
+        validateContext();
     }
-
     @Override
-    public void skillEffectAction(Character activePlayer, Character passivePlayer) {
+    public void prepareSkillToExecute(Ally ally, BattleObserver allyObserver, BattleObserver battleGroundObserver) {
+        validateContext();
+    }
+    @Override
+    public void prepareSkillToExecute(Ally ally, BattleObserver allyObserver, BattleObserver enemyObserver, BattleObserver battleGroundObserver) {
+        validateContext();
+    }
+    @Override
+    public void executeSelectedSkill(Ally ally, Character activePlayer, Character passivePlayer) {
+        validateContext();
+    }
+    @Override
+    public void skillTypeAction(Ally ally, Character activePlayer, Character passivePlayer) {
+        validateContext();
+    }
+    @Override
+    public void skillEffectAction(Ally ally, Character activePlayer, Character passivePlayer) {
+        validateContext();
+
     }
 }

@@ -1,12 +1,15 @@
 package entities.skill;
 
 import entities.BattleGround;
+import entities.ally.Ally;
 import entities.character.Character;
+import entities.observer.BattleObserver;
+import entities.skill.hunter.ally.BeastAttack;
+import entities.skill.hunter.ally.BeastHeal;
 import entities.skill.paladin.HeavenlyGuardian;
-import entities.skill.hunter.Animal;
+import entities.skill.hunter.ally.Beast;
 import entities.skill.mage.Arcane;
-import entities.skill.warrior.Standard;
-import entities.skill.dynamic.Dynamic;
+import entities.skill.warrior.WarStandard;
 import entities.skill.hunter.*;
 import entities.skill.mage.*;
 import entities.skill.hunter.EvasionDefense;
@@ -38,6 +41,7 @@ public abstract class Skill {
     protected boolean casted;
     protected String skillAction;
     private boolean stunned;
+    private int activeSkillPowerAttack;
 
     protected static final List<String> voiceActionList = Arrays.asList(
             "Sinta o peso da minha lâmina!\" - grita enquanto executa ",
@@ -111,13 +115,17 @@ public abstract class Skill {
         this.casted = false;
     }
 
+    protected static void validateContext() {
+        throw new UnsupportedOperationException("This skill is not compatible with this context.");
+    }
+
     public static List<Skill> ofWarrior() {
         return Arrays.asList(
                 HeavyAttack.ofHeavyAttack(),
                 Lunge.ofLunge(),
                 DefensivePosture.ofDefensivePosture(),
                 BattlefieldWrath.ofBattlefieldWrath(),
-                Standard.ofWar());
+                WarStandard.ofWarriorAlly());
     }
 
     public static List<Skill> ofMage() {
@@ -125,9 +133,9 @@ public abstract class Skill {
                 FireBall.ofFireBall(),
                 ParalyzingIce.ofParalyzingIce(),
                 ArcaneBarrier.ofArcaneBarrier(),
-                Dynamic.ofArcaneAmplificationOrCurseOfWeakness(),
+//                Dynamic.ofArcaneAmplificationOrCurseOfWeakness(),
                 ElementalStorm.ofElementalStorm(),
-                Arcane.ofMystic());
+                Arcane.ofMageAlly());
     }
 
     public static List<Skill> ofPaladin() {
@@ -136,7 +144,7 @@ public abstract class Skill {
                 BlessingLight.ofBlessingLight(),
                 DivineShield.ofDivineShield(),
                 JusticeHammer.ofJusticeHammer(),
-                HeavenlyGuardian.ofGuardian());
+                HeavenlyGuardian.ofPaladinAlly());
     }
 
     public static List<Skill> ofHunter() {
@@ -146,7 +154,14 @@ public abstract class Skill {
                 EvasionDefense.ofEvasion(),
                 ArrowRain.ofArrowRain(),
                 PoisonArrow.ofPoisonArrow(),
-                Animal.ofBeast());
+                Beast.ofHunterAlly());
+    }
+
+    public static List<Skill> ofBeast() {
+        return Arrays.asList(
+                BeastAttack.ofAttackTarget(),
+                BeastHeal.ofHealTarget()
+        );
     }
 
     public void updateSkillCooldown() {
@@ -192,6 +207,15 @@ public abstract class Skill {
         return this instanceof Support;
     }
 
+
+    // implementado somente para habilidades de aliados
+    public abstract void prepareSkillToExecute(Ally ally, BattleObserver allyObserver, BattleObserver battleGroundObserver);
+    public abstract void prepareSkillToExecute(Ally ally, BattleObserver allyObserver, BattleObserver enemyObserver, BattleObserver battleGroundObserver);
+    public abstract void executeSelectedSkill(Ally ally, Character activePlayer, Character passivePlayer);
+    public abstract void skillTypeAction(Ally ally, Character activePlayer, Character passivePlayer);
+    public abstract void skillEffectAction(Ally ally, Character activePlayer, Character passivePlayer);
+
+
     public abstract void prepareSkillToExecute(Character activePlayer, Character passivePlayer, BattleGround battleGround);
     public abstract void executeSelectedSkill(Character activePlayer, Character passivePlayer);
     public abstract void executeSelectedSkill(Character activePlayer, Character passivePlayer, BattleGround battleGround);
@@ -201,5 +225,17 @@ public abstract class Skill {
 
     protected String getAction(List<String> actionList) {
         return actionList.get(ThreadLocalRandom.current().nextInt(actionList.size()));
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getSkillAction() {
+        return skillAction;
+    }
+
+    public int getActiveSkillPowerAttack() {
+        return activeSkillPowerAttack;
     }
 }

@@ -2,10 +2,10 @@ package enums;
 
 import entities.*;
 import entities.ally.*;
-import entities.skill.hunter.Animal;
+import entities.skill.hunter.ally.Beast;
 import entities.skill.mage.Arcane;
 import entities.skill.paladin.HeavenlyGuardian;
-import entities.skill.warrior.Standard;
+import entities.skill.warrior.WarStandard;
 import entities.state.OriginalState;
 import entities.skill.Skill;
 import entities.state.State;
@@ -13,10 +13,10 @@ import entities.state.State;
 import java.util.List;
 
 public enum Specialization {
-    Warrior(Skill.ofWarrior(), OriginalState.ofWarrior(), Standard.ofWar(), Weapon.ofHeavySteelSword()),
-    Mage(Skill.ofMage(), OriginalState.ofMage(), Arcane.ofMystic(), Weapon.ofAncestralArcaneStaff()),
-    Hunter(Skill.ofHunter(), OriginalState.ofPaladin(), Animal.ofBeast(), Weapon.ofElvenPrecisionBow()),
-    Paladin(Skill.ofPaladin(), OriginalState.ofHunter(), HeavenlyGuardian.ofGuardian(), Weapon.ofHammerDivineLight());
+    Warrior(Skill.ofWarrior(), OriginalState.ofWarrior(), WarStandard.ofWarriorAlly(), Weapon.ofHeavySteelSword()),
+    Mage(Skill.ofMage(), OriginalState.ofMage(), Arcane.ofMageAlly(), Weapon.ofAncestralArcaneStaff()),
+    Hunter(Skill.ofHunter(), OriginalState.ofPaladin(), Beast.ofHunterAlly(), Weapon.ofElvenPrecisionBow()),
+    Paladin(Skill.ofPaladin(), OriginalState.ofHunter(), HeavenlyGuardian.ofPaladinAlly(), Weapon.ofHammerDivineLight());
 
     private List<Skill> skills;
     private State state;

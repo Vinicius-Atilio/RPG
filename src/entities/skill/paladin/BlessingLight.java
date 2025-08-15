@@ -1,12 +1,9 @@
 package entities.skill.paladin;
 
-import entities.BattleGround;
 import entities.character.Character;
 import entities.skill.support.Support;
 
 public class BlessingLight extends Support {
-
-
     public BlessingLight(String name, String description, String skillAction, int cooldown) {
         super(name, description, skillAction, cooldown);
     }

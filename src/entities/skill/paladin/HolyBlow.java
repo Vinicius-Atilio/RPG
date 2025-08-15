@@ -3,11 +3,10 @@ package entities.skill.paladin;
 import entities.BattleGround;
 import entities.character.Character;
 import entities.skill.attack.Attack;
-import entities.skill.melee.Melee;
 
 public class HolyBlow extends Attack {
-    protected HolyBlow(String name, String description, String skillAction, int cooldown, boolean special) {
-        super(name, description, skillAction, cooldown, special);
+    protected HolyBlow(String name, String description, String skillAction, int cooldown) {
+        super(name, description, skillAction, cooldown);
     }
 
     @Override
@@ -30,7 +29,7 @@ public class HolyBlow extends Attack {
     public void skillTypeAction(Character activePlayer, Character passivePlayer, BattleGround battleGround) {
         System.out.println();
         System.out.println("╔════════════════════════════════════════════════════════════════╗");
-        System.out.println("║                                      HABILIDADE ATIVADA: GOLPE SAGRADO                             ║");
+        System.out.println("║                HABILIDADE ATIVADA: GOLPE SAGRADO               ║");
         System.out.println("╚════════════════════════════════════════════════════════════════╝");
         System.out.println();
         System.out.println("✨ " + activePlayer.getName() + " canaliza energia sagrada em sua arma!");
@@ -38,9 +37,10 @@ public class HolyBlow extends Attack {
         System.out.println();
     }
 
-    public static Melee ofHolyBlow() {
-        return new Melee("Golpe Sagrado",
+    public static HolyBlow ofHolyBlow() {
+        return new HolyBlow("Golpe Sagrado",
                 "Ataque com dano extra contra inimigos sombrios.",
-                "✨ Uma luz sagrada envolve sua arma ao atingir o alvo.", 1, false);
+                "✨ Uma luz sagrada envolve sua arma ao atingir o alvo.",
+                1);
     }
 }

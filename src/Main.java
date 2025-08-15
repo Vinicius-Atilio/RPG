@@ -17,6 +17,7 @@ public class Main {
         battle.onAddObserver(player2);
 
         while (!battle.isGameOver()) {
+            battle.onTurnStart();
             battle.nextTurn();
         }
 

@@ -1,6 +1,8 @@
 package entities.skill.mage;
 
+import entities.ally.Ally;
 import entities.character.Character;
+import entities.observer.BattleObserver;
 import entities.skill.defense.Defense;
 
 import java.util.Arrays;

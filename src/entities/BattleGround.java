@@ -2,9 +2,9 @@ package entities;
 
 import entities.ally.Ally;
 import entities.character.Character;
-import entities.observer.BattleInvoker;
 import entities.observer.BattleObserver;
 import entities.skill.Skill;
+import entities.skill.attack.Trap;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +13,9 @@ public class BattleGround implements BattleObserver {
     private final List<BattleObserver> observersList;
     private Character player1;
     private Character player2;
-    private BattleInvoker allyInvoker;
+//    private BattleInvoker allyInvoker;
+    private List<Trap> traps;
+    private List<Ally> allies;
     private int turn;
 
     public BattleGround(Character player1, Character player2) {
@@ -38,12 +40,8 @@ public class BattleGround implements BattleObserver {
 
         this.turn++;
 
-        this.player1.prepareToPlay();
-        this.player2.prepareToPlay();
-
         if (this.player1.isAlive()) {
-            this.player1.useAllyIfAlive();
-            Skill selectedSkill = this.player1.play();
+            Skill selectedSkill = this.player1.selectSkill();
             selectedSkill.prepareSkillToExecute(this.player1, this.player2, this);
             selectedSkill.markAsCasted();
             verifyIfPlayerDied(this.player2, selectedSkill);
@@ -52,8 +50,7 @@ public class BattleGround implements BattleObserver {
         System.out.println();
 
         if (this.player2.isAlive()) {
-            this.player2.useAllyIfAlive();
-            Skill selectedSkill = this.player2.play();
+            Skill selectedSkill = this.player2.selectSkill();
             selectedSkill.prepareSkillToExecute(this.player2, this.player1, this);
             selectedSkill.markAsCasted();
             verifyIfPlayerDied(this.player1, selectedSkill);
@@ -84,10 +81,38 @@ public class BattleGround implements BattleObserver {
     }
 
     @Override
+    public void onTurnStart() {
+        System.out.println("🔄 Iniciando o turno " + this.turn + "...");
+        System.out.println("⚔️ " + this.player1.getName() + " vs " + this.player2.getName());
+        System.out.println("❤️ Vida de " + this.player1.getName() + ": " + String.format("%.2f", this.player1.getLife()));
+        System.out.println("❤️ Vida de " + this.player2.getName() + ": " + String.format("%.2f", this.player2.getLife()));
+        this.player1.onTurnStart();
+        this.player2.onTurnStart();
+        if (this.hasTraps()) {
+            for (Trap trap : this.traps) {
+                if (trap.canBeExplode()) {
+                    this.onTrapActivated(trap);
+                }
+            }
+        }
+
+        if (this.hasAllies()) {
+            for (Ally ally : this.allies) {
+                ally.allyAction(this);
+            }
+        }
+    }
+
+    @Override
     public void onAllyInvoked(Ally ally) {
         for (BattleObserver observer : observersList) {
-            observer.onNotifyObserver(ally);
+            observer.onAllyInvoked(ally);
         }
+    }
+
+    @Override
+    public void onAllyAttack(Ally ally) {
+
     }
 
     @Override
@@ -96,8 +121,39 @@ public class BattleGround implements BattleObserver {
     }
 
     @Override
-    public void onNotifyObserver(Ally ally) {
-        System.out.println( ally.getIcon() + " Aliado invocado: " + ally.getName());
+    public void onNotifyAllyAction(Ally ally, Skill skill) {
+        System.out.println("👤 Campo de batalha notifica: O aliado " + ally.getName() + " realizou a ação: " + skill.getSkillAction() + "!");
+        System.out.println("👤 Campo de batalha notifica: O aliado " + ally.getName() + " possui " + ally.getLife() + " de vida restante.");
+    }
+
+    @Override
+    public void onTrapActivated(Trap trap) {
+        System.out.println("🪤 Armadilha ativada: " + trap.getName());
+        trap.skillEffectAction(this.player1, this.player2);
+        trap.applyDamage();
+        if (this.traps != null) {
+            this.traps.remove(trap);
+        }
+    }
+
+    @Override
+    public void onReceiveAllyAttack(Ally ally, Skill skill) {
+
+    }
+
+    @Override
+    public void onAllySupport(Ally ally) {
+
+    }
+
+    @Override
+    public void onAllyUpdateState(Ally ally) {
+
+    }
+
+    @Override
+    public Character getObserver() {
+        return null;
     }
 
     public void victory() {
@@ -113,5 +169,38 @@ public class BattleGround implements BattleObserver {
     private void winner(Character player) {
         System.out.println("\n🏆 Vitória de " + player.getName() + "!");
         System.out.println("🎁 Recompensas disponíveis no inventário...");
+    }
+
+    public void addTrap(Trap trap) {
+        if (trap == null) {
+            throw new IllegalArgumentException("A armadilha não pode ser nula.");
+        }
+
+        if (this.traps == null) {
+            this.traps = new ArrayList<>();
+        }
+
+        this.traps.add(trap);
+    }
+
+    public void addAlly(Ally ally) {
+        if (ally == null) {
+            throw new IllegalArgumentException("O aliado não pode ser nulo.");
+        }
+
+        if (this.allies == null) {
+            this.allies = new ArrayList<>();
+        }
+
+        this.allies.add(ally);
+        this.onAllyInvoked(ally);
+    }
+
+    private boolean hasTraps() {
+        return this.traps != null && !this.traps.isEmpty();
+    }
+
+    private boolean hasAllies() {
+        return this.allies != null && !this.allies.isEmpty();
     }
 }

@@ -1,7 +1,9 @@
 package entities.state;
 
+import entities.ally.Ally;
 import entities.character.Character;
 import entities.skill.Skill;
+import entities.skill.attack.Trap;
 
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -30,6 +32,16 @@ public class EvasionState extends State {
     }
 
     @Override
+    public double calculateAllyDamage(Ally ally, Skill skill, Character actionPlayer, Character passivePlayer) {
+        return 0;
+    }
+
+    @Override
+    public double calculateAllyHeal(Ally ally, Skill skill, Character actionPlayer) {
+        return 0;
+    }
+
+    @Override
     public void receiveDamage(Character actionPlayer, Character passivePlayer, double value, Skill skill) {
         if (ThreadLocalRandom.current().nextBoolean()) {
             System.out.printf("😱 %s conseguiu desviar do ataque de %s!%n", passivePlayer.getName(), actionPlayer.getName());
@@ -37,12 +49,17 @@ public class EvasionState extends State {
         }
 
         this.life -= value;
-        skill.skillAction(actionPlayer, passivePlayer);
+        skill.skillEffectAction(actionPlayer, passivePlayer);
         System.out.printf("😤 %s recebeu o dano de %.2f de %s!%n", passivePlayer.getName(), value, actionPlayer.getName());
     }
 
     @Override
     public void receiveDamage(double value, Character passivePlayer, String effectName) {
+
+    }
+
+    @Override
+    public void receiveDamage(Trap trap) {
 
     }
 
@@ -80,6 +97,11 @@ public class EvasionState extends State {
         };
 
         this.stateDuration--;
+    }
+
+    @Override
+    public void receiveHeal(double value) {
+
     }
 
     @Override

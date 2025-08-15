@@ -1,7 +1,8 @@
 package entities.skill.warrior;
 
-import entities.BattleGround;
+import entities.ally.Ally;
 import entities.character.Character;
+import entities.observer.BattleObserver;
 import entities.skill.attack.Attack;
 
 import java.util.Arrays;

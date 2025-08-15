@@ -6,6 +6,10 @@ import entities.ally.Ally;
 import entities.effect.StatusEffect;
 import entities.observer.BattleObserver;
 import entities.skill.Skill;
+import entities.skill.ally.AllyAttack;
+import entities.skill.hunter.ally.BeastAttack;
+import entities.skill.attack.Trap;
+import entities.skill.hunter.ally.BeastHeal;
 import entities.state.*;
 import enums.Race;
 import enums.Specialization;
@@ -16,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class Character  implements BattleObserver {
+public class Character implements BattleObserver {
     private BigInteger id;
     private String name;
     private Race race;
@@ -59,18 +63,16 @@ public class Character  implements BattleObserver {
     }
 
     public void prepareToPlay() {
-        this.state.stateCountDown(this, this.specialization.state(this.state.getLife()));
-        this.applyEffect();
-        this.skills.forEach(Skill::updateSkillCooldown);
+
     }
 
-    public Skill play() {
+    public Skill selectSkill() {
         Skill selectedSkill = this.skills.get(ThreadLocalRandom.current().nextInt(this.skills.size()));
         if (selectedSkill.getCurrentCooldown() == 0) {
             return selectedSkill;
         }
 
-        return play();
+        return selectSkill();
     }
 
     public void receiveDamage(Character activePlayer, int activeSKillPowerAttack, Skill skill) {
@@ -99,6 +101,23 @@ public class Character  implements BattleObserver {
         this.receiveDamage(activePlayer, activeSKillPowerAttack, skill);
     }
 
+
+    public void receiveAllyDamage(Ally ally, Skill skill, Character activePlayer, Character passivePlayer) {
+        double damage = this.state.calculateAllyDamage(ally, skill, activePlayer, passivePlayer);
+        if (damage <= 0) {
+            System.out.println("😱 " + this.name + " conseguiu se defender do ataque da fera de " + activePlayer.getName() + "!");
+            return;
+        }
+
+        this.state.receiveDamage(activePlayer, passivePlayer, damage, skill);
+        System.out.println("😤 " + this.name + " recebeu o dano de " + String.format("%.2f", damage) + " da fera de " + activePlayer.getName() + "!");
+    }
+
+    public void receiveAllyHeal(Ally ally, Skill skill, Character activePlayer) {
+        double heal = this.state.calculateAllyHeal(ally, skill, activePlayer);
+        activePlayer.state.receiveHeal(heal);
+    }
+
     public int getMainAttribute() {
         return switch (this.specialization) {
             case Warrior, Paladin -> this.state.getStrength();
@@ -109,16 +128,6 @@ public class Character  implements BattleObserver {
 
     public void makeDefense(Character actionPlayer, Skill skill) {
         skill.updateSkillCooldown();
-    }
-
-
-    // Método para usar o aliado se ele estiver vivo
-    public void useAllyIfAlive() {
-        if (this.ally != null && this.ally.isAlive()) {
-            if (this.ally.isSupport()) {
-                this.state.update(this.ally.getState());
-            }
-        }
     }
 
     public void addEffect(StatusEffect statusEffect) {
@@ -257,8 +266,20 @@ public class Character  implements BattleObserver {
     }
 
     @Override
+    public void onTurnStart() {
+        this.state.stateCountDown(this, this.specialization.state(this.state.getLife()));
+        this.applyEffect();
+        this.skills.forEach(Skill::updateSkillCooldown);
+    }
+
+    @Override
     public void onAllyInvoked(Ally ally) {
-        this.ally = ally;
+        System.out.println("👤 " + this.name + " diz: Um aliado chegou! " + ally.getName() + " e está no campo de batalha .");
+    }
+
+    @Override
+    public void onAllyAttack(Ally ally) {
+        System.out.println("👤 " + this.name + " diz: Meu aliado " + ally.getName() + " está atacando!");
     }
 
     @Override
@@ -267,8 +288,34 @@ public class Character  implements BattleObserver {
     }
 
     @Override
-    public void onNotifyObserver(Ally ally) {
-        System.out.println("👤 " + this.name + " diz: Um aliado chegou! " + ally.getName() + " e está no campo de batalha .");
+    public void onNotifyAllyAction(Ally ally, Skill skill) {
+
+    }
+
+    @Override
+    public void onTrapActivated(Trap trap) {
+        this.state.receiveDamage(trap);
+        System.out.println("👤 " + this.name + " diz: Você me pagará por isso!");
+    }
+
+    @Override
+    public void onReceiveAllyAttack(Ally ally, Skill skill) {
+        System.out.println("👤 " + this.name + " diz: O aliado " + ally.getName() + " está me atacando com " + skill.getName() + "!");
+    }
+
+    @Override
+    public void onAllySupport(Ally ally) {
+
+    }
+
+    @Override
+    public void onAllyUpdateState(Ally ally) {
+        this.state.update(ally.getState());
+    }
+
+    @Override
+    public Character getObserver() {
+        return this;
     }
 
     public void changeStatusToWrath() {
@@ -284,10 +331,6 @@ public class Character  implements BattleObserver {
 
     public void buffAlly() {
 
-    }
-
-    public void buffStateBy(Ally ally) {
-        this.state.update(ally.getState());
     }
 
     public void removeBuffStateBy(Ally ally) {

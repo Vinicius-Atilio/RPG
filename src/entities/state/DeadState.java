@@ -1,8 +1,10 @@
 package entities.state;
 
+import entities.ally.Ally;
 import entities.character.Character;
 import entities.effect.StatusEffect;
 import entities.skill.Skill;
+import entities.skill.attack.Trap;
 
 public class DeadState extends State {
 
@@ -24,6 +26,16 @@ public class DeadState extends State {
     }
 
     @Override
+    public double calculateAllyDamage(Ally ally, Skill skill, Character actionPlayer, Character passivePlayer) {
+        return 0;
+    }
+
+    @Override
+    public double calculateAllyHeal(Ally ally, Skill skill, Character actionPlayer) {
+        return 0;
+    }
+
+    @Override
     public double calculateDefense() {
         return 0;
     }
@@ -38,12 +50,22 @@ public class DeadState extends State {
     }
 
     @Override
+    public void receiveHeal(double value) {
+
+    }
+
+    @Override
     public void receiveDamage(Character actionPlayer, Character passivePlayer, double value, Skill skill) {
 
     }
 
     @Override
     public void receiveDamage(double value, Character passivePlayer, String effectName) {
+
+    }
+
+    @Override
+    public void receiveDamage(Trap trap) {
 
     }
 

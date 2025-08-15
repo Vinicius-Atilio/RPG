@@ -1,7 +1,9 @@
 package entities.state;
 
+import entities.ally.Ally;
 import entities.character.Character;
 import entities.skill.Skill;
+import entities.skill.attack.Trap;
 
 public class DefensiveState extends State {
     private double reducedValue = 0.5;
@@ -30,12 +32,22 @@ public class DefensiveState extends State {
     }
 
     @Override
+    public double calculateAllyDamage(Ally ally, Skill skill, Character actionPlayer, Character passivePlayer) {
+        return 0;
+    }
+
+    @Override
+    public double calculateAllyHeal(Ally ally, Skill skill, Character actionPlayer) {
+        return 0;
+    }
+
+    @Override
     public void receiveDamage(Character actionPlayer, Character passivePlayer, double value, Skill skill) {
        if (value > 0) {
            System.out.printf("😤 %s está em estado defensivo e reduz o dano recebido de %.2f para %.2f!%n",
                    passivePlayer.getName(), value, value * 0.5);
            this.life -= value * this.reducedValue;
-           skill.skillAction(actionPlayer, passivePlayer);
+           skill.skillEffectAction(actionPlayer, passivePlayer);
            System.out.printf("😤 %s recebeu o dano reduzido de %.2f de %s!%n", passivePlayer.getName(), value * 0.5, actionPlayer.getName());
            return;
         }
@@ -48,6 +60,11 @@ public class DefensiveState extends State {
         this.life -= value * this.reducedValue;
         System.out.printf("😤 %s está em estado defensivo e reduz o dano recebido de %.2f para %.2f devido ao efeito %s! Vida atual: %.2f%n",
                 passivePlayer.getName(), value, reducedValue, effectName, this.life);
+    }
+
+    @Override
+    public void receiveDamage(Trap trap) {
+
     }
 
     @Override
@@ -84,5 +101,10 @@ public class DefensiveState extends State {
         };
 
         this.stateDuration--;
+    }
+
+    @Override
+    public void receiveHeal(double value) {
+
     }
 }

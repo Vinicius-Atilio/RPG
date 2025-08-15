@@ -3,6 +3,8 @@ package entities.skill.mage;
 import entities.BattleGround;
 import entities.ally.Ally;
 import entities.character.Character;
+import entities.observer.BattleObserver;
+import entities.skill.Skill;
 import entities.state.OriginalState;
 import entities.state.State;
 
@@ -16,13 +18,33 @@ public class Arcane extends Ally {
             " entra em batalha com um brilho arcano, lançando feitiços devastadores!"
     );
 
-    public Arcane(String name, String description, int cooldown, State state) {
-        super(name, description, cooldown, state);
+    public Arcane(String name, String description, String skillAction, int cooldown, State state, double invokerPower, double skillMultiplier) {
+        super(name, description, skillAction, cooldown, state, invokerPower, skillMultiplier);
+    }
+
+    @Override
+    public void allyAction(BattleObserver battleGroundObserver) {
+
+    }
+
+    @Override
+    public Skill allySelectSkill() {
+        return null;
     }
 
     @Override
     public String getIcon() {
         return " 🔮 ";
+    }
+
+    @Override
+    public double getAllyPower() {
+        return 0;
+    }
+
+    @Override
+    public double getAllyHeal() {
+        return 0;
     }
 
     @Override
@@ -55,10 +77,13 @@ public class Arcane extends Ally {
     }
 
 
-    public static Arcane ofMystic() {
+    public static Arcane ofMageAlly() {
         return new Arcane("Arcano Místico",
                 "Um aliado que conjura feitiços poderosos para ajudar na batalha",
+                "✨ Aliado místico esta conjurando feitiços poderosos!",
                 4,
-                OriginalState.ofMystic());
+                OriginalState.ofMystic(),
+                2.0,
+                1.5);
     }
 }

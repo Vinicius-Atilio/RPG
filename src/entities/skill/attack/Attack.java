@@ -1,7 +1,9 @@
 package entities.skill.attack;
 
 import entities.BattleGround;
+import entities.ally.Ally;
 import entities.character.Character;
+import entities.observer.BattleObserver;
 import entities.skill.Skill;
 
 import java.util.concurrent.ThreadLocalRandom;
@@ -24,7 +26,7 @@ public abstract class Attack extends Skill {
     public void prepareSkillToExecute(Character activePlayer, Character passivePlayer, BattleGround battleGround) {
         System.out.println();
         System.out.println("╔════════════════════════════════════════════════════════════════╗");
-        System.out.println("║        ⚔️ PREPARANDO HABILIDADE DE ATAQUE: " + this.name + "                          ║");
+        System.out.println("║        ⚔️ PREPARANDO HABILIDADE DE ATAQUE: " + this.name + "   ║");
         System.out.println("╚════════════════════════════════════════════════════════════════╝");
         System.out.println();
         System.out.println("🔄 " + activePlayer.getName() + " se prepara para atacar " + passivePlayer.getName() + " no campo de batalha!");
@@ -39,16 +41,6 @@ public abstract class Attack extends Skill {
     }
 
     @Override
-    public void executeSelectedSkill(Character activePlayer, Character passivePlayer, BattleGround battleGround) {
-        throw new UnsupportedOperationException("This skill does not use BattleGround context.");
-    }
-
-    @Override
-    public void skillTypeAction(Character activePlayer, Character passivePlayer, BattleGround battleGround) {
-        throw new UnsupportedOperationException("This skill does not use BattleGround context.");
-    }
-
-    @Override
     public void skillEffectAction(Character activePlayer, Character passivePlayer) {
         System.out.println();
         System.out.println("💢" + activePlayer.getName() + " " + voiceActionList.get(ThreadLocalRandom.current().nextInt(voiceActionList.size())));
@@ -56,5 +48,42 @@ public abstract class Attack extends Skill {
         System.out.println(passivePlayer.getName() +  hitEffectList.get(ThreadLocalRandom.current().nextInt(hitEffectList.size())));
         System.out.println(" 😡🔪 " + passivePlayer.getName() + " " + answerVegeanceList.get(ThreadLocalRandom.current().nextInt(answerVegeanceList.size())));
         System.out.println();
+    }
+
+    @Override
+    public void executeSelectedSkill(Character activePlayer, Character passivePlayer, BattleGround battleGround) {
+        validateContext();
+    }
+    @Override
+    public void skillTypeAction(Character activePlayer, Character passivePlayer, BattleGround battleGround) {
+        validateContext();
+    }
+    @Override
+    public void prepareSkillToExecute(Ally ally, BattleObserver allyObserver, BattleObserver battleGroundObserver) {
+        validateContext();
+    }
+    @Override
+    public void prepareSkillToExecute(Ally ally, BattleObserver allyObserver, BattleObserver enemyObserver, BattleObserver battleGroundObserver) {
+        validateContext();
+    }
+    @Override
+    public void executeSelectedSkill(Ally ally, Character activePlayer, Character passivePlayer) {
+        validateContext();
+    }
+    @Override
+    public void skillTypeAction(Ally ally, Character activePlayer, Character passivePlayer) {
+        validateContext();
+    }
+    @Override
+    public void skillEffectAction(Ally ally, Character activePlayer, Character passivePlayer) {
+        validateContext();
+    }
+    @Override
+    public void executeSelectedSkill(Character activePlayer, Character passivePlayer) {
+        validateContext();
+    }
+    @Override
+    public void skillTypeAction(Character activePlayer, Character passivePlayer) {
+        validateContext();
     }
 }

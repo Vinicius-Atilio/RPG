@@ -2,16 +2,12 @@ package entities.skill.paladin;
 
 import entities.BattleGround;
 import entities.character.Character;
-import entities.skill.Skill;
 import entities.skill.attack.Attack;
-import entities.skill.melee.Melee;
-
-import java.util.concurrent.ThreadLocalRandom;
 
 public class JusticeHammer extends Attack {
 
-    protected JusticeHammer(String name, String description, String skillAction, int cooldown, boolean special) {
-        super(name, description, skillAction, cooldown, special);
+    protected JusticeHammer(String name, String description, String skillAction, int cooldown) {
+        super(name, description, skillAction, cooldown);
     }
 
     @Override
@@ -43,10 +39,11 @@ public class JusticeHammer extends Attack {
         System.out.println();
     }
 
-    public static Skill ofJusticeHammer() {
-        return new Melee("Martelo da Justiça (especial)",
+    public static JusticeHammer ofJusticeHammer() {
+        return new JusticeHammer(
+                "Martelo da Justiça (especial)",
                 "Golpe poderoso com dano alto e atordoamento.",
-                "⚡ O martelo brilha com luz divina... ", 3,
-                false, ThreadLocalRandom.current().nextBoolean());
+                "⚡ O martelo brilha com luz divina... ",
+                3);
     }
 }

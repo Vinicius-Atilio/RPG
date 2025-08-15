@@ -1,15 +1,18 @@
-package entities.skill.hunter;
+package entities.skill.hunter.ally;
 
 import entities.BattleGround;
 import entities.ally.Ally;
 import entities.character.Character;
+import entities.observer.BattleObserver;
+import entities.skill.Skill;
 import entities.state.OriginalState;
 import entities.state.State;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
-public class Animal extends Ally {
+public class Beast extends Ally {
     private static final List<String> actionList = Arrays.asList(
             " surge ferozmente na batalha pronto para atacar!",
             " corre rapidamente para ajudar seu mestre!!",
@@ -17,22 +20,35 @@ public class Animal extends Ally {
             " ruge ferozmente antes de atacar!"
     );
 
-    public Animal(String name, String description, int cooldown, State state) {
-        super(name, description, cooldown, state);
+    public Beast(String name, String description, String skillAction, int cooldown, State state, List<Skill> skills, double invokerPower, double skillMultiplier) {
+        super(name, description, skillAction, cooldown, state, skills, invokerPower, skillMultiplier);
     }
 
-    public static Animal ofBeast() {
-        return new Animal("Fera Companheira",
-                "Um aliado animal que traz força e agilidade para a batalha",
-                4,
-                OriginalState.ofBeast());
+    @Override
+    public Skill allySelectSkill() {
+        Skill selectedSkill = this.skills.get(ThreadLocalRandom.current().nextInt(this.skills.size()));
+        if (selectedSkill.getCurrentCooldown() == 0) {
+            return selectedSkill;
+        }
+
+        return allySelectSkill();
+    }
+
+    @Override
+    public void allyAction(BattleObserver battleGroundObserver) {
+        System.out.println("🐾 " + this.getName() + " está pronto para usar sua habilidade!");
+        battleGroundObserver.onNotifyAllyAction(this, this);
+        Skill selectedSkill = this.allySelectSkill();
+        System.out.println("⚔️ " + this.getName() + " escolheu a habilidade: " + selectedSkill.getName());
+        selectedSkill.prepareSkillToExecute(this, this.allyObserver.getObserver(), this.enemyObserver.getObserver(), battleGroundObserver);
+        System.out.println("🐾 " + this.getName() + " executou a habilidade: " + selectedSkill.getName());
     }
 
     @Override
     public void executeSelectedSkill(Character activePlayer, Character passivePlayer, BattleGround battleGround) {
         System.out.println();
         System.out.println("╔════════════════════════════════════════════════════════════════╗");
-        System.out.println("║                             🐺 PREPARANDO FERA COMPANHEIRA                                         ║");
+        System.out.println("║              🐺 PREPARANDO FERA COMPANHEIRA                    ║");
         System.out.println("╚════════════════════════════════════════════════════════════════╝");
         System.out.println();
         System.out.println(activePlayer.getName() + " chama sua fera companheira para a batalha!");
@@ -40,6 +56,33 @@ public class Animal extends Ally {
         System.out.println("⚔️ " + activePlayer.getName() + " se prepara para posicionar sua fera companheira no campo de batalha!");
         System.out.println();
         activePlayer.onAllyInvoked(this);
+        this.markAllyObserver(activePlayer);
+        this.markEnemyObserver(passivePlayer);
+    }
+
+    @Override
+    public void skillTypeAction(Character activePlayer, Character passivePlayer, BattleGround battleGround) {
+        System.out.println();
+        System.out.println("╔════════════════════════════════════════════════════════════════╗");
+        System.out.println("║                   🐾 FERA COMPANHEIRA ATIVADA                  ║");
+        System.out.println("╚════════════════════════════════════════════════════════════════╝");
+        System.out.println();
+        System.out.println("🤝 " + activePlayer.getName() + " invocou o aliado " + this.name + " para lutar ao seu lado!");
+        System.out.println("🐾 O aliado de " + activePlayer.getName() + this.getAction(actionList));
+        System.out.println("💪 A fera companheira está pronta para atacar e ajudar na batalha!");
+        System.out.println();
+        battleGround.onAllyInvoked(this);
+    }
+
+    public static Beast ofHunterAlly() {
+        return new Beast("Fera Companheira",
+                "Um aliado animal que traz força e agilidade para a batalha",
+                "🐺 Fera Companheira está lutando por seu mestre na batalha!.",
+                4,
+                OriginalState.ofBeast(),
+                ofBeast(),
+                1.5,
+                1.5);
     }
 
     @Override
@@ -48,15 +91,12 @@ public class Animal extends Ally {
     }
 
     @Override
-    public void skillTypeAction(Character activePlayer, Character passivePlayer, BattleGround battleGround) {
-        System.out.println();
-        System.out.println("╔════════════════════════════════════════════════════════════════╗");
-        System.out.println("║                                      🐾 FERA COMPANHEIRA ATIVADA                                        ║");
-        System.out.println("╚════════════════════════════════════════════════════════════════╝");
-        System.out.println();
-        System.out.println("🐾 O aliado de " + activePlayer.getName() + this.getAction(actionList));
-        System.out.println("💪 A fera companheira está pronta para atacar e ajudar na batalha!");
-        System.out.println();
-        battleGround.onAllyInvoked(this);
+    public double getAllyPower() {
+        return this.state.getStrength();
+    }
+
+    @Override
+    public double getAllyHeal() {
+        return this.state.getAgility();
     }
 }

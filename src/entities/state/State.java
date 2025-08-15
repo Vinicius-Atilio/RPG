@@ -1,7 +1,9 @@
 package entities.state;
 
+import entities.ally.Ally;
 import entities.character.Character;
 import entities.skill.Skill;
+import entities.skill.attack.Trap;
 
 public abstract class State {
     protected double life;
@@ -90,14 +92,19 @@ public abstract class State {
 
     public abstract void receiveDamage(Character actionPlayer, Character passivePlayer, double value, Skill skill);
     public abstract void receiveDamage(double value, Character passivePlayer, String effectName);
+    public abstract void receiveDamage(Trap trap);
     public abstract void receiveEffect(String name);
 
     public abstract void onDeath(Character character);
     public abstract boolean isAlive();
 
     public abstract double calculateDamage(Character actionPlayer, Character passivePlayer, int activeSKillPowerAttack);
+    public abstract double calculateAllyDamage(Ally ally, Skill skill, Character actionPlayer, Character passivePlayer);
+    public abstract double calculateAllyHeal(Ally ally, Skill skill, Character actionPlayer);
     public abstract double calculateDefense();
 
     public abstract State withLife(double life);
     public abstract void stateCountDown(Character actionPlayer, State state);
+
+    public abstract void receiveHeal(double value);
 }

@@ -13,7 +13,7 @@ public class PrecisionShot extends Attack {
     public void executeSelectedSkill(Character activePlayer, Character passivePlayer) {
         System.out.println();
         System.out.println("╔══════════════════════════════════════════════════════╗");
-        System.out.println("║                        🎯 TÉCNICA: DISPARO PRECISO BANUK ELITE             ║");
+        System.out.println("║     🎯 TÉCNICA: DISPARO PRECISO BANUK ELITE          ║");
         System.out.println("╚══════════════════════════════════════════════════════╝");
         System.out.println();
         System.out.println("👤 O " + activePlayer.getName() + " desacelera a respiração... tudo ao redor silencia.");
@@ -30,7 +30,7 @@ public class PrecisionShot extends Attack {
     public void skillTypeAction(Character activePlayer, Character passivePlayer) {
         System.out.println();
         System.out.println("╔══════════════════════════════════════════════════════╗");
-        System.out.println("║              🎯️ HABILIDADE ATIVADA: DISPARO PRECISO (ATAQUE)      ║");
+        System.out.println("║  🎯️ HABILIDADE ATIVADA: DISPARO PRECISO (ATAQUE)     ║");
         System.out.println("╚══════════════════════════════════════════════════════╝");
         System.out.println();
         System.out.println("🏹 " + activePlayer.getName() + " dispara uma flecha certeira!");

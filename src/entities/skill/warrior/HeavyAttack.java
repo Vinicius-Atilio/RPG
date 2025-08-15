@@ -14,7 +14,7 @@ public class HeavyAttack extends Attack {
     public void executeSelectedSkill(Character activePlayer, Character passivePlayer) {
         System.out.println();
         System.out.println("╔════════════════════════════════════════════════════════════════╗");
-        System.out.println("║                  💥 HABILIDADE: GOLPE PESADO DESFERIDO PELO GUERREIRO            ║");
+        System.out.println("║    💥 HABILIDADE: GOLPE PESADO DESFERIDO PELO GUERREIRO        ║");
         System.out.println("╚════════════════════════════════════════════════════════════════╝");
         System.out.println();
         System.out.println("🧍‍♂️ O guerreiro firma os pés no chão, o peso de sua armadura ressoa no campo...");
@@ -32,7 +32,7 @@ public class HeavyAttack extends Attack {
     public void skillTypeAction(Character activePlayer, Character passivePlayer) {
         System.out.println();
         System.out.println("╔════════════════════════════════════════════════════════════════╗");
-        System.out.println("║                        HABILIDADE ATIVADA: GOLPE PESADO                                               ║");
+        System.out.println("║                 HABILIDADE ATIVADA: GOLPE PESADO               ║");
         System.out.println("╚════════════════════════════════════════════════════════════════╝");
         System.out.println();
         System.out.println("💢" + activePlayer.getName() + " " + voiceActionList.get(ThreadLocalRandom.current().nextInt(voiceActionList.size())));

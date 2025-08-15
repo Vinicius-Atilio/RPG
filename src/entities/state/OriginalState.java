@@ -1,7 +1,9 @@
 package entities.state;
 
+import entities.ally.Ally;
 import entities.character.Character;
 import entities.skill.Skill;
+import entities.skill.attack.Trap;
 
 public class OriginalState extends State {
 
@@ -11,22 +13,41 @@ public class OriginalState extends State {
 
     @Override
     public double calculateDamage(Character actionPlayer, Character passivePlayer, int activeSKillPowerAttack) {
-        double damage = (actionPlayer.getMainAttribute() * actionPlayer.weaponFactor()) + (activeSKillPowerAttack - passivePlayer.originalDefenseValue());
+        double damage = activeSKillPowerAttack + (actionPlayer.getMainAttribute() * actionPlayer.weaponFactor())
+                - passivePlayer.originalDefenseValue();
         return Math.max(damage, 0);
+    }
+
+    @Override
+    public double calculateAllyDamage(Ally ally, Skill skill, Character actionPlayer, Character passivePlayer) {
+        double damage = (ally.getAllyPower() + skill.getActiveSkillPowerAttack()
+                + (actionPlayer.getMainAttribute() * ally.getInvokerPower()) * ally.getSkillMultiplier())
+                - passivePlayer.originalDefenseValue();
+
+        return Math.max(damage, 0);
+    }
+
+    @Override
+    public double calculateAllyHeal(Ally ally, Skill skill, Character actionPlayer) {
+        return (ally.getAllyHeal() * ally.getSkillMultiplier()) + actionPlayer.getMainAttribute();
     }
 
     @Override
     public void receiveDamage(Character actionPlayer, Character passivePlayer, double value, Skill skill) {
         this.life -= value;
-        skill.skillAction(actionPlayer, passivePlayer);
-
-//        System.out.println("😱 " + passivePlayer.getName() + " conseguiu se defender do ataque de " + actionPlayer.getName() + "!");
+        skill.skillEffectAction(actionPlayer, passivePlayer);
     }
 
     @Override
     public void receiveDamage(double value, Character passivePlayer, String effectName) {
         this.life -= value;
         System.out.printf("😤 %s recebeu o dano de %.2f devido ao efeito %s!%n", passivePlayer.getName(), value, effectName);
+    }
+
+    @Override
+    public void receiveDamage(Trap trap) {
+        this.life -= trap.getDamage();
+        System.out.println("💣 A armadilha explode causando " + trap.getDamage() + " de dano!");
     }
 
     @Override
@@ -55,6 +76,11 @@ public class OriginalState extends State {
 
     @Override
     public void stateCountDown(Character actionPlayer, State state) {
+    }
+
+    @Override
+    public void receiveHeal(double value) {
+        this.life += value;
     }
 
     public static OriginalState ofState(State state) {
@@ -93,7 +119,7 @@ public class OriginalState extends State {
 
     public static OriginalState ofGuardian() {return new OriginalState(50, 3, 3,2,6,2,8);}
 
-    public static OriginalState ofBeast() {return new OriginalState(50, 5, 2,8,4,1,3);}
+    public static OriginalState ofBeast() {return new OriginalState(50, 15, 2,8,4,1,3);}
 
     public static OriginalState ofDeath() {return new OriginalState(0,0, 0, 0, 0, 0, 0);}
 

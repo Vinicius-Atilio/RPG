@@ -1,9 +1,11 @@
 package entities.state;
 
+import entities.ally.Ally;
 import entities.character.Character;
 import entities.skill.Skill;
+import entities.skill.attack.Trap;
 
-public class StunnedState extends State{
+public class StunnedState extends State {
     public StunnedState(double life, int strength, int intelligence, int agility, int vigor, int mana, int defense, int turns) {
         super(life, strength, intelligence, agility, vigor, mana, defense, turns);
     }
@@ -32,6 +34,11 @@ public class StunnedState extends State{
     }
 
     @Override
+    public void receiveDamage(Trap trap) {
+
+    }
+
+    @Override
     public void receiveEffect(String name) {
 
     }
@@ -52,6 +59,16 @@ public class StunnedState extends State{
     }
 
     @Override
+    public double calculateAllyDamage(Ally ally, Skill skill, Character actionPlayer, Character passivePlayer) {
+        return 0;
+    }
+
+    @Override
+    public double calculateAllyHeal(Ally ally, Skill skill, Character actionPlayer) {
+        return 0;
+    }
+
+    @Override
     public double calculateDefense() {
         return 0;
     }
@@ -63,6 +80,11 @@ public class StunnedState extends State{
 
     @Override
     public void stateCountDown(Character actionPlayer, State state) {
+
+    }
+
+    @Override
+    public void receiveHeal(double value) {
 
     }
 }
