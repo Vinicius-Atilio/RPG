@@ -1,9 +1,8 @@
 package entities.skill.hunter;
 
-import entities.BattleGround;
 import entities.skill.defense.Defense;
 import entities.effect.BuffEffect;
-import entities.character.Character;
+import entities.character.Player;
 
 import java.util.Arrays;
 import java.util.List;
@@ -35,7 +34,7 @@ public class EvasionDefense extends Defense {
     }
 
     @Override
-    public void executeSelectedSkill(Character activePlayer, Character passivePlayer) {
+    public void executeSelectedSkill(Player activePlayer, Player passivePlayer) {
         System.out.println("\n🤸 " + activePlayer.getName() + this.getAction(playerActionList) + this.getName());
         printSkillBox("🎯 SE POSICIONA PARA: Evasão");
         System.out.println("👣 " + activePlayer.getName() + " analisa o terreno ao seu redor...");
@@ -49,7 +48,7 @@ public class EvasionDefense extends Defense {
     }
 
     @Override
-    public void skillTypeAction(Character activePlayer, Character passivePlayer) {
+    public void skillTypeAction(Player activePlayer, Player passivePlayer) {
         activePlayer.changeStateToEvasion();
         printSkillBox("🪶 HABILIDADE DEFENSIVA ATIVADA: EVASÃO");
         System.out.println("🎯 " + activePlayer.getName() + " desaparece em um movimento ágil.");

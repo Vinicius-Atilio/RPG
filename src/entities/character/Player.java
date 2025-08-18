@@ -6,10 +6,7 @@ import entities.ally.Ally;
 import entities.effect.StatusEffect;
 import entities.observer.BattleObserver;
 import entities.skill.Skill;
-import entities.skill.ally.AllyAttack;
-import entities.skill.hunter.ally.BeastAttack;
 import entities.skill.attack.Trap;
-import entities.skill.hunter.ally.BeastHeal;
 import entities.state.*;
 import enums.Race;
 import enums.Specialization;
@@ -20,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class Character implements BattleObserver {
+public class Player implements BattleObserver {
     private BigInteger id;
     private String name;
     private Race race;
@@ -33,7 +30,7 @@ public class Character implements BattleObserver {
     private State state;
     private boolean immune;
 
-    public Character(String name, Race race, Specialization specialization, State state, List<Skill> skills, Weapon weapon, Inventory inventory) {
+    public Player(String name, Race race, Specialization specialization, State state, List<Skill> skills, Weapon weapon, Inventory inventory) {
         this.id = new BigInteger(128, new SecureRandom());
         this.name = name;
         this.race = race;
@@ -49,7 +46,7 @@ public class Character implements BattleObserver {
         }
     }
 
-    public Character(String name, State state) {
+    public Player(String name, State state) {
         this.name = name;
         this.state = state;
     }
@@ -75,7 +72,7 @@ public class Character implements BattleObserver {
         return selectSkill();
     }
 
-    public void receiveDamage(Character activePlayer, int activeSKillPowerAttack, Skill skill) {
+    public void receiveDamage(Player activePlayer, int activeSKillPowerAttack, Skill skill) {
         var damage = this.state.calculateDamage(activePlayer, this, activeSKillPowerAttack);
         if (damage <= 0) {
             System.out.println("😱 " + this.name + " conseguiu se defender do ataque de " + activePlayer.getName() + "!");
@@ -91,7 +88,7 @@ public class Character implements BattleObserver {
         skill.skillEffectAction(activePlayer, this);
     }
 
-    public void receiveSpecialDamage(Character activePlayer, int activeSKillPowerAttack, Skill skill) {
+    public void receiveSpecialDamage(Player activePlayer, int activeSKillPowerAttack, Skill skill) {
         if (this.ally != null && this.ally.isAlive()) {
             this.ally.receiveDamage(activePlayer, this, activeSKillPowerAttack, skill);
             this.receiveDamage(activePlayer, activeSKillPowerAttack, skill);
@@ -99,10 +96,11 @@ public class Character implements BattleObserver {
         }
 
         this.receiveDamage(activePlayer, activeSKillPowerAttack, skill);
+        skill.skillEffectAction(activePlayer, this);
     }
 
 
-    public void receiveAllyDamage(Ally ally, Skill skill, Character activePlayer, Character passivePlayer) {
+    public void receiveAllyDamage(Ally ally, Skill skill, Player activePlayer, Player passivePlayer) {
         double damage = this.state.calculateAllyDamage(ally, skill, activePlayer, passivePlayer);
         if (damage <= 0) {
             System.out.println("😱 " + this.name + " conseguiu se defender do ataque da fera de " + activePlayer.getName() + "!");
@@ -110,12 +108,14 @@ public class Character implements BattleObserver {
         }
 
         this.state.receiveDamage(activePlayer, passivePlayer, damage, skill);
+        skill.skillEffectAction(activePlayer, this);
         System.out.println("😤 " + this.name + " recebeu o dano de " + String.format("%.2f", damage) + " da fera de " + activePlayer.getName() + "!");
     }
 
-    public void receiveAllyHeal(Ally ally, Skill skill, Character activePlayer) {
+    public void receiveAllyHeal(Ally ally, Skill skill, Player activePlayer) {
         double heal = this.state.calculateAllyHeal(ally, skill, activePlayer);
         activePlayer.state.receiveHeal(heal);
+        skill.skillEffectAction(activePlayer, this);
     }
 
     public int getMainAttribute() {
@@ -126,7 +126,7 @@ public class Character implements BattleObserver {
         };
     }
 
-    public void makeDefense(Character actionPlayer, Skill skill) {
+    public void makeDefense(Player actionPlayer, Skill skill) {
         skill.updateSkillCooldown();
     }
 
@@ -261,7 +261,7 @@ public class Character implements BattleObserver {
         this.effects.remove(statusEffect);
     }
 
-    public void makeSupport(Character passivePlayer, Skill support) {
+    public void makeSupport(Player passivePlayer, Skill support) {
 
     }
 
@@ -314,7 +314,7 @@ public class Character implements BattleObserver {
     }
 
     @Override
-    public Character getObserver() {
+    public Player getObserver() {
         return this;
     }
 

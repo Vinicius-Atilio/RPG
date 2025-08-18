@@ -1,7 +1,7 @@
 package entities.skill.hunter.ally;
 
 import entities.ally.Ally;
-import entities.character.Character;
+import entities.character.Player;
 import entities.skill.ally.AllyAttack;
 
 public class BeastAttack extends AllyAttack {
@@ -10,7 +10,7 @@ public class BeastAttack extends AllyAttack {
     }
 
     @Override
-    public void executeSelectedSkill(Ally ally, Character activePlayer, Character passivePlayer) {
+    public void executeSelectedSkill(Ally ally, Player activePlayer, Player passivePlayer) {
         printSkillBox("🐾 ALIADO: ATAQUE DA FERA");
         System.out.println(activePlayer.getName() + " ordena a fera companheira a atacar " + passivePlayer.getName() + "!");
         System.out.println("A fera salta sobre o inimigo, dilacerando-o com suas garras afiadas!");
@@ -22,7 +22,7 @@ public class BeastAttack extends AllyAttack {
     }
 
     @Override
-    public void skillTypeAction(Ally ally, Character activePlayer, Character passivePlayer) {
+    public void skillTypeAction(Ally ally, Player activePlayer, Player passivePlayer) {
         printSkillBox("🐾 FERA COMPANHEIRA ATACA");
         System.out.println(activePlayer.getName() + " ordena a fera companheira a atacar " + passivePlayer.getName() + "!");
         System.out.println("A fera salta sobre o " + passivePlayer.getName() + ", dilacerando-o com suas garras afiadas!");

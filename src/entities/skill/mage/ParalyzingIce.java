@@ -1,6 +1,6 @@
 package entities.skill.mage;
 
-import entities.character.Character;
+import entities.character.Player;
 import entities.skill.attack.Attack;
 
 import java.util.Arrays;
@@ -51,7 +51,7 @@ public class ParalyzingIce extends Attack  {
     }
 
     @Override
-    public void executeSelectedSkill(Character activePlayer, Character passivePlayer) {
+    public void executeSelectedSkill(Player activePlayer, Player passivePlayer) {
         System.out.println();
         System.out.println("╔════════════════════════════════════════════════════════════════╗");
         System.out.println("║            ❄️ MAGIA: GELO PARALISANTE LANÇADO PELO MAGO                              ║");
@@ -68,7 +68,7 @@ public class ParalyzingIce extends Attack  {
     }
 
     @Override
-    public void skillTypeAction(Character activePlayer, Character passivePlayer) {
+    public void skillTypeAction(Player activePlayer, Player passivePlayer) {
         System.out.println();
         System.out.println("╔════════════════════════════════════════════════════════════════╗");
         System.out.println("║                                  HABILIDADE ATIVADA: GELO PARALISANTE                             ║");

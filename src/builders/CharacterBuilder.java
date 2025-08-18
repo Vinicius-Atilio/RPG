@@ -1,6 +1,6 @@
 package builders;
 
-import entities.character.Character;
+import entities.character.Player;
 import entities.Inventory;
 import enums.Race;
 import enums.Specialization;
@@ -48,8 +48,8 @@ public class CharacterBuilder {
         return this;
     }
 
-    public Character build() {
-        return new Character(getString(), this.race, this.specialization, this.specialization.state(),
+    public Player build() {
+        return new Player(getString(), this.race, this.specialization, this.specialization.state(),
                 this.specialization.skills(), this.specialization.weapon(), new Inventory(new ArrayList<>()));
     }
 

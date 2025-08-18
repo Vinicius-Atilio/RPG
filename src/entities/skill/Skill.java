@@ -2,7 +2,7 @@ package entities.skill;
 
 import entities.BattleGround;
 import entities.ally.Ally;
-import entities.character.Character;
+import entities.character.Player;
 import entities.observer.BattleObserver;
 import entities.skill.hunter.ally.BeastAttack;
 import entities.skill.hunter.ally.BeastHeal;
@@ -23,6 +23,7 @@ import entities.skill.warrior.DefensivePosture;
 import entities.skill.warrior.HeavyAttack;
 import entities.skill.warrior.Lunge;
 
+import java.text.Normalizer;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
@@ -213,17 +214,17 @@ public abstract class Skill {
     // implementado somente para habilidades de aliados
     public abstract void prepareSkillToExecute(Ally ally, BattleObserver allyObserver, BattleObserver battleGroundObserver);
     public abstract void prepareSkillToExecute(Ally ally, BattleObserver allyObserver, BattleObserver enemyObserver, BattleObserver battleGroundObserver);
-    public abstract void executeSelectedSkill(Ally ally, Character activePlayer, Character passivePlayer);
-    public abstract void skillTypeAction(Ally ally, Character activePlayer, Character passivePlayer);
-    public abstract void skillEffectAction(Ally ally, Character activePlayer, Character passivePlayer);
+    public abstract void executeSelectedSkill(Ally ally, Player activePlayer, Player passivePlayer);
+    public abstract void skillTypeAction(Ally ally, Player activePlayer, Player passivePlayer);
+    public abstract void skillEffectAction(Ally ally, Player activePlayer, Player passivePlayer);
 
 
-    public abstract void prepareSkillToExecute(Character activePlayer, Character passivePlayer, BattleGround battleGround);
-    public abstract void executeSelectedSkill(Character activePlayer, Character passivePlayer);
-    public abstract void executeSelectedSkill(Character activePlayer, Character passivePlayer, BattleGround battleGround);
-    public abstract void skillTypeAction(Character activePlayer, Character passivePlayer);
-    public abstract void skillTypeAction(Character activePlayer, Character passivePlayer, BattleGround battleGround);
-    public abstract void skillEffectAction(Character activePlayer, Character passivePlayer);
+    public abstract void prepareSkillToExecute(Player activePlayer, Player passivePlayer, BattleGround battleGround);
+    public abstract void executeSelectedSkill(Player activePlayer, Player passivePlayer);
+    public abstract void executeSelectedSkill(Player activePlayer, Player passivePlayer, BattleGround battleGround);
+    public abstract void skillTypeAction(Player activePlayer, Player passivePlayer);
+    public abstract void skillTypeAction(Player activePlayer, Player passivePlayer, BattleGround battleGround);
+    public abstract void skillEffectAction(Player activePlayer, Player passivePlayer);
 
     protected String getAction(List<String> actionList) {
         return actionList.get(ThreadLocalRandom.current().nextInt(actionList.size()));
@@ -245,11 +246,43 @@ public abstract class Skill {
         return activeSkillPowerAttack;
     }
 
-    protected void printSkillBox(String skillTitle) {
+    private static int getDisplayWidth(String str) {
+        int width = 0;
+        String normalized = Normalizer.normalize(str, Normalizer.Form.NFKC);
+
+        for (int i = 0; i < normalized.length();) {
+            int codePoint = normalized.codePointAt(i);
+
+            if (codePoint == 0x200D || (codePoint >= 0x1F3FB && codePoint <= 0x1F3FF)) {
+                i += Character.charCount(codePoint);
+                continue;
+            }
+
+            if (Character.UnicodeScript.of(codePoint) == Character.UnicodeScript.HAN ||
+                    Character.UnicodeScript.of(codePoint) == Character.UnicodeScript.HIRAGANA ||
+                    Character.UnicodeScript.of(codePoint) == Character.UnicodeScript.KATAKANA ||
+                    (codePoint >= 0x1F300 && codePoint <= 0x1FAFF)) {
+                width += 2;
+            } else {
+                width += 1;
+            }
+
+            i += Character.charCount(codePoint);
+        }
+        return width;
+    }
+
+    protected static void printSkillBox(String skillTitle) {
         String border = "╔" + "═".repeat(BOX_WIDTH) + "╗";
         String bottom = "╚" + "═".repeat(BOX_WIDTH) + "╝";
-        int padding = (BOX_WIDTH - skillTitle.length()) / 2;
-        String line = "║" + " ".repeat(padding) + skillTitle + " ".repeat(BOX_WIDTH - skillTitle.length() - padding) + "║";
+
+        int titleWidth = getDisplayWidth(skillTitle);
+        int padding = (BOX_WIDTH - titleWidth) / 2;
+        int extra = (BOX_WIDTH - titleWidth) % 2;
+
+        String line = "║" + " ".repeat(padding) + skillTitle + " ".repeat(padding + extra) + "║";
+
+        System.out.println();
         System.out.println(border);
         System.out.println(line);
         System.out.println(bottom);

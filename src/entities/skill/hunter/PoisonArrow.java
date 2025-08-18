@@ -1,7 +1,6 @@
 package entities.skill.hunter;
 
-import entities.BattleGround;
-import entities.character.Character;
+import entities.character.Player;
 import entities.effect.PoisonedEffect;
 import entities.effect.StatusEffect;
 import entities.skill.attack.Attack;
@@ -15,7 +14,7 @@ public class PoisonArrow extends Attack {
     }
 
     @Override
-    public void executeSelectedSkill(Character activePlayer, Character passivePlayer) {
+    public void executeSelectedSkill(Player activePlayer, Player passivePlayer) {
         printSkillBox("⏳ 🧪 🏹 PREPARAÇÃO: FLECHA ENVENENADA");
         System.out.println("🖐️" + activePlayer.getName() + "  desliza os dedos sobre a aljava, puxando uma flecha negra...");
         System.out.println("🧪 Um frasco de veneno é aberto... Um líquido esverdeado escorre lentamente.");
@@ -31,7 +30,7 @@ public class PoisonArrow extends Attack {
     }
 
     @Override
-    public void skillTypeAction(Character activePlayer, Character passivePlayer) {
+    public void skillTypeAction(Player activePlayer, Player passivePlayer) {
         this.poisonedEffect.addEffect(passivePlayer, statusEffect.ofPoisonArrow());
         printSkillBox("HABILIDADE ATIVADA: FLECHA ENVENENADA");
         System.out.println("🏹 " + activePlayer.getName() + " dispara uma flecha banhada em veneno mortal!");

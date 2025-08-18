@@ -1,7 +1,7 @@
 package entities.ally;
 
 import entities.BattleGround;
-import entities.character.Character;
+import entities.character.Player;
 import entities.observer.BattleObserver;
 import entities.skill.Skill;
 import entities.state.State;
@@ -36,7 +36,7 @@ public abstract class Ally extends Skill {
     }
 
     @Override
-    public void prepareSkillToExecute(Character activePlayer, Character passivePlayer, BattleGround battleGround) {
+    public void prepareSkillToExecute(Player activePlayer, Player passivePlayer, BattleGround battleGround) {
         printSkillBox("🛡️ PREPARANDO EVOCAÇÃO DO ALIADO: " + this.name);
         System.out.println("🔄 " + activePlayer.getName() + " se prepara para invocar o aliado " + this.name + " no campo de batalha!");
         System.out.println("⚔️ O aliado se posiciona, pronto para ajudar na batalha!");
@@ -44,30 +44,25 @@ public abstract class Ally extends Skill {
         this.executeSelectedSkill(activePlayer, passivePlayer, battleGround);
         this.skillTypeAction(activePlayer, passivePlayer, battleGround);
         battleGround.addAlly(this);
-
         System.out.println(" ❤️ Vida atual do aliado " + this.name + ": " + String.format("%.2f", Math.max(passivePlayer.getLife(), 0)) );
         System.out.println();
     }
 
     @Override
-    public void skillEffectAction(Character activePlayer, Character passivePlayer) {
-        System.out.println();
-        System.out.println("╔══════════════════════════════════════════════════════╗");
-        System.out.println("║   🛡️ ALIADO: " + this.name + " executou              ║");
-        System.out.println("╚══════════════════════════════════════════════════════╝");
-        System.out.println();
-        System.out.println("⚔️ O aliado está pronto para ajudar na batalha!");
-
+    public void skillEffectAction(Player activePlayer, Player passivePlayer) {
+        printSkillBox("🛡️ ALIADO: " + this.name + " executou ");
+        System.out.println("✨ " + activePlayer.getName() + " teve ajuda de " + this.name + " na batalha!");
+        System.out.println("💪 Com a ajuda do aliado, " + activePlayer.getName() + " sente-se mais confiante e determinado!");
         System.out.println();
     }
 
     @Override
-    public void executeSelectedSkill(Character activePlayer, Character passivePlayer) {
+    public void executeSelectedSkill(Player activePlayer, Player passivePlayer) {
         validateContext();
     }
 
     @Override
-    public void skillTypeAction(Character activePlayer, Character passivePlayer) {
+    public void skillTypeAction(Player activePlayer, Player passivePlayer) {
         validateContext();
     }
 
@@ -81,15 +76,15 @@ public abstract class Ally extends Skill {
         validateContext();
     }
     @Override
-    public void executeSelectedSkill(Ally ally, Character activePlayer, Character passivePlayer) {
+    public void executeSelectedSkill(Ally ally, Player activePlayer, Player passivePlayer) {
         validateContext();
     }
     @Override
-    public void skillTypeAction(Ally ally, Character activePlayer, Character passivePlayer) {
+    public void skillTypeAction(Ally ally, Player activePlayer, Player passivePlayer) {
         validateContext();
     }
     @Override
-    public void skillEffectAction(Ally ally, Character activePlayer, Character passivePlayer) {
+    public void skillEffectAction(Ally ally, Player activePlayer, Player passivePlayer) {
         validateContext();
     }
     // OS METODOS ACIMA DEVEM SER IMPLEMENTADOS NAS CLASSES FILHAS DA HABILIDADE DO ALIADO
@@ -122,7 +117,7 @@ public abstract class Ally extends Skill {
         return skillMultiplier;
     }
 
-    public void receiveDamage(Character actionPlayer, Character passivePlayer, int activeSKillPowerAttack, Skill skill) {
+    public void receiveDamage(Player actionPlayer, Player passivePlayer, int activeSKillPowerAttack, Skill skill) {
         this.state.receiveDamage(actionPlayer,
                 passivePlayer,
                 this.state.calculateDamage(

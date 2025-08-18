@@ -1,7 +1,7 @@
 package entities.skill.hunter;
 
 import entities.BattleGround;
-import entities.character.Character;
+import entities.character.Player;
 import entities.skill.attack.Trap;
 
 public class ExplosiveTrap extends Trap {
@@ -10,7 +10,7 @@ public class ExplosiveTrap extends Trap {
     }
 
     @Override
-    public void executeSelectedSkill(Character activePlayer, Character passivePlayer, BattleGround battleGround) {
+    public void executeSelectedSkill(Player activePlayer, Player passivePlayer, BattleGround battleGround) {
         printSkillBox("💣 PREPARAÇÃO: ARMADILHA EXPLOSIVA BANUK");
         System.out.println("👣 O caçador ajoelha silenciosamente no solo congelado...");
         System.out.println("🧰 Ele retira uma carga instável da bolsa e um detonador artesanal.");
@@ -20,7 +20,7 @@ public class ExplosiveTrap extends Trap {
     }
 
     @Override
-    public void skillTypeAction(Character activePlayer, Character passivePlayer, BattleGround battleGround) {
+    public void skillTypeAction(Player activePlayer, Player passivePlayer, BattleGround battleGround) {
         printSkillBox("💣 ARMADILHA EXPLOSIVA ATIVADA!");
         System.out.println("💥 " + activePlayer.getName() + " instala a armadilha explosiva com maestria!");
         System.out.println("Alvo selecionado: " + passivePlayer.getName() + ".");

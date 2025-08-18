@@ -1,7 +1,7 @@
 package entities.skill.attack;
 
 import entities.ally.Ally;
-import entities.character.Character;
+import entities.character.Player;
 import entities.BattleGround;
 import entities.observer.BattleObserver;
 import entities.skill.Skill;
@@ -20,7 +20,7 @@ public abstract class Trap extends Skill {
     }
 
     @Override
-    public void prepareSkillToExecute(Character activePlayer, Character passivePlayer, BattleGround battleGround) {
+    public void prepareSkillToExecute(Player activePlayer, Player passivePlayer, BattleGround battleGround) {
         printSkillBox("🪤 PREPARANDO ARMADILHA: " + this.name);
         System.out.println("🔄 " + activePlayer.getName() + " se prepara para instalar a armadilha contra " + passivePlayer.getName() + " no campo de batalha!");
         System.out.println("🪤 O ambiente fica tenso enquanto a armadilha é preparada...");
@@ -34,7 +34,7 @@ public abstract class Trap extends Skill {
     }
 
     @Override
-    public void skillEffectAction(Character activePlayer, Character passivePlayer) {
+    public void skillEffectAction(Player activePlayer, Player passivePlayer) {
         printSkillBox("💣 ARMADILHA: " + this.name + " EXPLODIU!");
         System.out.println("💥 " + activePlayer.getName() + " ACERTA SEU ALVO!");
         System.out.println("A armadilha explode causando " + this.damage + " de dano a " + passivePlayer.getName() + "!");
@@ -63,11 +63,11 @@ public abstract class Trap extends Skill {
     }
 
     @Override
-    public void executeSelectedSkill(Character activePlayer, Character passivePlayer) {
+    public void executeSelectedSkill(Player activePlayer, Player passivePlayer) {
         validateContext();
     }
     @Override
-    public void skillTypeAction(Character activePlayer, Character passivePlayer) {
+    public void skillTypeAction(Player activePlayer, Player passivePlayer) {
         validateContext();
     }
     @Override
@@ -79,15 +79,15 @@ public abstract class Trap extends Skill {
         validateContext();
     }
     @Override
-    public void executeSelectedSkill(Ally ally, Character activePlayer, Character passivePlayer) {
+    public void executeSelectedSkill(Ally ally, Player activePlayer, Player passivePlayer) {
         validateContext();
     }
     @Override
-    public void skillTypeAction(Ally ally, Character activePlayer, Character passivePlayer) {
+    public void skillTypeAction(Ally ally, Player activePlayer, Player passivePlayer) {
         validateContext();
     }
     @Override
-    public void skillEffectAction(Ally ally, Character activePlayer, Character passivePlayer) {
+    public void skillEffectAction(Ally ally, Player activePlayer, Player passivePlayer) {
         validateContext();
     }
 }

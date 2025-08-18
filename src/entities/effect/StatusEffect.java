@@ -1,6 +1,6 @@
 package entities.effect;
 
-import entities.character.Character;
+import entities.character.Player;
 
 import java.util.function.Consumer;
 
@@ -8,21 +8,21 @@ public class StatusEffect {
     private Integer id;
     private String name;
     private int turnDuration;
-    private Consumer<Character> characterConsumer;
+    private Consumer<Player> characterConsumer;
     private boolean active;
     private Effect effect = new BuffEffect();
 
     public StatusEffect() {
     }
 
-    public StatusEffect(Integer id, String name, int turnDuration, Consumer<Character> characterConsumer) {
+    public StatusEffect(Integer id, String name, int turnDuration, Consumer<Player> characterConsumer) {
         this.id = id;
         this.name = name;
         this.turnDuration = turnDuration;
         this.characterConsumer = characterConsumer;
     }
 
-    public StatusEffect(Integer id, String name, int turnDuration, Consumer<Character> characterConsumer, Effect effect) {
+    public StatusEffect(Integer id, String name, int turnDuration, Consumer<Player> characterConsumer, Effect effect) {
         this.id = id;
         this.name = name;
         this.turnDuration = turnDuration;
@@ -69,16 +69,16 @@ public class StatusEffect {
                 '}';
     }
 
-    public void accept(Character character) {
-        characterConsumer.accept(character);
+    public void accept(Player player) {
+        characterConsumer.accept(player);
     }
 
-    public void updateTurnDuration(Character character, String effectName) {
+    public void updateTurnDuration(Player player, String effectName) {
         if (this.turnDuration > 0) {
-            character.receiveEffect(this.effect.damage(character), effectName);
+            player.receiveEffect(this.effect.damage(player), effectName);
 
-            if (!character.isAlive()) {
-                character.makeDeath();
+            if (!player.isAlive()) {
+                player.makeDeath();
                 System.out.println(this.name + " morreu devido ao efeito " + this.name + ".");
                 return;
             }
@@ -89,7 +89,7 @@ public class StatusEffect {
         }
 
         System.out.println(this.name + " não tem mais turnos restantes.");
-        character.removeEffect(this);
+        player.removeEffect(this);
     }
 
     public boolean isActive() {

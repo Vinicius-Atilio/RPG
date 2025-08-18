@@ -1,7 +1,7 @@
 package entities;
 
 import entities.ally.Ally;
-import entities.character.Character;
+import entities.character.Player;
 import entities.observer.BattleObserver;
 import entities.skill.Skill;
 import entities.skill.attack.Trap;
@@ -11,14 +11,14 @@ import java.util.List;
 
 public class BattleGround implements BattleObserver {
     private final List<BattleObserver> observersList;
-    private Character player1;
-    private Character player2;
+    private Player player1;
+    private Player player2;
 //    private BattleInvoker allyInvoker;
     private List<Trap> traps;
     private List<Ally> allies;
     private int turn;
 
-    public BattleGround(Character player1, Character player2) {
+    public BattleGround(Player player1, Player player2) {
         if (player1 == null || player2 == null) {
             throw new IllegalArgumentException("Os jogadores são obrigatórios.");
         }
@@ -34,13 +34,10 @@ public class BattleGround implements BattleObserver {
     }
 
     public void nextTurn() {
-        System.out.println();
-        System.out.println("\n⏳ A tensão cresce durante a batalha...");
-        System.out.println();
-
         this.turn++;
 
         if (this.player1.isAlive()) {
+            System.out.println("\n⏳ Ação de " + this.player1.getName());
             Skill selectedSkill = this.player1.selectSkill();
             selectedSkill.prepareSkillToExecute(this.player1, this.player2, this);
             selectedSkill.markAsCasted();
@@ -50,6 +47,7 @@ public class BattleGround implements BattleObserver {
         System.out.println();
 
         if (this.player2.isAlive()) {
+            System.out.println("\n⏳ Ação de " + this.player2.getName());
             Skill selectedSkill = this.player2.selectSkill();
             selectedSkill.prepareSkillToExecute(this.player2, this.player1, this);
             selectedSkill.markAsCasted();
@@ -57,14 +55,14 @@ public class BattleGround implements BattleObserver {
         }
     }
 
-    private void verifyIfPlayerDied(entities.character.Character player, Skill selectedSkill) {
+    private void verifyIfPlayerDied(Player player, Skill selectedSkill) {
         if (!player.isAlive()) {
             player.makeDeath();
             this.playerIsDied(player, selectedSkill);
         }
     }
 
-    private void playerIsDied(entities.character.Character player, Skill selectedSkill) {
+    private void playerIsDied(Player player, Skill selectedSkill) {
 
         System.out.println("💥 O " + selectedSkill.getName() + " atinge em cheio!");
         System.out.println("❤️ " + player.getName() + " tinha apenas " +  String.format("%.2f", player.getLife() > 0 ? player.getLife() : 0 ) + " de vida restante...");
@@ -84,8 +82,8 @@ public class BattleGround implements BattleObserver {
     public void onTurnStart() {
         System.out.println("🔄 Iniciando o turno " + this.turn + "...");
         System.out.println("⚔️ " + this.player1.getName() + " vs " + this.player2.getName());
-        System.out.println("❤️ Vida de " + this.player1.getName() + ": " + String.format("%.2f", this.player1.getLife()));
-        System.out.println("❤️ Vida de " + this.player2.getName() + ": " + String.format("%.2f", this.player2.getLife()));
+        System.out.println(this.player1.getName() + " - " + this.player1.getSpecialization() +  " ❤️ " + String.format("%.2f", this.player1.getLife()));
+        System.out.println(this.player2.getName() + " - " + this.player2.getSpecialization() +  " ❤️ " + String.format("%.2f", this.player2.getLife()));
         this.player1.onTurnStart();
         this.player2.onTurnStart();
         if (this.hasTraps()) {
@@ -155,7 +153,7 @@ public class BattleGround implements BattleObserver {
     }
 
     @Override
-    public Character getObserver() {
+    public Player getObserver() {
         return null;
     }
 
@@ -169,7 +167,7 @@ public class BattleGround implements BattleObserver {
         }
     }
 
-    private void winner(Character player) {
+    private void winner(Player player) {
         System.out.println("\n🏆 Vitória de " + player.getName() + "!");
         System.out.println("🎁 Recompensas disponíveis no inventário...");
     }
@@ -196,7 +194,6 @@ public class BattleGround implements BattleObserver {
         }
 
         this.allies.add(ally);
-        this.onAllyInvoked(ally);
     }
 
     private boolean hasTraps() {

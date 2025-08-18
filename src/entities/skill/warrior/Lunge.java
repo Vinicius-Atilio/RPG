@@ -1,8 +1,6 @@
 package entities.skill.warrior;
 
-import entities.ally.Ally;
-import entities.character.Character;
-import entities.observer.BattleObserver;
+import entities.character.Player;
 import entities.skill.attack.Attack;
 
 import java.util.Arrays;
@@ -28,7 +26,7 @@ public class Lunge extends Attack {
     }
 
     @Override
-    public void executeSelectedSkill(Character activePlayer, Character passivePlayer) {
+    public void executeSelectedSkill(Player activePlayer, Player passivePlayer) {
         printSkillBox("🚨 HABILIDADE: INVESTIDA RELÂMPAGO");
         System.out.println("🏃‍♂️ " + activePlayer.getName() + " abaixa a postura e se lança com fúria sobre " + passivePlayer.getName() + "!");
         System.out.println("💨 A poeira se levanta enquanto ele rasga o campo em velocidade absurda!");
@@ -40,7 +38,7 @@ public class Lunge extends Attack {
     }
 
     @Override
-    public void skillTypeAction(Character activePlayer, Character passivePlayer) {
+    public void skillTypeAction(Player activePlayer, Player passivePlayer) {
         printSkillBox("⚡ HABILIDADE: INVESTIDA RELÂMPAGO EXECUTADA PELO GUERREIRO");
         System.out.println("🏃‍♂️ " + activePlayer.getName() + " abaixa a postura e dispara como um trovão em direção ao inimigo!");
         System.out.println("💢 " + this.getAction(skillActionList));

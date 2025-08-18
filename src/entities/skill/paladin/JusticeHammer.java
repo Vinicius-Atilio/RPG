@@ -1,7 +1,7 @@
 package entities.skill.paladin;
 
 import entities.BattleGround;
-import entities.character.Character;
+import entities.character.Player;
 import entities.skill.attack.Attack;
 
 public class JusticeHammer extends Attack {
@@ -11,7 +11,7 @@ public class JusticeHammer extends Attack {
     }
 
     @Override
-    public void prepareSkillToExecute(Character activePlayer, Character passivePlayer, BattleGround battleGround) {
+    public void prepareSkillToExecute(Player activePlayer, Player passivePlayer, BattleGround battleGround) {
         System.out.println();
         System.out.println("╔════════════════════════════════════════════════════════════════════════════╗");
         System.out.println("║                      ⚡️ ESPECIAL ATIVADO: MARTELADA DA JUSTIÇA CAI COM FÚRIA DIVINA!              ║");
@@ -28,7 +28,7 @@ public class JusticeHammer extends Attack {
     }
 
     @Override
-    public void skillTypeAction(Character activePlayer, Character passivePlayer, BattleGround battleGround) {
+    public void skillTypeAction(Player activePlayer, Player passivePlayer, BattleGround battleGround) {
         System.out.println();
         System.out.println("╔════════════════════════════════════════════════════════════════════════════╗");
         System.out.println("║                🌟 HABILIDADE ESPECIAL ATIVADA: MARTELADA DA JUSTIÇA (ESPECIAL)                    ║");

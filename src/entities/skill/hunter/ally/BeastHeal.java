@@ -1,7 +1,7 @@
 package entities.skill.hunter.ally;
 
 import entities.ally.Ally;
-import entities.character.Character;
+import entities.character.Player;
 import entities.skill.ally.AllySupport;
 
 public class BeastHeal extends AllySupport {
@@ -10,7 +10,7 @@ public class BeastHeal extends AllySupport {
     }
 
     @Override
-    public void executeSelectedSkill(Ally ally, Character activePlayer, Character passivePlayer) {
+    public void executeSelectedSkill(Ally ally, Player activePlayer, Player passivePlayer) {
         printSkillBox(" 🐾 ALIADO: CURA DA FERA");
         System.out.println(activePlayer.getName() + " ordena a fera companheira a curar " + passivePlayer.getName() + "!");
         System.out.println("A fera usa suas habilidades naturais para restaurar parte da vida do aliado.");
@@ -22,7 +22,7 @@ public class BeastHeal extends AllySupport {
     }
 
     @Override
-    public void skillTypeAction(Ally ally, Character activePlayer, Character passivePlayer) {
+    public void skillTypeAction(Ally ally, Player activePlayer, Player passivePlayer) {
         printSkillBox(" 🐾 FERA COMPANHEIRA CURA");
         System.out.println(activePlayer.getName() + " ordena a fera companheira a curar " + passivePlayer.getName() + "!");
         System.out.println("A fera usa suas habilidades naturais para restaurar parte da vida do aliado.");

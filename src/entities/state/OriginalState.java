@@ -1,7 +1,7 @@
 package entities.state;
 
 import entities.ally.Ally;
-import entities.character.Character;
+import entities.character.Player;
 import entities.skill.Skill;
 import entities.skill.attack.Trap;
 
@@ -12,14 +12,14 @@ public class OriginalState extends State {
     }
 
     @Override
-    public double calculateDamage(Character actionPlayer, Character passivePlayer, int activeSKillPowerAttack) {
+    public double calculateDamage(Player actionPlayer, Player passivePlayer, int activeSKillPowerAttack) {
         double damage = activeSKillPowerAttack + (actionPlayer.getMainAttribute() * actionPlayer.weaponFactor())
                 - passivePlayer.originalDefenseValue();
         return Math.max(damage, 0);
     }
 
     @Override
-    public double calculateAllyDamage(Ally ally, Skill skill, Character actionPlayer, Character passivePlayer) {
+    public double calculateAllyDamage(Ally ally, Skill skill, Player actionPlayer, Player passivePlayer) {
         double damage = (ally.getAllyPower() + skill.getActiveSkillPowerAttack()
                 + (actionPlayer.getMainAttribute() * ally.getInvokerPower()) * ally.getSkillMultiplier())
                 - passivePlayer.originalDefenseValue();
@@ -28,18 +28,18 @@ public class OriginalState extends State {
     }
 
     @Override
-    public double calculateAllyHeal(Ally ally, Skill skill, Character actionPlayer) {
+    public double calculateAllyHeal(Ally ally, Skill skill, Player actionPlayer) {
         return (ally.getAllyHeal() * ally.getSkillMultiplier()) + actionPlayer.getMainAttribute();
     }
 
     @Override
-    public void receiveDamage(Character actionPlayer, Character passivePlayer, double value, Skill skill) {
+    public void receiveDamage(Player actionPlayer, Player passivePlayer, double value, Skill skill) {
         this.life -= value;
         skill.skillEffectAction(actionPlayer, passivePlayer);
     }
 
     @Override
-    public void receiveDamage(double value, Character passivePlayer, String effectName) {
+    public void receiveDamage(double value, Player passivePlayer, String effectName) {
         this.life -= value;
         System.out.printf("😤 %s recebeu o dano de %.2f devido ao efeito %s!%n", passivePlayer.getName(), value, effectName);
     }
@@ -54,8 +54,8 @@ public class OriginalState extends State {
     public void receiveEffect(String name) {}
 
     @Override
-    public void onDeath(Character character) {
-        character.changeState(DeadState.of(new Character("* DEAD " + character.getName(), OriginalState.ofDeath())));
+    public void onDeath(Player player) {
+        player.changeState(DeadState.of(new Player("* DEAD " + player.getName(), OriginalState.ofDeath())));
     }
 
     @Override
@@ -75,7 +75,7 @@ public class OriginalState extends State {
     }
 
     @Override
-    public void stateCountDown(Character actionPlayer, State state) {
+    public void stateCountDown(Player actionPlayer, State state) {
     }
 
     @Override

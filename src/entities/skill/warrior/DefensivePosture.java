@@ -1,6 +1,6 @@
 package entities.skill.warrior;
 
-import entities.character.Character;
+import entities.character.Player;
 import entities.skill.defense.Defense;
 
 public class DefensivePosture extends Defense {
@@ -9,7 +9,7 @@ public class DefensivePosture extends Defense {
     }
 
     @Override
-    public void executeSelectedSkill(Character activePlayer, Character passivePlayer) {
+    public void executeSelectedSkill(Player activePlayer, Player passivePlayer) {
         printSkillBox("⏳ SE PREPARA PARA ATIVAR POSTURA DEFENSIVA 🛡️");
         System.out.println("🧭 " + activePlayer.getName() + " fixa o olhar em seu alvo...");
         System.out.println("📣 Você sente que algo poderoso está por vir!");
@@ -21,7 +21,7 @@ public class DefensivePosture extends Defense {
     }
 
     @Override
-    public void skillTypeAction(Character activePlayer, Character passivePlayer) {
+    public void skillTypeAction(Player activePlayer, Player passivePlayer) {
         activePlayer.changeStateToDefensive();
         printSkillBox("🛡️ HABILIDADE ATIVADA: POSTURA DEFENSIVA");
         System.out.println("🧍 " + activePlayer.getName() + " firma os pés no chão com autoridade.");

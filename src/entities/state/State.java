@@ -1,7 +1,7 @@
 package entities.state;
 
 import entities.ally.Ally;
-import entities.character.Character;
+import entities.character.Player;
 import entities.skill.Skill;
 import entities.skill.attack.Trap;
 
@@ -90,21 +90,21 @@ public abstract class State {
         return mana;
     }
 
-    public abstract void receiveDamage(Character actionPlayer, Character passivePlayer, double value, Skill skill);
-    public abstract void receiveDamage(double value, Character passivePlayer, String effectName);
+    public abstract void receiveDamage(Player actionPlayer, Player passivePlayer, double value, Skill skill);
+    public abstract void receiveDamage(double value, Player passivePlayer, String effectName);
     public abstract void receiveDamage(Trap trap);
     public abstract void receiveEffect(String name);
 
-    public abstract void onDeath(Character character);
+    public abstract void onDeath(Player player);
     public abstract boolean isAlive();
 
-    public abstract double calculateDamage(Character actionPlayer, Character passivePlayer, int activeSKillPowerAttack);
-    public abstract double calculateAllyDamage(Ally ally, Skill skill, Character actionPlayer, Character passivePlayer);
-    public abstract double calculateAllyHeal(Ally ally, Skill skill, Character actionPlayer);
+    public abstract double calculateDamage(Player actionPlayer, Player passivePlayer, int activeSKillPowerAttack);
+    public abstract double calculateAllyDamage(Ally ally, Skill skill, Player actionPlayer, Player passivePlayer);
+    public abstract double calculateAllyHeal(Ally ally, Skill skill, Player actionPlayer);
     public abstract double calculateDefense();
 
     public abstract State withLife(double life);
-    public abstract void stateCountDown(Character actionPlayer, State state);
+    public abstract void stateCountDown(Player actionPlayer, State state);
 
     public abstract void receiveHeal(double value);
 }

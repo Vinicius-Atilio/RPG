@@ -1,6 +1,6 @@
 package entities.effect;
 
-import entities.character.Character;
+import entities.character.Player;
 
 /**
  * Classe BuffEffect representa um efeito de buff que pode ser aplicado a um personagem.
@@ -11,12 +11,12 @@ import entities.character.Character;
 public class BuffEffect implements Effect {
 
     @Override
-    public void addEffect(entities.character.Character character, StatusEffect statusEffect) {
-        character.addEffect(statusEffect);
+    public void addEffect(Player player, StatusEffect statusEffect) {
+        player.addEffect(statusEffect);
     }
 
     @Override
-    public double damage(Character character) {
+    public double damage(Player player) {
         return 0;
     }
 

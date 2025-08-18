@@ -2,7 +2,7 @@ package entities.skill.ally;
 
 import entities.BattleGround;
 import entities.ally.Ally;
-import entities.character.Character;
+import entities.character.Player;
 import entities.observer.BattleObserver;
 import entities.skill.Skill;
 
@@ -26,7 +26,7 @@ public abstract class AllySupport extends Ally {
     }
 
     @Override
-    public void skillEffectAction(Ally ally, Character activePlayer, Character passivePlayer) {
+    public void skillEffectAction(Ally ally, Player activePlayer, Player passivePlayer) {
         System.out.println();
         System.out.println("💢 " + activePlayer.getName() + " " + voiceActionList.get(ThreadLocalRandom.current().nextInt(voiceActionList.size())));
         System.out.println("💥 " + activePlayer.getName() + " " + hitActionList.get(ThreadLocalRandom.current().nextInt(hitActionList.size())));
@@ -36,12 +36,12 @@ public abstract class AllySupport extends Ally {
     }
 
     @Override
-    public void executeSelectedSkill(Character activePlayer, Character passivePlayer, BattleGround battleGround) {
+    public void executeSelectedSkill(Player activePlayer, Player passivePlayer, BattleGround battleGround) {
         validateContext();
     }
 
     @Override
-    public void skillTypeAction(Character activePlayer, Character passivePlayer, BattleGround battleGround) {
+    public void skillTypeAction(Player activePlayer, Player passivePlayer, BattleGround battleGround) {
         validateContext();
     }
 

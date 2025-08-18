@@ -1,6 +1,6 @@
 package entities.skill.hunter;
 
-import entities.character.Character;
+import entities.character.Player;
 import entities.skill.attack.Attack;
 
 public class ArrowRain extends Attack {
@@ -9,7 +9,7 @@ public class ArrowRain extends Attack {
     }
 
     @Override
-    public void executeSelectedSkill(Character activePlayer, Character passivePlayer) {
+    public void executeSelectedSkill(Player activePlayer, Player passivePlayer) {
         printSkillBox("☄️ ATAQUE ESPECIAL: CHUVA DE FLECHAS BANUK INVOCADA");
         System.out.println("🌫️ O céu escurece enquanto o " +activePlayer.getName()+ " finca seus pés no solo...");
         System.out.println("🧿 " + activePlayer.getName() + " ergue o arco em direção ao céu — seus olhos brilham com foco absoluto.");
@@ -25,7 +25,7 @@ public class ArrowRain extends Attack {
     }
 
     @Override
-    public void skillTypeAction(Character activePlayer, Character passivePlayer) {
+    public void skillTypeAction(Player activePlayer, Player passivePlayer) {
         printSkillBox("🌟️ HABILIDADE ESPECIAL ATIVADA: CHUVA DE FLECHAS BANUK (ESPECIAL)");
         System.out.println("🏹 " + activePlayer.getName() + " ergue o arco aos céus, invocando uma tempestade de flechas!");
         System.out.println("☁️ Nuvens densas se formam — a tensão paira no ar...");

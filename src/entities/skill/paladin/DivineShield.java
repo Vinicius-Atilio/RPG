@@ -1,7 +1,7 @@
 package entities.skill.paladin;
 
 import entities.BattleGround;
-import entities.character.Character;
+import entities.character.Player;
 import entities.skill.defense.Defense;
 
 import java.util.Arrays;
@@ -23,7 +23,7 @@ public class DivineShield extends Defense {
     }
 
     @Override
-    public void executeSelectedSkill(Character activePlayer, Character passivePlayer, BattleGround battleGround) {
+    public void executeSelectedSkill(Player activePlayer, Player passivePlayer, BattleGround battleGround) {
         System.out.println();
         System.out.println("╔════════════════════════════════════════════════════════════════╗");
         System.out.println("║                                            HABILIDADE: ESCUDO DIVINO                                          ║");
@@ -40,7 +40,7 @@ public class DivineShield extends Defense {
     }
 
     @Override
-    public void skillTypeAction(Character activePlayer, Character passivePlayer, BattleGround battleGround) {
+    public void skillTypeAction(Player activePlayer, Player passivePlayer, BattleGround battleGround) {
         activePlayer.changeStateToDefensive();
         System.out.println();
         System.out.println("╔════════════════════════════════════════════════════════════════╗");

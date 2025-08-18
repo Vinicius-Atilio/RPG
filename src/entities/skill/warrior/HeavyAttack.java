@@ -1,6 +1,6 @@
 package entities.skill.warrior;
 
-import entities.character.Character;
+import entities.character.Player;
 import entities.skill.attack.Attack;
 
 import java.util.concurrent.ThreadLocalRandom;
@@ -11,7 +11,7 @@ public class HeavyAttack extends Attack {
     }
 
     @Override
-    public void executeSelectedSkill(Character activePlayer, Character passivePlayer) {
+    public void executeSelectedSkill(Player activePlayer, Player passivePlayer) {
         printSkillBox("💥 HABILIDADE SELECIONADA: GOLPE PESADO DESFERIDO PELO GUERREIRO");
         System.out.println("🧍‍♂️ O guerreiro firma os pés no chão, o peso de sua armadura ressoa no campo...");
         System.out.println("🗡️ Ele empunha sua arma com ambas as mãos, canalizando toda sua força no próximo movimento.");
@@ -25,7 +25,7 @@ public class HeavyAttack extends Attack {
     }
 
     @Override
-    public void skillTypeAction(Character activePlayer, Character passivePlayer) {
+    public void skillTypeAction(Player activePlayer, Player passivePlayer) {
         System.out.println();
         System.out.println("╔════════════════════════════════════════════════════════════════╗");
         System.out.println("║                 HABILIDADE ATIVADA: GOLPE PESADO               ║");

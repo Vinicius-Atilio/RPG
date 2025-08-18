@@ -2,7 +2,7 @@ package entities.skill.hunter.ally;
 
 import entities.BattleGround;
 import entities.ally.Ally;
-import entities.character.Character;
+import entities.character.Player;
 import entities.observer.BattleObserver;
 import entities.skill.Skill;
 import entities.state.OriginalState;
@@ -45,19 +45,18 @@ public class Beast extends Ally {
     }
 
     @Override
-    public void executeSelectedSkill(Character activePlayer, Character passivePlayer, BattleGround battleGround) {
+    public void executeSelectedSkill(Player activePlayer, Player passivePlayer, BattleGround battleGround) {
         printSkillBox("🐺 PREPARANDO FERA COMPANHEIRA");
         System.out.println(activePlayer.getName() + " chama sua fera companheira para a batalha!");
         System.out.println(activePlayer.getName() + " assobia e a fera aparece rapidamente ao seu lado!");
         System.out.println("⚔️ " + activePlayer.getName() + " se prepara para posicionar sua fera companheira no campo de batalha!");
         System.out.println();
-        activePlayer.onAllyInvoked(this);
         this.markAllyObserver(activePlayer);
         this.markEnemyObserver(passivePlayer);
     }
 
     @Override
-    public void skillTypeAction(Character activePlayer, Character passivePlayer, BattleGround battleGround) {
+    public void skillTypeAction(Player activePlayer, Player passivePlayer, BattleGround battleGround) {
         printSkillBox("🐾 FERA COMPANHEIRA ATIVADA");
         System.out.println("🤝 " + activePlayer.getName() + " invocou o aliado " + this.name + " para lutar ao seu lado!");
         System.out.println("🐾 O aliado de " + activePlayer.getName() + this.getAction(actionList));

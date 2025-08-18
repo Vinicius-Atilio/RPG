@@ -2,7 +2,7 @@ package entities.skill.attack;
 
 import entities.BattleGround;
 import entities.ally.Ally;
-import entities.character.Character;
+import entities.character.Player;
 import entities.observer.BattleObserver;
 import entities.skill.Skill;
 
@@ -23,7 +23,7 @@ public abstract class Attack extends Skill {
     }
 
     @Override
-    public void prepareSkillToExecute(Character activePlayer, Character passivePlayer, BattleGround battleGround) {
+    public void prepareSkillToExecute(Player activePlayer, Player passivePlayer, BattleGround battleGround) {
         printSkillBox( "⚔️ PREPARANDO HABILIDADE DE ATAQUE: " + this.name);
         System.out.println("🔄 " + activePlayer.getName() + " se prepara para atacar " + passivePlayer.getName() + " no campo de batalha!");
         System.out.println("🗡️ O ambiente fica tenso enquanto o ataque é preparado...");
@@ -37,7 +37,7 @@ public abstract class Attack extends Skill {
     }
 
     @Override
-    public void skillEffectAction(Character activePlayer, Character passivePlayer) {
+    public void skillEffectAction(Player activePlayer, Player passivePlayer) {
         System.out.println();
         System.out.println("💢" + activePlayer.getName() + " " + voiceActionList.get(ThreadLocalRandom.current().nextInt(voiceActionList.size())));
         System.out.println("💥" + activePlayer.getName() +" " + hitActionList.get(ThreadLocalRandom.current().nextInt(hitActionList.size())));
@@ -47,11 +47,11 @@ public abstract class Attack extends Skill {
     }
 
     @Override
-    public void executeSelectedSkill(Character activePlayer, Character passivePlayer, BattleGround battleGround) {
+    public void executeSelectedSkill(Player activePlayer, Player passivePlayer, BattleGround battleGround) {
         validateContext();
     }
     @Override
-    public void skillTypeAction(Character activePlayer, Character passivePlayer, BattleGround battleGround) {
+    public void skillTypeAction(Player activePlayer, Player passivePlayer, BattleGround battleGround) {
         validateContext();
     }
     @Override
@@ -63,23 +63,23 @@ public abstract class Attack extends Skill {
         validateContext();
     }
     @Override
-    public void executeSelectedSkill(Ally ally, Character activePlayer, Character passivePlayer) {
+    public void executeSelectedSkill(Ally ally, Player activePlayer, Player passivePlayer) {
         validateContext();
     }
     @Override
-    public void skillTypeAction(Ally ally, Character activePlayer, Character passivePlayer) {
+    public void skillTypeAction(Ally ally, Player activePlayer, Player passivePlayer) {
         validateContext();
     }
     @Override
-    public void skillEffectAction(Ally ally, Character activePlayer, Character passivePlayer) {
+    public void skillEffectAction(Ally ally, Player activePlayer, Player passivePlayer) {
         validateContext();
     }
     @Override
-    public void executeSelectedSkill(Character activePlayer, Character passivePlayer) {
+    public void executeSelectedSkill(Player activePlayer, Player passivePlayer) {
         validateContext();
     }
     @Override
-    public void skillTypeAction(Character activePlayer, Character passivePlayer) {
+    public void skillTypeAction(Player activePlayer, Player passivePlayer) {
         validateContext();
     }
 }

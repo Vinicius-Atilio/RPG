@@ -1,8 +1,6 @@
 package entities.skill.mage;
 
-import entities.ally.Ally;
-import entities.character.Character;
-import entities.observer.BattleObserver;
+import entities.character.Player;
 import entities.skill.defense.Defense;
 
 import java.util.Arrays;
@@ -33,7 +31,7 @@ public class ArcaneBarrier extends Defense {
     }
 
     @Override
-    public void executeSelectedSkill(Character activePlayer, Character passivePlayer) {
+    public void executeSelectedSkill(Player activePlayer, Player passivePlayer) {
         System.out.println();
         System.out.println("╔════════════════════════════════════════════════════════════════╗");
         System.out.println("║                 🛡️ MAGIA: BARREIRA ARCANA ERGUIDA PELO MAGO                             ║");
@@ -50,7 +48,7 @@ public class ArcaneBarrier extends Defense {
     }
 
     @Override
-    public void skillTypeAction(Character activePlayer, Character passivePlayer) {
+    public void skillTypeAction(Player activePlayer, Player passivePlayer) {
         activePlayer.changeStateToDefensive();
         System.out.println();
         System.out.println("╔════════════════════════════════════════════════════════════════╗");

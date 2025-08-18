@@ -2,7 +2,7 @@ package entities.skill.paladin;
 
 import entities.BattleGround;
 import entities.ally.Ally;
-import entities.character.Character;
+import entities.character.Player;
 import entities.observer.BattleObserver;
 import entities.skill.Skill;
 import entities.state.OriginalState;
@@ -50,7 +50,7 @@ public class HeavenlyGuardian extends Ally {
     }
 
     @Override
-    public void executeSelectedSkill(Character activePlayer, Character passivePlayer, BattleGround battleGround) {
+    public void executeSelectedSkill(Player activePlayer, Player passivePlayer, BattleGround battleGround) {
         System.out.println();
         System.out.println("╔════════════════════════════════════════════════════════════════════╗");
         System.out.println("║                                          👼 ALIADO: GUARDIÃO CELESTIAL                                            ║");
@@ -64,7 +64,7 @@ public class HeavenlyGuardian extends Ally {
     }
 
     @Override
-    public void skillTypeAction(Character activePlayer, Character passivePlayer, BattleGround battleGround) {
+    public void skillTypeAction(Player activePlayer, Player passivePlayer, BattleGround battleGround) {
         System.out.println();
         System.out.println("╔════════════════════════════════════════════════════════════════════╗");
         System.out.println("║                                   👼 GUARDIÃO CELESTIAL ATIVADO                                      ║");

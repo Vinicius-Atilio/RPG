@@ -2,7 +2,7 @@ package entities.skill.warrior.ally;
 
 import entities.BattleGround;
 import entities.ally.Ally;
-import entities.character.Character;
+import entities.character.Player;
 import entities.observer.BattleObserver;
 import entities.skill.Skill;
 import entities.state.OriginalState;
@@ -39,18 +39,17 @@ public class WarStandard extends Ally {
     }
 
     @Override
-    public void executeSelectedSkill(Character activePlayer, Character passivePlayer, BattleGround battleGround) {
+    public void executeSelectedSkill(Player activePlayer, Player passivePlayer, BattleGround battleGround) {
         printSkillBox("🏴 ALIADO: ESTANDARTE DE GUERRA");
         System.out.println(activePlayer.getName() + "Levanta um estandarte com uma bandeira vermelha vibrante!");
         System.out.println(activePlayer.getName() + " segura firmemente o estandarte de guerra!");
         System.out.println("⚔️ " + activePlayer.getName() + " se prepara para posicionar o estandarte de guerra no campo de batalha!");
         System.out.println();
-        activePlayer.onAllyInvoked(this);
         this.markAllyObserver(activePlayer);
     }
 
     @Override
-    public void skillTypeAction(Character activePlayer, Character passivePlayer, BattleGround battleGround) {
+    public void skillTypeAction(Player activePlayer, Player passivePlayer, BattleGround battleGround) {
         this.allyObserver.onAllyUpdateState(this);
         printSkillBox("🏴 ESTANDARTE DE GUERRA ATIVADO");
         System.out.println("✨ " + activePlayer.getName() + this.getAction(actionList));

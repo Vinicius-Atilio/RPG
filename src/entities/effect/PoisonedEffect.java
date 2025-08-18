@@ -1,6 +1,6 @@
 package entities.effect;
 
-import entities.character.Character;
+import entities.character.Player;
 
 public class PoisonedEffect implements Effect {
     private double damage;
@@ -14,12 +14,12 @@ public class PoisonedEffect implements Effect {
     }
 
     @Override
-    public void addEffect(Character character, StatusEffect statusEffect) {
-        character.addEffect(statusEffect);
+    public void addEffect(Player player, StatusEffect statusEffect) {
+        player.addEffect(statusEffect);
     }
 
     @Override
-    public double damage(Character character) {
-        return character.getLife() * damage; // Retorna o dano causado pelo veneno;
+    public double damage(Player player) {
+        return player.getLife() * damage; // Retorna o dano causado pelo veneno;
     }
 }

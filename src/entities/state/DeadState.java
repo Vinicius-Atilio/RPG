@@ -1,8 +1,7 @@
 package entities.state;
 
 import entities.ally.Ally;
-import entities.character.Character;
-import entities.effect.StatusEffect;
+import entities.character.Player;
 import entities.skill.Skill;
 import entities.skill.attack.Trap;
 
@@ -16,22 +15,22 @@ public class DeadState extends State {
         super(name, state);
     }
 
-    public static DeadState of(Character character) {
-        return new DeadState(character.getName(), character.getState());
+    public static DeadState of(Player player) {
+        return new DeadState(player.getName(), player.getState());
     }
 
     @Override
-    public double calculateDamage(Character actionPlayer, Character passivePlayer, int activeSKillPowerAttack) {
+    public double calculateDamage(Player actionPlayer, Player passivePlayer, int activeSKillPowerAttack) {
         return 0;
     }
 
     @Override
-    public double calculateAllyDamage(Ally ally, Skill skill, Character actionPlayer, Character passivePlayer) {
+    public double calculateAllyDamage(Ally ally, Skill skill, Player actionPlayer, Player passivePlayer) {
         return 0;
     }
 
     @Override
-    public double calculateAllyHeal(Ally ally, Skill skill, Character actionPlayer) {
+    public double calculateAllyHeal(Ally ally, Skill skill, Player actionPlayer) {
         return 0;
     }
 
@@ -46,7 +45,7 @@ public class DeadState extends State {
     }
 
     @Override
-    public void stateCountDown(Character actionPlayer, State state) {
+    public void stateCountDown(Player actionPlayer, State state) {
     }
 
     @Override
@@ -55,12 +54,12 @@ public class DeadState extends State {
     }
 
     @Override
-    public void receiveDamage(Character actionPlayer, Character passivePlayer, double value, Skill skill) {
+    public void receiveDamage(Player actionPlayer, Player passivePlayer, double value, Skill skill) {
 
     }
 
     @Override
-    public void receiveDamage(double value, Character passivePlayer, String effectName) {
+    public void receiveDamage(double value, Player passivePlayer, String effectName) {
 
     }
 
@@ -78,11 +77,11 @@ public class DeadState extends State {
      * This method is called when the character dies.
      * It can be overridden by subclasses to provide specific behavior.
      *
-     * @param character The character that has died.
+     * @param player The character that has died.
      */
     @Override
-    public void onDeath(Character character) {
-        System.out.println("ESTOU MORRENDO " + character.getName() + "!");
+    public void onDeath(Player player) {
+        System.out.println("ESTOU MORRENDO " + player.getName() + "!");
     }
 
     @Override

@@ -2,11 +2,9 @@ package entities.skill.support;
 
 import entities.BattleGround;
 import entities.ally.Ally;
-import entities.character.Character;
+import entities.character.Player;
 import entities.observer.BattleObserver;
 import entities.skill.Skill;
-
-import java.util.concurrent.ThreadLocalRandom;
 
 public abstract class Support extends Skill {
 
@@ -15,7 +13,7 @@ public abstract class Support extends Skill {
     }
 
     @Override
-    public void prepareSkillToExecute(Character activePlayer, Character passivePlayer, BattleGround battleGround) {
+    public void prepareSkillToExecute(Player activePlayer, Player passivePlayer, BattleGround battleGround) {
         System.out.println();
         System.out.println("╔════════════════════════════════════════════════════════════════╗");
         System.out.println("║      ⚡ PREPARANDO HABILIDADE DE SUPORTE: " + this.name + "     ║");
@@ -30,15 +28,15 @@ public abstract class Support extends Skill {
     }
 
     @Override
-    public void skillEffectAction(Character activePlayer, Character passivePlayer) {
+    public void skillEffectAction(Player activePlayer, Player passivePlayer) {
     }
 
     @Override
-    public void executeSelectedSkill(Character activePlayer, Character passivePlayer, BattleGround battleGround) {
+    public void executeSelectedSkill(Player activePlayer, Player passivePlayer, BattleGround battleGround) {
         validateContext();
     }
     @Override
-    public void skillTypeAction(Character activePlayer, Character passivePlayer, BattleGround battleGround) {
+    public void skillTypeAction(Player activePlayer, Player passivePlayer, BattleGround battleGround) {
         validateContext();
     }
     @Override
@@ -50,15 +48,15 @@ public abstract class Support extends Skill {
         validateContext();
     }
     @Override
-    public void executeSelectedSkill(Ally ally, Character activePlayer, Character passivePlayer) {
+    public void executeSelectedSkill(Ally ally, Player activePlayer, Player passivePlayer) {
         validateContext();
     }
     @Override
-    public void skillTypeAction(Ally ally, Character activePlayer, Character passivePlayer) {
+    public void skillTypeAction(Ally ally, Player activePlayer, Player passivePlayer) {
         validateContext();
     }
     @Override
-    public void skillEffectAction(Ally ally, Character activePlayer, Character passivePlayer) {
+    public void skillEffectAction(Ally ally, Player activePlayer, Player passivePlayer) {
         validateContext();
 
     }

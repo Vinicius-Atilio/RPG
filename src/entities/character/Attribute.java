@@ -53,7 +53,7 @@ public abstract class Attribute {
         return agility;
     }
 
-    abstract double calculateDamage(Character actionPlayer, Character passivePlayer, int activeSKillPowerAttack);
+    abstract double calculateDamage(Player actionPlayer, Player passivePlayer, int activeSKillPowerAttack);
 
     public int getVigor() {
         return vigor;

@@ -1,7 +1,7 @@
 package entities.observer;
 
 import entities.ally.Ally;
-import entities.character.Character;
+import entities.character.Player;
 import entities.skill.Skill;
 import entities.skill.attack.Trap;
 
@@ -15,5 +15,5 @@ public interface BattleObserver {
     void onReceiveAllyAttack(Ally ally, Skill skill);
     void onAllySupport(Ally ally);
     void onAllyUpdateState(Ally ally);
-    Character getObserver();
+    Player getObserver();
 }

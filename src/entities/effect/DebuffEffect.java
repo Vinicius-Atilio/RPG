@@ -1,14 +1,14 @@
 package entities.effect;
-import entities.character.Character;
+import entities.character.Player;
 
 public class DebuffEffect implements Effect {
 
     @Override
-    public void addEffect(Character character, StatusEffect statusEffect) {
+    public void addEffect(Player player, StatusEffect statusEffect) {
     }
 
     @Override
-    public double damage(Character character) {
+    public double damage(Player player) {
         return 0;
     }
 }

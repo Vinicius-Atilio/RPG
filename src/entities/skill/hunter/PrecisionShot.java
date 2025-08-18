@@ -1,7 +1,6 @@
 package entities.skill.hunter;
 
-import entities.BattleGround;
-import entities.character.Character;
+import entities.character.Player;
 import entities.skill.attack.Attack;
 
 public class PrecisionShot extends Attack {
@@ -10,7 +9,7 @@ public class PrecisionShot extends Attack {
     }
 
     @Override
-    public void executeSelectedSkill(Character activePlayer, Character passivePlayer) {
+    public void executeSelectedSkill(Player activePlayer, Player passivePlayer) {
         printSkillBox("🎯 TÉCNICA: DISPARO PRECISO BANUK ELITE");
         System.out.println(activePlayer.getName() + " desacelera a respiração... tudo ao redor silencia.");
         System.out.println("👁️ Seus olhos fixam o ponto fraco do " + passivePlayer.getName() + " — núcleo exposto...");
@@ -23,7 +22,7 @@ public class PrecisionShot extends Attack {
     }
 
     @Override
-    public void skillTypeAction(Character activePlayer, Character passivePlayer) {
+    public void skillTypeAction(Player activePlayer, Player passivePlayer) {
         printSkillBox("🎯️ HABILIDADE ATIVADA: DISPARO PRECISO (ATAQUE)");
         System.out.println("🏹 " + activePlayer.getName() + " dispara uma flecha certeira!");
         System.out.println(passivePlayer.getName() + " observa enquanto o tempo parece desacelerar...");

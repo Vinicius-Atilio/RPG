@@ -1,6 +1,6 @@
 package entities.skill.paladin;
 
-import entities.character.Character;
+import entities.character.Player;
 import entities.skill.support.Support;
 
 public class BlessingLight extends Support {
@@ -9,7 +9,7 @@ public class BlessingLight extends Support {
     }
 
     @Override
-    public void executeSelectedSkill(Character activePlayer, Character passivePlayer) {
+    public void executeSelectedSkill(Player activePlayer, Player passivePlayer) {
         System.out.println();
         System.out.println("╔════════════════════════════════════════════════════════════════╗");
         System.out.println("║                  ✨ HABILIDADE: BÊNÇÃO DA LUZ CONCEDIDA PELO PALADINO           ║");
@@ -25,7 +25,7 @@ public class BlessingLight extends Support {
     }
 
     @Override
-    public void skillTypeAction(Character activePlayer, Character passivePlayer) {
+    public void skillTypeAction(Player activePlayer, Player passivePlayer) {
         System.out.println();
         System.out.println("╔════════════════════════════════════════════════════════════════╗");
         System.out.println("║                                      HABILIDADE ATIVADA: BÊNÇÃO DA LUZ                               ║");

@@ -1,7 +1,7 @@
 package entities.skill.paladin;
 
 import entities.BattleGround;
-import entities.character.Character;
+import entities.character.Player;
 import entities.skill.attack.Attack;
 
 public class HolyBlow extends Attack {
@@ -10,7 +10,7 @@ public class HolyBlow extends Attack {
     }
 
     @Override
-    public void prepareSkillToExecute(Character activePlayer, Character passivePlayer, BattleGround battleGround) {
+    public void prepareSkillToExecute(Player activePlayer, Player passivePlayer, BattleGround battleGround) {
         System.out.println();
         System.out.println("╔════════════════════════════════════════════════════════════════╗");
         System.out.println("║                 ✨ HABILIDADE: GOLPE SAGRADO DESFERIDO PELO PALADINO           ║");
@@ -26,7 +26,7 @@ public class HolyBlow extends Attack {
     }
 
     @Override
-    public void skillTypeAction(Character activePlayer, Character passivePlayer, BattleGround battleGround) {
+    public void skillTypeAction(Player activePlayer, Player passivePlayer, BattleGround battleGround) {
         System.out.println();
         System.out.println("╔════════════════════════════════════════════════════════════════╗");
         System.out.println("║                HABILIDADE ATIVADA: GOLPE SAGRADO               ║");

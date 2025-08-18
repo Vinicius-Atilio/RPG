@@ -1,6 +1,6 @@
 package entities.skill.warrior;
 
-import entities.character.Character;
+import entities.character.Player;
 import entities.skill.attack.Attack;
 
 import java.util.Arrays;
@@ -20,7 +20,7 @@ public class BattlefieldWrath extends Attack {
     }
 
     @Override
-    public void executeSelectedSkill(Character activePlayer, Character passivePlayer) {
+    public void executeSelectedSkill(Player activePlayer, Player passivePlayer) {
         printSkillBox("🌟 ESPECIAL SELECIADO: IRA DO CAMPO DE BATALHA TOMBA O EQUILÍBRIO!");
         System.out.println("😡 " + activePlayer.getName() + " crava os pés na terra, soltando um rugido que ecoa pela arena!");
         System.out.println("🌪️ Uma aura vermelha flamejante envolve seu corpo — sua respiração fica pesada...");
@@ -35,7 +35,7 @@ public class BattlefieldWrath extends Attack {
     }
 
     @Override
-    public void skillTypeAction(Character activePlayer, Character passivePlayer) {
+    public void skillTypeAction(Player activePlayer, Player passivePlayer) {
         activePlayer.changeStatusToWrath();
         printSkillBox("🌟 HABILIDADE ESPECIAL ATIVADA: IRA DO CAMPO DE BATALHA (ESPECIAL)");
         System.out.println("🔥 " + activePlayer.getName() + " entra em estado de furia!");

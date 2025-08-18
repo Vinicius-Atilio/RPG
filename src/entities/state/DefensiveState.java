@@ -1,7 +1,7 @@
 package entities.state;
 
 import entities.ally.Ally;
-import entities.character.Character;
+import entities.character.Player;
 import entities.skill.Skill;
 import entities.skill.attack.Trap;
 
@@ -26,23 +26,23 @@ public class DefensiveState extends State {
     }
 
     @Override
-    public double calculateDamage(Character actionPlayer, Character passivePlayer, int activeSKillPowerAttack) {
+    public double calculateDamage(Player actionPlayer, Player passivePlayer, int activeSKillPowerAttack) {
         System.out.println("😤 " + passivePlayer.getName() + " está em estado defensivo e não efetua dano!");
         return 0;
     }
 
     @Override
-    public double calculateAllyDamage(Ally ally, Skill skill, Character actionPlayer, Character passivePlayer) {
+    public double calculateAllyDamage(Ally ally, Skill skill, Player actionPlayer, Player passivePlayer) {
         return 0;
     }
 
     @Override
-    public double calculateAllyHeal(Ally ally, Skill skill, Character actionPlayer) {
+    public double calculateAllyHeal(Ally ally, Skill skill, Player actionPlayer) {
         return 0;
     }
 
     @Override
-    public void receiveDamage(Character actionPlayer, Character passivePlayer, double value, Skill skill) {
+    public void receiveDamage(Player actionPlayer, Player passivePlayer, double value, Skill skill) {
        if (value > 0) {
            System.out.printf("😤 %s está em estado defensivo e reduz o dano recebido de %.2f para %.2f!%n",
                    passivePlayer.getName(), value, value * 0.5);
@@ -56,7 +56,7 @@ public class DefensiveState extends State {
     }
 
     @Override
-    public void receiveDamage(double value, Character passivePlayer, String effectName) {
+    public void receiveDamage(double value, Player passivePlayer, String effectName) {
         this.life -= value * this.reducedValue;
         System.out.printf("😤 %s está em estado defensivo e reduz o dano recebido de %.2f para %.2f devido ao efeito %s! Vida atual: %.2f%n",
                 passivePlayer.getName(), value, reducedValue, effectName, this.life);
@@ -73,8 +73,8 @@ public class DefensiveState extends State {
     }
 
     @Override
-    public void onDeath(Character character) {
-        character.changeState(DeadState.of(new Character("* DEAD " + character.getName(), OriginalState.ofDeath())));
+    public void onDeath(Player player) {
+        player.changeState(DeadState.of(new Player("* DEAD " + player.getName(), OriginalState.ofDeath())));
     }
 
     @Override
@@ -94,7 +94,7 @@ public class DefensiveState extends State {
     }
 
     @Override
-    public void stateCountDown(Character actionPlayer, State state) {
+    public void stateCountDown(Player actionPlayer, State state) {
         if (this.stateDuration == 0) {
             System.out.println("😌 O efeito de defensivo terminou. " + actionPlayer.getName() + " está de volta ao estado original.");
             actionPlayer.changeState(state);

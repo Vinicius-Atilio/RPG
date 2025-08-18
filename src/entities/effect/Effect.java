@@ -1,8 +1,8 @@
 package entities.effect;
 
-import entities.character.Character;
+import entities.character.Player;
 
 public interface Effect {
-    void addEffect(Character character, StatusEffect statusEffect);
-    double damage(Character character);
+    void addEffect(Player player, StatusEffect statusEffect);
+    double damage(Player player);
 }
