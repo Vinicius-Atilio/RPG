@@ -36,40 +36,21 @@ public class BattleGround implements BattleObserver {
     public void nextTurn() {
         this.turn++;
 
-        if (this.player1.isAlive()) {
+        if (this.player1.canAttack(this.player2)) {
             System.out.println("\n⏳ Ação de " + this.player1.getName());
             Skill selectedSkill = this.player1.selectSkill();
             selectedSkill.prepareSkillToExecute(this.player1, this.player2, this);
             selectedSkill.markAsCasted();
-            verifyIfPlayerDied(this.player2, selectedSkill);
         }
 
         System.out.println();
 
-        if (this.player2.isAlive()) {
+        if (this.player2.canAttack(this.player1)) {
             System.out.println("\n⏳ Ação de " + this.player2.getName());
             Skill selectedSkill = this.player2.selectSkill();
             selectedSkill.prepareSkillToExecute(this.player2, this.player1, this);
             selectedSkill.markAsCasted();
-            verifyIfPlayerDied(this.player1, selectedSkill);
         }
-    }
-
-    private void verifyIfPlayerDied(Player player, Skill selectedSkill) {
-        if (!player.isAlive()) {
-            player.makeDeath();
-            this.playerIsDied(player, selectedSkill);
-        }
-    }
-
-    private void playerIsDied(Player player, Skill selectedSkill) {
-
-        System.out.println("💥 O " + selectedSkill.getName() + " atinge em cheio!");
-        System.out.println("❤️ " + player.getName() + " tinha apenas " +  String.format("%.2f", player.getLife() > 0 ? player.getLife() : 0 ) + " de vida restante...");
-
-        System.out.println("\n💀 Ele é derrubado com o impacto. Sua armadura racha e ele cai de joelhos.");
-        System.out.println("🕯️ A chama da vida se apaga em seus olhos...");
-        System.out.println("⚰️ " + player.getName() + " foi derrotado.");
     }
 
     public void welcome() {
@@ -101,7 +82,7 @@ public class BattleGround implements BattleObserver {
 
         if (this.hasAllies()) {
             for (Ally ally : this.allies) {
-                ally.allyAction(this);
+                ally.doAction(this);
             }
         }
     }

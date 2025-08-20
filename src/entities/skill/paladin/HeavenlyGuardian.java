@@ -25,7 +25,7 @@ public class HeavenlyGuardian extends Ally {
     }
 
     @Override
-    public void allyAction(BattleObserver battleGroundObserver) {
+    public void doAction(BattleObserver battleGroundObserver) {
 
     }
 

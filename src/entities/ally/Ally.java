@@ -50,7 +50,6 @@ public abstract class Ally extends Skill {
 
     @Override
     public void skillEffectAction(Player activePlayer, Player passivePlayer) {
-        printSkillBox("🛡️ ALIADO: " + this.name + " executou ");
         System.out.println("✨ " + activePlayer.getName() + " teve ajuda de " + this.name + " na batalha!");
         System.out.println("💪 Com a ajuda do aliado, " + activePlayer.getName() + " sente-se mais confiante e determinado!");
         System.out.println();
@@ -89,7 +88,7 @@ public abstract class Ally extends Skill {
     }
     // OS METODOS ACIMA DEVEM SER IMPLEMENTADOS NAS CLASSES FILHAS DA HABILIDADE DO ALIADO
 
-    public abstract void allyAction(BattleObserver battleGroundObserver);
+    public abstract void doAction(BattleObserver battleGroundObserver);
     public abstract Skill allySelectSkill();
     public abstract String getIcon();
     public abstract double getAllyPower();

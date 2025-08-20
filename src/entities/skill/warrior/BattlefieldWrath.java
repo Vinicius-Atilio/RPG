@@ -36,7 +36,7 @@ public class BattlefieldWrath extends Attack {
 
     @Override
     public void skillTypeAction(Player activePlayer, Player passivePlayer) {
-        activePlayer.changeStatusToWrath();
+        activePlayer.changeStateToWrath();
         printSkillBox("🌟 HABILIDADE ESPECIAL ATIVADA: IRA DO CAMPO DE BATALHA (ESPECIAL)");
         System.out.println("🔥 " + activePlayer.getName() + " entra em estado de furia!");
         System.out.println("💥 " + activePlayer.getName() + " sente a força do campo de batalha pulsando em suas veias!");

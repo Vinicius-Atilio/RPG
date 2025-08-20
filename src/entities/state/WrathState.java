@@ -3,46 +3,45 @@ package entities.state;
 import entities.ally.Ally;
 import entities.character.Player;
 import entities.skill.Skill;
-import entities.skill.attack.Trap;
 
-public class StunnedState extends State {
-    public StunnedState(double life, int strength, int intelligence, int agility, int vigor, int mana, int defense, int turns) {
-        super("Estado Atordoado", life, strength, intelligence, agility, vigor, mana, defense, turns);
+public class WrathState extends  State {
+    public WrathState(double life, int strength, int intelligence, int agility, int vigor, int mana, int defense, int turns) {
+        super("Estado de ira", life, strength, intelligence, agility, vigor, mana, defense, turns);
     }
 
-    public static StunnedState of(State state) {
-        return new StunnedState(
+    public static WrathState of(State state) {
+        return new WrathState(
                 state.getLife(),
                 state.getStrength(),
                 state.getIntelligence(),
                 state.getAgility(),
                 state.getVigor(),
                 state.getMana(),
-                state.getDefense(),
-                1
+                (int) ( state.getDefense()  * 0.2),
+                2
         );
     }
 
     @Override
     public double calculateDamage(Player activePlayer, Player passivePlayer, int activeSKillPowerAttack) {
-        System.out.println("⚠️ " + passivePlayer.getName() + " está atordoado e não pode se defender!");
-        double damage = activeSKillPowerAttack + (activePlayer.getMainAttribute() * activePlayer.weaponFactor());
+        double damage = activeSKillPowerAttack + (activePlayer.getMainAttribute() * activePlayer.weaponFactor()) * 1.2;
         return Math.max(damage, 0);
     }
 
     @Override
     public double calculateAllyDamage(Ally ally, Skill skill, Player actionPlayer, Player passivePlayer) {
-        System.out.println("⚠️ " + passivePlayer.getName() + " está atordoado e não pode se defender do ataque do aliado.!");
         double damage = (ally.getAllyPower() + skill.getActiveSkillPowerAttack()
-                + (actionPlayer.getMainAttribute() * ally.getInvokerPower()) * ally.getSkillMultiplier());
-
+                + (actionPlayer.getMainAttribute() * ally.getInvokerPower()) * ally.getSkillMultiplier()) * 1.2;
         return Math.max(damage, 0);
     }
 
     @Override
-    public void receiveEffect(String name) {
-
+    public double calculateAllyHeal(Ally ally, Skill skill, Player activePlayer) {
+        return 0;
     }
+
+    @Override
+    public void receiveEffect(String name) {}
 
     @Override
     public void onDeath(Player player) {
@@ -51,7 +50,7 @@ public class StunnedState extends State {
 
     @Override
     public boolean isAlive() {
-        return true;
+        return this.life > 0;
     }
 
     @Override
@@ -66,13 +65,22 @@ public class StunnedState extends State {
     }
 
     @Override
+    public void stateCountDown(Player actionPlayer, State state) {
+        if (this.stateDuration == 0) {
+            System.out.println("😌 O efeito de defensivo terminou. " + actionPlayer.getName() + " está de volta ao estado original.");
+            actionPlayer.changeStateToTired(state);
+        };
+
+        this.stateDuration--;
+    }
+
+    @Override
     public void receiveHeal(double value) {
         this.life += value;
     }
 
     @Override
     public boolean canAttack(String activePlayerName) {
-        System.out.println("⚠️ " + activePlayerName + " está atordoado e não pode atacar!");
         return false;
     }
 }

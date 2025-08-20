@@ -11,7 +11,7 @@ public class BeastAttack extends AllyAttack {
 
     @Override
     public void executeSelectedSkill(Ally ally, Player activePlayer, Player passivePlayer) {
-        printSkillBox("🐾 ALIADO: ATAQUE DA FERA");
+        printSkillBox("🐾 HABILIDADE DO ALIADO: ATAQUE DA FERA");
         System.out.println(activePlayer.getName() + " ordena a fera companheira a atacar " + passivePlayer.getName() + "!");
         System.out.println("A fera salta sobre o inimigo, dilacerando-o com suas garras afiadas!");
         System.out.println("⚔️ " + activePlayer.getName() + " executa o ataque da fera com precisão!");

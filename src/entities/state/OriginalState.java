@@ -12,8 +12,8 @@ public class OriginalState extends State {
     }
 
     @Override
-    public double calculateDamage(Player actionPlayer, Player passivePlayer, int activeSKillPowerAttack) {
-        double damage = activeSKillPowerAttack + (actionPlayer.getMainAttribute() * actionPlayer.weaponFactor())
+    public double calculateDamage(Player activePlayer, Player passivePlayer, int activeSKillPowerAttack) {
+        double damage = activeSKillPowerAttack + (activePlayer.getMainAttribute() * activePlayer.weaponFactor())
                 - passivePlayer.originalDefenseValue();
         return Math.max(damage, 0);
     }
@@ -25,29 +25,6 @@ public class OriginalState extends State {
                 - passivePlayer.originalDefenseValue();
 
         return Math.max(damage, 0);
-    }
-
-    @Override
-    public double calculateAllyHeal(Ally ally, Skill skill, Player actionPlayer) {
-        return (ally.getAllyHeal() * ally.getSkillMultiplier()) + actionPlayer.getMainAttribute();
-    }
-
-    @Override
-    public void receiveDamage(Player actionPlayer, Player passivePlayer, double value, Skill skill) {
-        this.life -= value;
-        skill.skillEffectAction(actionPlayer, passivePlayer);
-    }
-
-    @Override
-    public void receiveDamage(double value, Player passivePlayer, String effectName) {
-        this.life -= value;
-        System.out.printf("😤 %s recebeu o dano de %.2f devido ao efeito %s!%n", passivePlayer.getName(), value, effectName);
-    }
-
-    @Override
-    public void receiveDamage(Trap trap) {
-        this.life -= trap.getDamage();
-        System.out.println("💣 A armadilha explode causando " + trap.getDamage() + " de dano!");
     }
 
     @Override
@@ -75,12 +52,13 @@ public class OriginalState extends State {
     }
 
     @Override
-    public void stateCountDown(Player actionPlayer, State state) {
+    public void receiveHeal(double value) {
+        this.life += value;
     }
 
     @Override
-    public void receiveHeal(double value) {
-        this.life += value;
+    public boolean canAttack(String activePlayerName) {
+        return true;
     }
 
     public static OriginalState ofState(State state) {

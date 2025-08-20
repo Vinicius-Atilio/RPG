@@ -24,7 +24,7 @@ public class WarStandard extends Ally {
     }
 
     @Override
-    public void allyAction(BattleObserver battleGroundObserver) {
+    public void doAction(BattleObserver battleGroundObserver) {
         battleGroundObserver.onNotifyAllyAction(this, this);
     }
 
@@ -58,7 +58,6 @@ public class WarStandard extends Ally {
         System.out.println();
         battleGround.onAllyInvoked(this);
     }
-
 
     @Override
     public Skill allySelectSkill() {

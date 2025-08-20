@@ -17,6 +17,7 @@ public class ExplosiveTrap extends Trap {
         System.out.println("🛠️ Posiciona a carga entre pedras e folhas, conectando os fios com precisão...");
         System.out.println("🔥 Um pequeno LED vermelho pisca no núcleo da bomba... armada com sucesso.");
         this.markTargetObserver(passivePlayer);
+        this.markOwnerObserver(activePlayer);
     }
 
     @Override

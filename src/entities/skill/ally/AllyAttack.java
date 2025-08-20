@@ -48,7 +48,7 @@ public abstract class AllyAttack extends Ally {
     }
 
     @Override
-    public void allyAction(BattleObserver battleGroundObserver) {
+    public void doAction(BattleObserver battleGroundObserver) {
 
     }
 

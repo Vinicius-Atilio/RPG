@@ -20,7 +20,7 @@ public class DeadState extends State {
     }
 
     @Override
-    public double calculateDamage(Player actionPlayer, Player passivePlayer, int activeSKillPowerAttack) {
+    public double calculateDamage(Player activePlayer, Player passivePlayer, int activeSKillPowerAttack) {
         return 0;
     }
 
@@ -30,7 +30,7 @@ public class DeadState extends State {
     }
 
     @Override
-    public double calculateAllyHeal(Ally ally, Skill skill, Player actionPlayer) {
+    public double calculateAllyHeal(Ally ally, Skill skill, Player activePlayer) {
         return 0;
     }
 
@@ -54,18 +54,8 @@ public class DeadState extends State {
     }
 
     @Override
-    public void receiveDamage(Player actionPlayer, Player passivePlayer, double value, Skill skill) {
-
-    }
-
-    @Override
-    public void receiveDamage(double value, Player passivePlayer, String effectName) {
-
-    }
-
-    @Override
-    public void receiveDamage(Trap trap) {
-
+    public boolean canAttack(String activePlayerName) {
+        return false;
     }
 
     @Override

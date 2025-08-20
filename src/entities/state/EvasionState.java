@@ -10,7 +10,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public class EvasionState extends State {
 
     public EvasionState(double life, int strength, int intelligence, int agility, int vigor, int mana, int defense, int stateDuration) {
-        super(life, strength, intelligence, agility, vigor, mana, defense, stateDuration);
+        super("Estado Evasivo", life, strength, intelligence, agility, vigor, mana, defense, stateDuration);
     }
 
     public static State of(State state) {
@@ -26,9 +26,19 @@ public class EvasionState extends State {
         );
     }
 
+    private static boolean chanceToEvade(Player activePlayer, Player passivePlayer) {
+        if (ThreadLocalRandom.current().nextBoolean()) {
+            System.out.printf("😱 %s conseguiu desviar do ataque de %s!%n", passivePlayer.getName(), activePlayer.getName());
+            return true;
+        }
+
+        System.out.printf("😢 %s não conseguiu desviar do ataque de %s.%n", passivePlayer.getName(), activePlayer.getName());
+        return false;
+    }
+
     @Override
-    public double calculateDamage(Player actionPlayer, Player passivePlayer, int activeSKillPowerAttack) {
-        return (actionPlayer.getMainAttribute() * actionPlayer.weaponFactor()) + (activeSKillPowerAttack - passivePlayer.originalDefenseValue());
+    public double calculateDamage(Player activePlayer, Player passivePlayer, int activeSKillPowerAttack) {
+        return (activePlayer.getMainAttribute() * activePlayer.weaponFactor()) + (activeSKillPowerAttack - passivePlayer.originalDefenseValue());
     }
 
     @Override
@@ -37,30 +47,26 @@ public class EvasionState extends State {
     }
 
     @Override
-    public double calculateAllyHeal(Ally ally, Skill skill, Player actionPlayer) {
+    public double calculateAllyHeal(Ally ally, Skill skill, Player activePlayer) {
         return 0;
     }
 
     @Override
-    public void receiveDamage(Player actionPlayer, Player passivePlayer, double value, Skill skill) {
-        if (ThreadLocalRandom.current().nextBoolean()) {
-            System.out.printf("😱 %s conseguiu desviar do ataque de %s!%n", passivePlayer.getName(), actionPlayer.getName());
-            return;
-        }
-
-        this.life -= value;
-        skill.skillEffectAction(actionPlayer, passivePlayer);
-        System.out.printf("😤 %s recebeu o dano de %.2f de %s!%n", passivePlayer.getName(), value, actionPlayer.getName());
+    public void receiveDamage(Player activePlayer, Player passivePlayer, double value, Skill skill) {
+        if (chanceToEvade(activePlayer, passivePlayer)) return;
+        super.receiveDamage(activePlayer, passivePlayer, value, skill);
     }
 
     @Override
     public void receiveDamage(double value, Player passivePlayer, String effectName) {
-
+        if (chanceToEvade(passivePlayer, passivePlayer)) return;
+        super.receiveDamage(value, passivePlayer, effectName);
     }
 
     @Override
-    public void receiveDamage(Trap trap) {
-
+    public void receiveDamage(Trap trap, Player passivePlayer) {
+        if (chanceToEvade(trap.getOwnerPlayerObserver(), passivePlayer)) return;
+        super.receiveDamage(trap.getDamage(), passivePlayer, trap.getName());
     }
 
     @Override
@@ -90,18 +96,13 @@ public class EvasionState extends State {
     }
 
     @Override
-    public void stateCountDown(Player actionPlayer, State state) {
-        if (this.stateDuration == 0) {
-            System.out.println("😌 O efeito de evasão terminou. " + actionPlayer.getName() + " está de volta ao estado original.");
-            actionPlayer.changeState(state);
-        };
+    public void receiveHeal(double value) {
 
-        this.stateDuration--;
     }
 
     @Override
-    public void receiveHeal(double value) {
-
+    public boolean canAttack(String activePlayerName) {
+        return true;
     }
 
     @Override

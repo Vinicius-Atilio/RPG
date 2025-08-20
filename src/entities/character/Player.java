@@ -23,6 +23,7 @@ public class Player implements BattleObserver {
     private Race race;
     private Specialization specialization;
     private List<Skill> skills;
+    // refatorar mandar pro estado do jogador
     private List<StatusEffect> effects;
     private Weapon weapon;
     private Ally ally;
@@ -55,12 +56,12 @@ public class Player implements BattleObserver {
         return this.state.isAlive();
     }
 
-    public String getName() {
-        return name;
+    public boolean canAttack(Player player2) {
+        return this.state.canAttack(this.name) && this.state.isAlive() && player2.state.isAlive();
     }
 
-    public void prepareToPlay() {
-
+    public String getName() {
+        return name;
     }
 
     public Skill selectSkill() {
@@ -169,8 +170,16 @@ public class Player implements BattleObserver {
         return ally;
     }
 
-    public void makeImmune() {
+    public void changeStateToImmune() {
         this.state = ImmuneState.of(this.state);
+    }
+
+    public void changeStateToWrath() {
+        this.state = WrathState.of(this.state);
+    }
+
+    public void changeStateToTired(State state) {
+        this.state = TiredState.of(state);
     }
 
     public void changeStateToStunned() {
@@ -294,7 +303,7 @@ public class Player implements BattleObserver {
 
     @Override
     public void onTrapActivated(Trap trap) {
-        this.state.receiveDamage(trap);
+        this.state.receiveDamage(trap, this);
         System.out.println("👤 " + this.name + " diz: Você me pagará por isso!");
     }
 
@@ -316,9 +325,6 @@ public class Player implements BattleObserver {
     @Override
     public Player getObserver() {
         return this;
-    }
-
-    public void changeStatusToWrath() {
     }
 
     public int getDefense() {

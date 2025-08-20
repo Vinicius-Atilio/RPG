@@ -6,8 +6,8 @@ import entities.skill.Skill;
 import entities.skill.attack.Trap;
 
 public class ImmuneState extends State {
-    public ImmuneState(double life, int strength, int intelligence, int agility, int vigor, int mana, int defense) {
-        super(life, strength, intelligence, agility, vigor, mana, defense);
+    public ImmuneState(double life, int strength, int intelligence, int agility, int vigor, int mana, int defense, int turns) {
+        super("Estado Imune", life, strength, intelligence, agility, vigor, mana, defense, turns);
     }
 
     public ImmuneState(String name, State state) {
@@ -22,33 +22,40 @@ public class ImmuneState extends State {
                 state.getAgility(),
                 state.getVigor(),
                 state.getMana(),
-                state.getDefense()
+                state.getDefense(),
+                1
         );
     }
 
+    public void printImmuneState(Player activePlayer) {
+        System.out.println("🛡️ " + activePlayer.getName() + " está sob efeito de imunidade!");
+        System.out.println("Nenhum dano será recebido enquanto este estado estiver ativo.");
+    }
+
     @Override
-    public void receiveDamage(Player actionPlayer, Player passivePlayer, double value, Skill skill) {
-        System.out.printf(" Está imune a ataques, sob efeito de %s!%n");
+    public void receiveDamage(Player activePlayer, Player passivePlayer, double value, Skill skill) {
+        this.printImmuneState(activePlayer);
     }
 
     @Override
     public void receiveDamage(double value, Player passivePlayer, String effectName) {
+        this.printImmuneState(passivePlayer);
     }
 
     @Override
-    public void receiveDamage(Trap trap) {
-
+    public void receiveDamage(Trap trap, Player passivePlayer) {
+        System.out.println("💣 A armadilha não causa dano devido ao estado de imunidade!");
     }
 
 
     @Override
     public void receiveEffect(String name) {
-
+        System.out.println("🛡️ O efeito " + name + " não afeta o jogador devido ao estado de imunidade.");
     }
 
     @Override
     public void onDeath(Player player) {
-        player.changeState(DeadState.of(new Player("* DEAD " + player.getName(), OriginalState.ofDeath())));
+        this.printImmuneState(player);
     }
 
     @Override
@@ -57,7 +64,7 @@ public class ImmuneState extends State {
     }
 
     @Override
-    public double calculateDamage(Player actionPlayer, Player passivePlayer, int activeSKillPowerAttack) {
+    public double calculateDamage(Player activePlayer, Player passivePlayer, int activeSKillPowerAttack) {
         return 0;
     }
 
@@ -67,7 +74,7 @@ public class ImmuneState extends State {
     }
 
     @Override
-    public double calculateAllyHeal(Ally ally, Skill skill, Player actionPlayer) {
+    public double calculateAllyHeal(Ally ally, Skill skill, Player activePlayer) {
         return 0;
     }
 
@@ -83,12 +90,13 @@ public class ImmuneState extends State {
     }
 
     @Override
-    public void stateCountDown(Player actionPlayer, State state) {
+    public void receiveHeal(double value) {
+
     }
 
     @Override
-    public void receiveHeal(double value) {
-
+    public boolean canAttack(String activePlayerName) {
+        return true;
     }
 
     @Override

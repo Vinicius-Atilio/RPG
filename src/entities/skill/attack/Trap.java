@@ -12,6 +12,7 @@ public abstract class Trap extends Skill {
     protected int damage;
     protected Random random = new Random();
     protected BattleObserver targetObserver;
+    protected BattleObserver ownerObserver;
 
     protected Trap(String name, String description, String skillAction,
                    int cooldown, int damage) {
@@ -46,6 +47,10 @@ public abstract class Trap extends Skill {
         this.targetObserver = targetObserver;
     }
 
+    protected void markOwnerObserver(BattleObserver ownerObserver) {
+        this.ownerObserver = ownerObserver;
+    }
+
     public boolean canBeExplode() {
         if (this.targetObserver == null) {
             return false;
@@ -60,6 +65,10 @@ public abstract class Trap extends Skill {
 
     public int getDamage() {
         return damage;
+    }
+
+    public Player getOwnerPlayerObserver() {
+        return ownerObserver.getObserver();
     }
 
     @Override

@@ -9,7 +9,7 @@ public class DefensiveState extends State {
     private double reducedValue = 0.5;
 
     public DefensiveState(double life, int strength, int intelligence, int agility, int vigor, int mana, int defense, int stateDuration) {
-        super(life, strength, intelligence, agility, vigor, mana, defense, stateDuration);
+        super("Estado Defensivo" ,life, strength, intelligence, agility, vigor, mana, defense, stateDuration);
     }
 
     public static State of(State state) {
@@ -20,13 +20,13 @@ public class DefensiveState extends State {
                 state.getAgility(),
                 state.getVigor(),
                 state.getMana(),
-                state.getDefense() + 5,
+                state.getDefense() * 2, // Aumenta a defesa
                 1
         );
     }
 
     @Override
-    public double calculateDamage(Player actionPlayer, Player passivePlayer, int activeSKillPowerAttack) {
+    public double calculateDamage(Player activePlayer, Player passivePlayer, int activeSKillPowerAttack) {
         System.out.println("😤 " + passivePlayer.getName() + " está em estado defensivo e não efetua dano!");
         return 0;
     }
@@ -37,22 +37,22 @@ public class DefensiveState extends State {
     }
 
     @Override
-    public double calculateAllyHeal(Ally ally, Skill skill, Player actionPlayer) {
+    public double calculateAllyHeal(Ally ally, Skill skill, Player activePlayer) {
         return 0;
     }
 
     @Override
-    public void receiveDamage(Player actionPlayer, Player passivePlayer, double value, Skill skill) {
+    public void receiveDamage(Player activePlayer, Player passivePlayer, double value, Skill skill) {
        if (value > 0) {
            System.out.printf("😤 %s está em estado defensivo e reduz o dano recebido de %.2f para %.2f!%n",
                    passivePlayer.getName(), value, value * 0.5);
            this.life -= value * this.reducedValue;
-           skill.skillEffectAction(actionPlayer, passivePlayer);
-           System.out.printf("😤 %s recebeu o dano reduzido de %.2f de %s!%n", passivePlayer.getName(), value * 0.5, actionPlayer.getName());
+           skill.skillEffectAction(activePlayer, passivePlayer);
+           System.out.printf("😤 %s recebeu o dano reduzido de %.2f de %s!%n", passivePlayer.getName(), value * 0.5, activePlayer.getName());
            return;
         }
 
-        System.out.println("😱 " + passivePlayer.getName() + " conseguiu se defender do ataque de " + actionPlayer.getName() + "!");
+        System.out.println("😱 " + passivePlayer.getName() + " conseguiu se defender do ataque de " + activePlayer.getName() + "!");
     }
 
     @Override
@@ -63,7 +63,7 @@ public class DefensiveState extends State {
     }
 
     @Override
-    public void receiveDamage(Trap trap) {
+    public void receiveDamage(Trap trap, Player passivePlayer) {
 
     }
 
@@ -94,17 +94,13 @@ public class DefensiveState extends State {
     }
 
     @Override
-    public void stateCountDown(Player actionPlayer, State state) {
-        if (this.stateDuration == 0) {
-            System.out.println("😌 O efeito de defensivo terminou. " + actionPlayer.getName() + " está de volta ao estado original.");
-            actionPlayer.changeState(state);
-        };
+    public void receiveHeal(double value) {
 
-        this.stateDuration--;
     }
 
     @Override
-    public void receiveHeal(double value) {
-
+    public boolean canAttack(String activePlayerName) {
+        System.out.println("⚠️ " + activePlayerName + " está em estado defensivo e não pode atacar!");
+        return false;
     }
 }

@@ -35,7 +35,7 @@ public class Beast extends Ally {
     }
 
     @Override
-    public void allyAction(BattleObserver battleGroundObserver) {
+    public void doAction(BattleObserver battleGroundObserver) {
         System.out.println("🐾 " + this.getName() + " está pronto para usar sua habilidade!");
         battleGroundObserver.onNotifyAllyAction(this, this);
         Skill selectedSkill = this.allySelectSkill();
