@@ -27,8 +27,9 @@ public class Lunge extends Attack {
 
     @Override
     public void executeSelectedSkill(Player activePlayer, Player passivePlayer) {
-        printSkillBox("🚨 HABILIDADE: INVESTIDA RELÂMPAGO");
+        printSkillBox("HABILIDADE:  INVESTIDA RELÂMPAGO 🛡");
         System.out.println("🏃‍♂️ " + activePlayer.getName() + " abaixa a postura e se lança com fúria sobre " + passivePlayer.getName() + "!");
+        System.out.println("O guerreiro dispara em fúria contra o adversário, esmagando o chão a cada passo. O impacto do choque é como uma muralha em movimento, lançando o inimigo para trás em choque.");
         System.out.println("💨 A poeira se levanta enquanto ele rasga o campo em velocidade absurda!");
         System.out.println("💥 O Impacto no corpo e da lâmina estremecera o alvo!");
         System.out.println();
@@ -39,9 +40,10 @@ public class Lunge extends Attack {
 
     @Override
     public void skillTypeAction(Player activePlayer, Player passivePlayer) {
-        printSkillBox("⚡ HABILIDADE: INVESTIDA RELÂMPAGO EXECUTADA PELO GUERREIRO");
+        printSkillBox("HABILIDADE:  INVESTIDA RELÂMPAGO EXECUTADA PELO GUERREIRO ⚡ ");
         System.out.println("🏃‍♂️ " + activePlayer.getName() + " abaixa a postura e dispara como um trovão em direção ao inimigo!");
         System.out.println("💢 " + this.getAction(skillActionList));
+        System.out.println("O guerreiro dispara em fúria contra o adversário, esmagando o chão a cada passo. O impacto do choque é como uma muralha em movimento, lançando o inimigo para trás em choque.");
         System.out.println("💨 O chão treme sob seus pés enquanto ele corta o campo em velocidade feroz!");
         System.out.println("💥 O impacto do avanço sacode tudo ao redor!");
         System.out.println("🔁 Há uma chance de que o inimigo fique completamente atordoado pela força do golpe!");

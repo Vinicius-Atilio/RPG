@@ -16,6 +16,7 @@ public class ExplosiveTrap extends Trap {
         System.out.println("🧰 Ele retira uma carga instável da bolsa e um detonador artesanal.");
         System.out.println("🛠️ Posiciona a carga entre pedras e folhas, conectando os fios com precisão...");
         System.out.println("🔥 Um pequeno LED vermelho pisca no núcleo da bomba... armada com sucesso.");
+        // JOGADOR IMPLEMENTAR ESSAS ACOES
         this.markTargetObserver(passivePlayer);
         this.markOwnerObserver(activePlayer);
     }

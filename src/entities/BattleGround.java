@@ -34,8 +34,6 @@ public class BattleGround implements BattleObserver {
     }
 
     public void nextTurn() {
-        this.turn++;
-
         if (this.player1.canAttack(this.player2)) {
             System.out.println("\n⏳ Ação de " + this.player1.getName());
             Skill selectedSkill = this.player1.selectSkill();
@@ -61,12 +59,14 @@ public class BattleGround implements BattleObserver {
 
     @Override
     public void onTurnStart() {
+        this.turn++;
         System.out.println("🔄 Iniciando o turno " + this.turn + "...");
         System.out.println("⚔️ " + this.player1.getName() + " vs " + this.player2.getName());
         System.out.println(this.player1.getName() + " - " + this.player1.getSpecialization() +  " ❤️ " + String.format("%.2f", this.player1.getLife()));
         System.out.println(this.player2.getName() + " - " + this.player2.getSpecialization() +  " ❤️ " + String.format("%.2f", this.player2.getLife()));
         this.player1.onTurnStart();
         this.player2.onTurnStart();
+
         if (this.hasTraps()) {
             List<Trap> trapsToRemove = new ArrayList<>();
 
