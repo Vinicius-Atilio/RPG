@@ -11,7 +11,7 @@ import java.util.List;
 public abstract class Ally extends Skill {
     protected State state;
     protected List<Skill> skills;
-    protected BattleObserver allyObserver; // Observador que invoca o aliado
+    protected BattleObserver invokerObserver; // Observador que invoca o aliado
     protected BattleObserver enemyObserver; // Observador que invoca o inimigo
     protected double invokerPower; // Quanto do poder do invocador influencia
     protected double skillMultiplier; // Quanto a habilidade influencia
@@ -70,24 +70,29 @@ public abstract class Ally extends Skill {
     public void prepareSkillToExecute(Ally ally, BattleObserver allyObserver, BattleObserver battleGroundObserver) {
         validateContext();
     }
+
     @Override
     public void prepareSkillToExecute(Ally ally, BattleObserver allyObserver, BattleObserver enemyObserver, BattleObserver battleGroundObserver) {
         validateContext();
     }
+
     @Override
     public void executeSelectedSkill(Ally ally, Player activePlayer, Player passivePlayer) {
         validateContext();
     }
+
     @Override
     public void skillTypeAction(Ally ally, Player activePlayer, Player passivePlayer) {
         validateContext();
     }
+
     @Override
     public void skillEffectAction(Ally ally, Player activePlayer, Player passivePlayer) {
         validateContext();
     }
     // OS METODOS ACIMA DEVEM SER IMPLEMENTADOS NAS CLASSES FILHAS DA HABILIDADE DO ALIADO
 
+    public abstract void contract(BattleObserver invokerObserver, BattleObserver enemyObserver);
     public abstract void doAction(BattleObserver battleGroundObserver);
     public abstract Skill allySelectSkill();
     public abstract String getIcon();
@@ -97,21 +102,19 @@ public abstract class Ally extends Skill {
     public boolean isAlive() {
         return this.state.isAlive();
     }
+
     public State getState() {
         return state;
     }
+
     public double getLife() {
         return this.state.getLife();
     }
-    public void markAllyObserver(BattleObserver allyObserver) {
-        this.allyObserver = allyObserver;
-    }
-    public void markEnemyObserver(BattleObserver enemyObserver) {
-        this.enemyObserver = enemyObserver;
-    }
+
     public double getInvokerPower() {
         return invokerPower;
     }
+
     public double getSkillMultiplier() {
         return skillMultiplier;
     }

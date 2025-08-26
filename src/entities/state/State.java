@@ -48,7 +48,15 @@ public abstract class State {
         this.defense += state.defense;
     }
 
-    public State(String name, State state) {
+    public State(String name) {
+        this.stateName = name;
+        this.life = 0;
+        this.strength = 0;
+        this.intelligence = 0;
+        this.agility = 0;
+        this.vigor = 0;
+        this.mana = 0;
+        this.defense = 0;
     }
 
     private void playerIsDied(String skillName, Player passivePlayer) {

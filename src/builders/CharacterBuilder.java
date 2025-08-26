@@ -49,8 +49,7 @@ public class CharacterBuilder {
     }
 
     public Player build() {
-        return new Player(getString(), this.race, this.specialization, this.specialization.state(),
-                this.specialization.skills(), this.specialization.weapon(), new Inventory(new ArrayList<>()));
+        return new Player(getString(), this.race, this.specialization, new Inventory(new ArrayList<>()));
     }
 
     private String getString() {

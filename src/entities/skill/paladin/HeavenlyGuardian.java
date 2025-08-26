@@ -5,6 +5,7 @@ import entities.ally.Ally;
 import entities.character.Player;
 import entities.observer.BattleObserver;
 import entities.skill.Skill;
+import entities.state.DeadState;
 import entities.state.OriginalState;
 import entities.state.State;
 
@@ -50,6 +51,11 @@ public class HeavenlyGuardian extends Ally {
     }
 
     @Override
+    public void contract(BattleObserver invokerObserver, BattleObserver enemyObserver) {
+
+    }
+
+    @Override
     public void executeSelectedSkill(Player activePlayer, Player passivePlayer, BattleGround battleGround) {
         System.out.println();
         System.out.println("╔════════════════════════════════════════════════════════════════════╗");
@@ -82,7 +88,7 @@ public class HeavenlyGuardian extends Ally {
                 "Um aliado celestial que traz bênçãos e proteção",
                 "✨ Um guardião celestial vindo dos céus esta protegendo e abençoando seu aliado.",
                 4,
-                OriginalState.ofGuardian(),
+                DeadState.of("Guardião Celestial"),
                 1.8,
                 1.5);
     }

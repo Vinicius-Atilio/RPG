@@ -5,6 +5,7 @@ import entities.ally.Ally;
 import entities.character.Player;
 import entities.observer.BattleObserver;
 import entities.skill.Skill;
+import entities.state.DeadState;
 import entities.state.OriginalState;
 import entities.state.State;
 
@@ -29,11 +30,12 @@ public class WarStandard extends Ally {
     }
 
     public static WarStandard ofWarriorAlly() {
-        return new WarStandard("Estandarte de Guerra",
+        var name = "Estandarte de Guerra";
+        return new WarStandard(name,
                 "Estandarte usado em batalha para fortalecer seu alidado",
                 "🏴 Estandarte de Guerra está fortalecendo o guerreiro com sua presença no campo de batalha!.",
                 1,
-                OriginalState.ofWarStandard(),
+                DeadState.of(name),
                 1.1,
                 1.1);
     }
@@ -45,12 +47,11 @@ public class WarStandard extends Ally {
         System.out.println(activePlayer.getName() + " segura firmemente o estandarte de guerra!");
         System.out.println("⚔️ " + activePlayer.getName() + " se prepara para posicionar o estandarte de guerra no campo de batalha!");
         System.out.println();
-        this.markAllyObserver(activePlayer);
     }
 
     @Override
     public void skillTypeAction(Player activePlayer, Player passivePlayer, BattleGround battleGround) {
-        this.allyObserver.onAllyUpdateState(this);
+        this.invokerObserver.onAllyUpdateState(this);
         printSkillBox("🏴 ESTANDARTE DE GUERRA ATIVADO");
         System.out.println("✨ " + activePlayer.getName() + this.getAction(actionList));
         System.out.println("💪 Os aliados sentem-se fortalecidos e motivados para a batalha!");
@@ -79,4 +80,10 @@ public class WarStandard extends Ally {
         return 0;
     }
 
+    @Override
+    public void contract(BattleObserver invokerObserver, BattleObserver enemyObserver) {
+        this.invokerObserver = invokerObserver;
+        this.enemyObserver = enemyObserver;
+        this.state = OriginalState.ofWarStandard();
+    }
 }

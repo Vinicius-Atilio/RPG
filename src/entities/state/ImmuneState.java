@@ -10,10 +10,6 @@ public class ImmuneState extends State {
         super("Estado Imune", life, strength, intelligence, agility, vigor, mana, defense, turns);
     }
 
-    public ImmuneState(String name, State state) {
-        super(name, state);
-    }
-
     public static ImmuneState of(State state) {
         return new ImmuneState(
                 state.getLife(),

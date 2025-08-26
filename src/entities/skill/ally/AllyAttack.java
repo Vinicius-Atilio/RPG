@@ -48,6 +48,11 @@ public abstract class AllyAttack extends Ally {
     }
 
     @Override
+    public void contract(BattleObserver invokerObserver, BattleObserver enemyObserver) {
+        validateContext();
+    }
+
+    @Override
     public void doAction(BattleObserver battleGroundObserver) {
 
     }

@@ -36,7 +36,7 @@ public class BattleGround implements BattleObserver {
     public void nextTurn() {
         if (this.player1.canAttack(this.player2)) {
             System.out.println("\n⏳ Ação de " + this.player1.getName());
-            Skill selectedSkill = this.player1.selectSkill();
+            Skill selectedSkill = this.player1.selectSkill(this.player2);
             selectedSkill.prepareSkillToExecute(this.player1, this.player2, this);
             selectedSkill.markAsCasted();
         }
@@ -45,7 +45,7 @@ public class BattleGround implements BattleObserver {
 
         if (this.player2.canAttack(this.player1)) {
             System.out.println("\n⏳ Ação de " + this.player2.getName());
-            Skill selectedSkill = this.player2.selectSkill();
+            Skill selectedSkill = this.player2.selectSkill(this.player1);
             selectedSkill.prepareSkillToExecute(this.player2, this.player1, this);
             selectedSkill.markAsCasted();
         }
@@ -132,6 +132,9 @@ public class BattleGround implements BattleObserver {
     public void onAllyUpdateState(Ally ally) {
 
     }
+
+    @Override
+    public void onAllyContract(BattleObserver enemyObserver) {}
 
     @Override
     public Player getObserver() {

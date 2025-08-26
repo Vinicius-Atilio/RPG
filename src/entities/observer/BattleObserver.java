@@ -15,5 +15,6 @@ public interface BattleObserver {
     void onReceiveAllyAttack(Ally ally, Skill skill);
     void onAllySupport(Ally ally);
     void onAllyUpdateState(Ally ally);
+    void onAllyContract(BattleObserver enemyObserver);
     Player getObserver();
 }

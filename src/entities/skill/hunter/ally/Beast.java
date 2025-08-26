@@ -5,6 +5,7 @@ import entities.ally.Ally;
 import entities.character.Player;
 import entities.observer.BattleObserver;
 import entities.skill.Skill;
+import entities.state.DeadState;
 import entities.state.OriginalState;
 import entities.state.State;
 
@@ -25,6 +26,13 @@ public class Beast extends Ally {
     }
 
     @Override
+    public void contract(BattleObserver invokerObserver, BattleObserver enemyObserver) {
+        this.invokerObserver = invokerObserver;
+        this.enemyObserver = enemyObserver;
+        this.state = OriginalState.ofBeast();
+    }
+
+    @Override
     public Skill allySelectSkill() {
         Skill selectedSkill = this.skills.get(ThreadLocalRandom.current().nextInt(this.skills.size()));
         if (selectedSkill.getCurrentCooldown() == 0) {
@@ -40,7 +48,7 @@ public class Beast extends Ally {
         battleGroundObserver.onNotifyAllyAction(this, this);
         Skill selectedSkill = this.allySelectSkill();
         System.out.println("⚔️ " + this.getName() + " escolheu a habilidade: " + selectedSkill.getName());
-        selectedSkill.prepareSkillToExecute(this, this.allyObserver.getObserver(), this.enemyObserver.getObserver(), battleGroundObserver);
+        selectedSkill.prepareSkillToExecute(this, this.invokerObserver.getObserver(), this.enemyObserver.getObserver(), battleGroundObserver);
         System.out.println("🐾 " + this.getName() + " executou a habilidade: " + selectedSkill.getName());
     }
 
@@ -51,10 +59,6 @@ public class Beast extends Ally {
         System.out.println(activePlayer.getName() + " assobia e a fera aparece rapidamente ao seu lado!");
         System.out.println("⚔️ " + activePlayer.getName() + " se prepara para posicionar sua fera companheira no campo de batalha!");
         System.out.println();
-
-        // JOGADOR IMPLEMENTAR ESSAS ACOES
-        this.markAllyObserver(activePlayer);
-        this.markEnemyObserver(passivePlayer);
     }
 
     @Override
@@ -72,7 +76,7 @@ public class Beast extends Ally {
                 "Um aliado animal que traz força e agilidade para a batalha",
                 "🐺 Fera Companheira está lutando por seu mestre na batalha!.",
                 1,
-                OriginalState.ofBeast(),
+                DeadState.of("Fera Companheira"),
                 ofBeast(),
                 1.5,
                 1.5);

@@ -11,12 +11,16 @@ public class DeadState extends State {
         super(life, strength, intelligence, agility, vigor, mana, defense);
     }
 
-    public DeadState(String name, State state) {
-        super(name, state);
+    public DeadState(String name) {
+        super(name);
     }
 
     public static DeadState of(Player player) {
-        return new DeadState(player.getName(), player.getState());
+        return new DeadState("*MORTO* " + player.getName());
+    }
+
+    public static DeadState of(String allyName) {
+        return new DeadState("*MORTO* " + allyName);
     }
 
     @Override

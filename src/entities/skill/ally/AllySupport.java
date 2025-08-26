@@ -5,6 +5,7 @@ import entities.ally.Ally;
 import entities.character.Player;
 import entities.observer.BattleObserver;
 import entities.skill.Skill;
+import entities.state.OriginalState;
 
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -48,6 +49,11 @@ public abstract class AllySupport extends Ally {
     @Override
     public void doAction(BattleObserver battleGroundObserver) {
 
+    }
+
+    @Override
+    public void contract(BattleObserver invokerObserver, BattleObserver enemyObserver) {
+        validateContext();
     }
 
     @Override

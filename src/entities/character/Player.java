@@ -27,19 +27,19 @@ public class Player implements BattleObserver {
     private List<StatusEffect> effects;
     private Weapon weapon;
     private Ally ally;
+    private BattleObserver enemyObserver;
     private Inventory inventory;
     private State state;
-    private boolean immune;
 
-    public Player(String name, Race race, Specialization specialization, State state, List<Skill> skills, Weapon weapon, Inventory inventory) {
+    public Player(String name, Race race, Specialization specialization, Inventory inventory) {
         this.id = new BigInteger(128, new SecureRandom());
         this.name = name;
         this.race = race;
         this.specialization = specialization;
-        this.skills = skills;
-        this.weapon = weapon;
+        this.weapon = this.specialization.weapon();
         this.inventory = inventory;
-        this.state = OriginalState.ofState(state);
+        this.skills = this.specialization.skills();
+        this.state = OriginalState.ofState(this.specialization.state());
         this.effects = new ArrayList<>();
 
         if (this.weapon != null) {
@@ -50,6 +50,63 @@ public class Player implements BattleObserver {
     public Player(String name, State state) {
         this.name = name;
         this.state = state;
+    }
+
+    @Override
+    public void onTurnStart() {
+        this.state.stateCountDown(this, this.specialization.state(this.state.getLife()));
+        this.applyEffect();
+        this.skills.forEach(Skill::updateSkillCooldown);
+    }
+
+    @Override
+    public void onAllyInvoked(Ally ally) {
+        System.out.println("👤 " + this.name + " diz: Um aliado chegou! " + ally.getName() + " e está no campo de batalha .");
+    }
+
+    @Override
+    public void onAllyAttack(Ally ally) {
+        System.out.println("👤 " + this.name + " diz: Meu aliado " + ally.getName() + " está atacando!");
+    }
+
+    @Override
+    public void onAddObserver(BattleObserver observer) {
+        this.enemyObserver = observer;
+    }
+
+    @Override
+    public void onNotifyAllyAction(Ally ally, Skill skill) {}
+
+    @Override
+    public void onTrapActivated(Trap trap) {
+        this.state.receiveDamage(trap, this);
+        System.out.println("👤 " + this.name + " diz: Você me pagará por isso!");
+    }
+
+    @Override
+    public void onReceiveAllyAttack(Ally ally, Skill skill) {
+        System.out.println("👤 " + this.name + " diz: O aliado " + ally.getName() + " está me atacando com " + skill.getName() + "!");
+    }
+
+    @Override
+    public void onAllySupport(Ally ally) {
+
+    }
+
+    @Override
+    public void onAllyUpdateState(Ally ally) {
+        this.state.update(ally.getState());
+    }
+
+    @Override
+    public void onAllyContract(BattleObserver enemyObserver) {
+        for (Skill skill : this.skills) {
+            if (skill instanceof Ally allySkill) {
+                allySkill.contract(this, enemyObserver);
+                this.ally = allySkill;
+                break;
+            }
+        }
     }
 
     public boolean isAlive() {
@@ -64,13 +121,16 @@ public class Player implements BattleObserver {
         return name;
     }
 
-    public Skill selectSkill() {
+    public Skill selectSkill(Player enemy) {
         Skill selectedSkill = this.skills.get(ThreadLocalRandom.current().nextInt(this.skills.size()));
         if (selectedSkill.getCurrentCooldown() == 0) {
+            if (selectedSkill instanceof Ally) {
+                this.onAllyContract(enemy);
+            }
             return selectedSkill;
         }
 
-        return selectSkill();
+        return selectSkill(enemy);
     }
 
     public void receiveDamage(Player activePlayer, int activeSKillPowerAttack, Skill skill) {
@@ -90,7 +150,7 @@ public class Player implements BattleObserver {
     }
 
     public void receiveSpecialDamage(Player activePlayer, int activeSKillPowerAttack, Skill skill) {
-        if (this.ally != null && this.ally.isAlive()) {
+        if (isAllyAlive()) {
             this.ally.receiveDamage(activePlayer, this, activeSKillPowerAttack, skill);
             this.receiveDamage(activePlayer, activeSKillPowerAttack, skill);
             return;
@@ -125,10 +185,6 @@ public class Player implements BattleObserver {
             case Mage -> this.state.getIntelligence();
             case Hunter -> this.state.getAgility();
         };
-    }
-
-    public void makeDefense(Player actionPlayer, Skill skill) {
-        skill.updateSkillCooldown();
     }
 
     public void addEffect(StatusEffect statusEffect) {
@@ -167,7 +223,13 @@ public class Player implements BattleObserver {
     }
 
     public Ally getAlly() {
+        System.out.println(ally.toString());
         return ally;
+    }
+
+    @Override
+    public Player getObserver() {
+        return this;
     }
 
     public void changeStateToImmune() {
@@ -210,121 +272,20 @@ public class Player implements BattleObserver {
         return this.state.getDefense();
     }
 
-    public int poisonedDefenseValue() {
-        return this.state.getDefense() - (int) (this.state.getDefense() * 0.1);
-    }
-
     public int tiredDefenseValue() {
         return this.state.getDefense() - (int) (this.state.getDefense() * 0.5);
-    }
-
-    public BigInteger getId() {
-        return id;
-    }
-
-    public Race getRace() {
-        return race;
     }
 
     public Specialization getSpecialization() {
         return specialization;
     }
 
-    public List<Skill> getSkills() {
-        return skills;
-    }
-
-    public Weapon getWeapon() {
-        return weapon;
-    }
-
-    public Inventory getInventory() {
-        return inventory;
-    }
-
     public State getState() {
         return state;
     }
 
-    public boolean isImmune() {
-        return immune;
-    }
-
-    @Override
-    public String toString() {
-        return "Character{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", race=" + race +
-                ", specialization=" + specialization +
-                ", attribute=" + state +
-                ", skills=" + skills +
-                ", weapon=" + weapon +
-                ", ally=" + ally +
-                ", inventory=" + inventory +
-                ", life=" + this.state.isAlive() +
-                '}';
-    }
-
     public void removeEffect(StatusEffect statusEffect) {
         this.effects.remove(statusEffect);
-    }
-
-    public void makeSupport(Player passivePlayer, Skill support) {
-
-    }
-
-    @Override
-    public void onTurnStart() {
-        this.state.stateCountDown(this, this.specialization.state(this.state.getLife()));
-        this.applyEffect();
-        this.skills.forEach(Skill::updateSkillCooldown);
-    }
-
-    @Override
-    public void onAllyInvoked(Ally ally) {
-        System.out.println("👤 " + this.name + " diz: Um aliado chegou! " + ally.getName() + " e está no campo de batalha .");
-    }
-
-    @Override
-    public void onAllyAttack(Ally ally) {
-        System.out.println("👤 " + this.name + " diz: Meu aliado " + ally.getName() + " está atacando!");
-    }
-
-    @Override
-    public void onAddObserver(BattleObserver observer) {
-
-    }
-
-    @Override
-    public void onNotifyAllyAction(Ally ally, Skill skill) {
-
-    }
-
-    @Override
-    public void onTrapActivated(Trap trap) {
-        this.state.receiveDamage(trap, this);
-        System.out.println("👤 " + this.name + " diz: Você me pagará por isso!");
-    }
-
-    @Override
-    public void onReceiveAllyAttack(Ally ally, Skill skill) {
-        System.out.println("👤 " + this.name + " diz: O aliado " + ally.getName() + " está me atacando com " + skill.getName() + "!");
-    }
-
-    @Override
-    public void onAllySupport(Ally ally) {
-
-    }
-
-    @Override
-    public void onAllyUpdateState(Ally ally) {
-        this.state.update(ally.getState());
-    }
-
-    @Override
-    public Player getObserver() {
-        return this;
     }
 
     public int getDefense() {
@@ -336,7 +297,6 @@ public class Player implements BattleObserver {
     }
 
     public void buffAlly() {
-
     }
 
     public void removeBuffStateBy(Ally ally) {

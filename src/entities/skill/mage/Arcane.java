@@ -5,6 +5,7 @@ import entities.ally.Ally;
 import entities.character.Player;
 import entities.observer.BattleObserver;
 import entities.skill.Skill;
+import entities.state.DeadState;
 import entities.state.OriginalState;
 import entities.state.State;
 
@@ -48,6 +49,11 @@ public class Arcane extends Ally {
     }
 
     @Override
+    public void contract(BattleObserver invokerObserver, BattleObserver enemyObserver) {
+
+    }
+
+    @Override
     public void executeSelectedSkill(Player activePlayer, Player passivePlayer, BattleGround battleGround) {
         System.out.println();
         System.out.println("╔════════════════════════════════════════════════════════════════╗");
@@ -82,7 +88,7 @@ public class Arcane extends Ally {
                 "Um aliado que conjura feitiços poderosos para ajudar na batalha",
                 "✨ Aliado místico esta conjurando feitiços poderosos!",
                 4,
-                OriginalState.ofMystic(),
+                DeadState.of("Arcano Místico"),
                 2.0,
                 1.5);
     }
