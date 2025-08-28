@@ -2,11 +2,22 @@ package entities.skill.hunter;
 
 import entities.BattleGround;
 import entities.character.Player;
+import entities.observer.Subject;
 import entities.skill.attack.Trap;
+import entities.state.ArmedState;
+import entities.state.DisarmedState;
+import entities.state.TrapState;
 
 public class ExplosiveTrap extends Trap {
-    protected ExplosiveTrap(String name, String description, String skillAction, int cooldown, int damage) {
-        super(name, description, skillAction, cooldown, damage);
+    protected ExplosiveTrap(String name, String description, String skillAction, TrapState state, int cooldown, int damage) {
+        super(name, description, skillAction, state, cooldown, damage);
+    }
+
+    @Override
+    public void contract(Subject invokerSubject, Subject enemySubject) {
+        this.invokerSUbject = invokerSubject;
+        this.enemySubject = enemySubject;
+        this.state = ArmedState.ofTrap();
     }
 
     @Override
@@ -17,8 +28,8 @@ public class ExplosiveTrap extends Trap {
         System.out.println("🛠️ Posiciona a carga entre pedras e folhas, conectando os fios com precisão...");
         System.out.println("🔥 Um pequeno LED vermelho pisca no núcleo da bomba... armada com sucesso.");
         // JOGADOR IMPLEMENTAR ESSAS ACOES
-        this.markTargetObserver(passivePlayer);
-        this.markOwnerObserver(activePlayer);
+//        this.markTargetObserver(passivePlayer);
+//        this.markOwnerObserver(activePlayer);
     }
 
     @Override
@@ -33,6 +44,7 @@ public class ExplosiveTrap extends Trap {
         return new ExplosiveTrap("Armadilha Explosiva",
                 "Instala armadilha que explode ao ser acionada.",
                 "💣 Uma armadilha mortal é colocada no campo de batalha!",
+                DisarmedState.ofTrap(),
                 1,
                 30);
     }

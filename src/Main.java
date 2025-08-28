@@ -14,8 +14,8 @@ public class Main {
 
         BattleGround battle = new BattleGround(player1, player2);
         battle.welcome();
-        battle.onAddObserver(player1);
-        battle.onAddObserver(player2);
+        player1.onAddObserver(battle);
+        player2.onAddObserver(battle);
 
         while (!battle.isGameOver()) {
             battle.onTurnStart();

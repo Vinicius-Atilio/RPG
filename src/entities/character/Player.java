@@ -4,10 +4,12 @@ import entities.Inventory;
 import entities.Weapon;
 import entities.ally.Ally;
 import entities.effect.StatusEffect;
-import entities.observer.BattleObserver;
+import entities.observer.Observer;
+import entities.observer.Subject;
 import entities.skill.Skill;
 import entities.skill.attack.Trap;
 import entities.state.*;
+import entities.turn.Game;
 import enums.Race;
 import enums.Specialization;
 
@@ -17,7 +19,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class Player implements BattleObserver {
+public class Player implements Subject, Game {
+    private List<Observer> observersList;
     private BigInteger id;
     private String name;
     private Race race;
@@ -27,7 +30,6 @@ public class Player implements BattleObserver {
     private List<StatusEffect> effects;
     private Weapon weapon;
     private Ally ally;
-    private BattleObserver enemyObserver;
     private Inventory inventory;
     private State state;
 
@@ -45,6 +47,7 @@ public class Player implements BattleObserver {
         if (this.weapon != null) {
             this.state.update(this.weapon.getState());
         }
+        this.observersList = new ArrayList<>();
     }
 
     public Player(String name, State state) {
@@ -60,6 +63,26 @@ public class Player implements BattleObserver {
     }
 
     @Override
+    public void registerObserver(Observer observer) {
+
+    }
+
+    @Override
+    public void removeObserver(Observer observer) {
+
+    }
+
+    @Override
+    public void notifyObservers(Ally ally) {
+        this.observersList.forEach(observer -> observer.update(this, ally));
+    }
+
+    @Override
+    public void notifyObservers(Trap trap) {
+        this.observersList.forEach(observer -> observer.update(this, trap));
+    }
+
+    @Override
     public void onAllyInvoked(Ally ally) {
         System.out.println("👤 " + this.name + " diz: Um aliado chegou! " + ally.getName() + " e está no campo de batalha .");
     }
@@ -70,8 +93,8 @@ public class Player implements BattleObserver {
     }
 
     @Override
-    public void onAddObserver(BattleObserver observer) {
-        this.enemyObserver = observer;
+    public void onAddObserver(Observer observer) {
+        this.observersList.add(observer);
     }
 
     @Override
@@ -80,7 +103,7 @@ public class Player implements BattleObserver {
     @Override
     public void onTrapActivated(Trap trap) {
         this.state.receiveDamage(trap, this);
-        System.out.println("👤 " + this.name + " diz: Você me pagará por isso!");
+        this.observersList.forEach(observer -> observer.update(this, trap));
     }
 
     @Override
@@ -98,12 +121,23 @@ public class Player implements BattleObserver {
         this.state.update(ally.getState());
     }
 
+    private void onTrapContract(Player enemy) {
+        for (Skill skill : this.skills) {
+            if (skill instanceof Trap trapSkill && trapSkill.hasBeenExploded()) {
+                trapSkill.contract(this, enemy);
+                this.notifyObservers(trapSkill);
+                break;
+            }
+        }
+    }
+
     @Override
-    public void onAllyContract(BattleObserver enemyObserver) {
+    public void onAllyContract(Subject enemyObserver) {
         for (Skill skill : this.skills) {
             if (skill instanceof Ally allySkill) {
                 allySkill.contract(this, enemyObserver);
                 this.ally = allySkill;
+                this.notifyObservers(this.ally);
                 break;
             }
         }
@@ -124,9 +158,15 @@ public class Player implements BattleObserver {
     public Skill selectSkill(Player enemy) {
         Skill selectedSkill = this.skills.get(ThreadLocalRandom.current().nextInt(this.skills.size()));
         if (selectedSkill.getCurrentCooldown() == 0) {
+
             if (selectedSkill instanceof Ally) {
                 this.onAllyContract(enemy);
             }
+
+            if (selectedSkill instanceof Trap) {
+                this.onTrapContract(enemy);
+            }
+
             return selectedSkill;
         }
 

@@ -3,9 +3,9 @@ package entities.skill.ally;
 import entities.BattleGround;
 import entities.ally.Ally;
 import entities.character.Player;
-import entities.observer.BattleObserver;
+import entities.observer.Observer;
+import entities.observer.Subject;
 import entities.skill.Skill;
-import entities.state.OriginalState;
 
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -15,14 +15,14 @@ public abstract class AllySupport extends Ally {
     }
 
     @Override
-    public void prepareSkillToExecute(Ally ally, BattleObserver allyObserver, BattleObserver enemyObserver, BattleObserver battleGroundObserver) {
+    public void prepareSkillToExecute(Ally ally, Subject allyObserver, Subject enemyObserver, Observer battleGroundObserver) {
         printSkillBox(" 🛡️ PREPARANDO SUPORTE DO ALIADO: " + this.name);
         System.out.println("🔄 " + ally.getName() + " se prepara para fornecer suporte ao seu invocador " + allyObserver.getObserver().getName() + " no campo de batalha!");
 
         this.executeSelectedSkill(ally, allyObserver.getObserver(), enemyObserver.getObserver());
         allyObserver.onAllySupport(ally);
         this.skillTypeAction(ally, allyObserver.getObserver(), enemyObserver.getObserver());
-        battleGroundObserver.onNotifyAllyAction(ally, this);
+//        battleGroundObserver.onNotifyAllyAction(ally, this);
         System.out.println();
     }
 
@@ -47,12 +47,12 @@ public abstract class AllySupport extends Ally {
     }
 
     @Override
-    public void doAction(BattleObserver battleGroundObserver) {
+    public void doAction(Observer battleGroundObserver) {
 
     }
 
     @Override
-    public void contract(BattleObserver invokerObserver, BattleObserver enemyObserver) {
+    public void contract(Subject invokerSubject, Subject enemySubject) {
         validateContext();
     }
 

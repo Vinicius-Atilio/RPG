@@ -3,7 +3,8 @@ package entities.skill;
 import entities.BattleGround;
 import entities.ally.Ally;
 import entities.character.Player;
-import entities.observer.BattleObserver;
+import entities.observer.Observer;
+import entities.observer.Subject;
 import entities.skill.hunter.ally.BeastAttack;
 import entities.skill.hunter.ally.BeastHeal;
 import entities.skill.paladin.HeavenlyGuardian;
@@ -212,8 +213,8 @@ public abstract class Skill {
 
 
     // implementado somente para habilidades de aliados
-    public abstract void prepareSkillToExecute(Ally ally, BattleObserver allyObserver, BattleObserver battleGroundObserver);
-    public abstract void prepareSkillToExecute(Ally ally, BattleObserver allyObserver, BattleObserver enemyObserver, BattleObserver battleGroundObserver);
+    public abstract void prepareSkillToExecute(Ally ally, Subject allySubject, Observer battleGroundObserver);
+    public abstract void prepareSkillToExecute(Ally ally, Subject allyObserver, Subject enemyObserver, Observer battleGroundObserver);
     public abstract void executeSelectedSkill(Ally ally, Player activePlayer, Player passivePlayer);
     public abstract void skillTypeAction(Ally ally, Player activePlayer, Player passivePlayer);
     public abstract void skillEffectAction(Ally ally, Player activePlayer, Player passivePlayer);

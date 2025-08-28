@@ -3,20 +3,24 @@ package entities.skill.attack;
 import entities.ally.Ally;
 import entities.character.Player;
 import entities.BattleGround;
-import entities.observer.BattleObserver;
+import entities.observer.Observer;
+import entities.observer.Subject;
 import entities.skill.Skill;
+import entities.state.TrapState;
 
 import java.util.Random;
 
 public abstract class Trap extends Skill {
     protected int damage;
+    protected TrapState state;
     protected Random random = new Random();
-    protected BattleObserver targetObserver;
-    protected BattleObserver ownerObserver;
+    protected Subject invokerSUbject;
+    protected Subject enemySubject;
 
-    protected Trap(String name, String description, String skillAction,
+    protected Trap(String name, String description, String skillAction, TrapState state,
                    int cooldown, int damage) {
         super(name, description, skillAction, cooldown);
+        this.state = state;
         this.damage = damage;
     }
 
@@ -43,16 +47,16 @@ public abstract class Trap extends Skill {
         System.out.println();
     }
 
-    protected void markTargetObserver(BattleObserver targetObserver) {
-        this.targetObserver = targetObserver;
+    protected void markTargetObserver(Subject targetObserver) {
+        this.invokerSUbject = targetObserver;
     }
 
-    protected void markOwnerObserver(BattleObserver ownerObserver) {
-        this.ownerObserver = ownerObserver;
+    protected void markOwnerObserver(Subject ownerObserver) {
+        this.enemySubject = ownerObserver;
     }
 
     public boolean canBeExplode() {
-        if (this.targetObserver == null) {
+        if (this.invokerSUbject == null) {
             return false;
         }
 
@@ -60,7 +64,7 @@ public abstract class Trap extends Skill {
     }
 
     public void applyDamage() {
-        this.targetObserver.onTrapActivated(this);
+        this.invokerSUbject.onTrapActivated(this);
     }
 
     public int getDamage() {
@@ -68,8 +72,15 @@ public abstract class Trap extends Skill {
     }
 
     public Player getOwnerPlayerObserver() {
-        return ownerObserver.getObserver();
+        return enemySubject.getObserver();
     }
+
+    public boolean hasBeenExploded() {
+        return this.state.hasBeenExploded();
+    };
+
+    public abstract void contract(Subject invokerSubject, Subject enemySubject);
+
 
     @Override
     public void executeSelectedSkill(Player activePlayer, Player passivePlayer) {
@@ -80,11 +91,11 @@ public abstract class Trap extends Skill {
         validateContext();
     }
     @Override
-    public void prepareSkillToExecute(Ally ally, BattleObserver allyObserver, BattleObserver battleGroundObserver) {
+    public void prepareSkillToExecute(Ally ally, Subject allySubject, Observer battleGroundObserver) {
         validateContext();
     }
     @Override
-    public void prepareSkillToExecute(Ally ally, BattleObserver allyObserver, BattleObserver enemyObserver, BattleObserver battleGroundObserver) {
+    public void prepareSkillToExecute(Ally ally, Subject allyObserver, Subject enemyObserver, Observer battleGroundObserver) {
         validateContext();
     }
     @Override

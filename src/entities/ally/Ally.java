@@ -2,7 +2,8 @@ package entities.ally;
 
 import entities.BattleGround;
 import entities.character.Player;
-import entities.observer.BattleObserver;
+import entities.observer.Observer;
+import entities.observer.Subject;
 import entities.skill.Skill;
 import entities.state.State;
 
@@ -11,8 +12,8 @@ import java.util.List;
 public abstract class Ally extends Skill {
     protected State state;
     protected List<Skill> skills;
-    protected BattleObserver invokerObserver; // Observador que invoca o aliado
-    protected BattleObserver enemyObserver; // Observador que invoca o inimigo
+    protected Subject invokerSubject; // Observador que invoca o aliado
+    protected Subject enemySubject; // Observador que invoca o inimigo
     protected double invokerPower; // Quanto do poder do invocador influencia
     protected double skillMultiplier; // Quanto a habilidade influencia
 
@@ -67,12 +68,12 @@ public abstract class Ally extends Skill {
 
     // OS METODOS ABAIXO DEVEM SER IMPLEMENTADOS NAS CLASSES FILHAS DA HABILIDADE DO ALIADO
     @Override
-    public void prepareSkillToExecute(Ally ally, BattleObserver allyObserver, BattleObserver battleGroundObserver) {
+    public void prepareSkillToExecute(Ally ally, Subject allySubject, Observer battleGroundObserver) {
         validateContext();
     }
 
     @Override
-    public void prepareSkillToExecute(Ally ally, BattleObserver allyObserver, BattleObserver enemyObserver, BattleObserver battleGroundObserver) {
+    public void prepareSkillToExecute(Ally ally, Subject allyObserver, Subject enemyObserver, Observer battleGroundObserver) {
         validateContext();
     }
 
@@ -92,8 +93,8 @@ public abstract class Ally extends Skill {
     }
     // OS METODOS ACIMA DEVEM SER IMPLEMENTADOS NAS CLASSES FILHAS DA HABILIDADE DO ALIADO
 
-    public abstract void contract(BattleObserver invokerObserver, BattleObserver enemyObserver);
-    public abstract void doAction(BattleObserver battleGroundObserver);
+    public abstract void contract(Subject invokerSubject, Subject enemySubject);
+    public abstract void doAction(Observer battleGroundObserver);
     public abstract Skill allySelectSkill();
     public abstract String getIcon();
     public abstract double getAllyPower();

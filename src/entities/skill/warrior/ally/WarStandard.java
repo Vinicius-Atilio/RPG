@@ -3,7 +3,8 @@ package entities.skill.warrior.ally;
 import entities.BattleGround;
 import entities.ally.Ally;
 import entities.character.Player;
-import entities.observer.BattleObserver;
+import entities.observer.Observer;
+import entities.observer.Subject;
 import entities.skill.Skill;
 import entities.state.DeadState;
 import entities.state.OriginalState;
@@ -25,8 +26,8 @@ public class WarStandard extends Ally {
     }
 
     @Override
-    public void doAction(BattleObserver battleGroundObserver) {
-        battleGroundObserver.onNotifyAllyAction(this, this);
+    public void doAction(Observer battleGroundObserver) {
+//        battleGroundObserver.onNotifyAllyAction(this, this);
     }
 
     public static WarStandard ofWarriorAlly() {
@@ -51,13 +52,13 @@ public class WarStandard extends Ally {
 
     @Override
     public void skillTypeAction(Player activePlayer, Player passivePlayer, BattleGround battleGround) {
-        this.invokerObserver.onAllyUpdateState(this);
+        this.invokerSubject.onAllyUpdateState(this);
         printSkillBox("🏴 ESTANDARTE DE GUERRA ATIVADO");
         System.out.println("✨ " + activePlayer.getName() + this.getAction(actionList));
         System.out.println("💪 Os aliados sentem-se fortalecidos e motivados para a batalha!");
         System.out.println(passivePlayer.getName() + " observa o estandarte com respeito e determinação.");
         System.out.println();
-        battleGround.onAllyInvoked(this);
+//        battleGround.onAllyInvoked(this);
     }
 
     @Override
@@ -81,9 +82,9 @@ public class WarStandard extends Ally {
     }
 
     @Override
-    public void contract(BattleObserver invokerObserver, BattleObserver enemyObserver) {
-        this.invokerObserver = invokerObserver;
-        this.enemyObserver = enemyObserver;
+    public void contract(Subject invokerSubject, Subject enemySubject) {
+        this.invokerSubject = invokerSubject;
+        this.enemySubject = enemySubject;
         this.state = OriginalState.ofWarStandard();
     }
 }

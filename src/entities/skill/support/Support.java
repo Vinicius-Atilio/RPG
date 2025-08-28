@@ -3,7 +3,8 @@ package entities.skill.support;
 import entities.BattleGround;
 import entities.ally.Ally;
 import entities.character.Player;
-import entities.observer.BattleObserver;
+import entities.observer.Observer;
+import entities.observer.Subject;
 import entities.skill.Skill;
 
 public abstract class Support extends Skill {
@@ -40,11 +41,11 @@ public abstract class Support extends Skill {
         validateContext();
     }
     @Override
-    public void prepareSkillToExecute(Ally ally, BattleObserver allyObserver, BattleObserver battleGroundObserver) {
+    public void prepareSkillToExecute(Ally ally, Subject allySubject, Observer battleGroundObserver) {
         validateContext();
     }
     @Override
-    public void prepareSkillToExecute(Ally ally, BattleObserver allyObserver, BattleObserver enemyObserver, BattleObserver battleGroundObserver) {
+    public void prepareSkillToExecute(Ally ally, Subject allyObserver, Subject enemyObserver, Observer battleGroundObserver) {
         validateContext();
     }
     @Override

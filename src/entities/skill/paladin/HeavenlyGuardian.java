@@ -3,10 +3,10 @@ package entities.skill.paladin;
 import entities.BattleGround;
 import entities.ally.Ally;
 import entities.character.Player;
-import entities.observer.BattleObserver;
+import entities.observer.Observer;
+import entities.observer.Subject;
 import entities.skill.Skill;
 import entities.state.DeadState;
-import entities.state.OriginalState;
 import entities.state.State;
 
 import java.util.Arrays;
@@ -26,7 +26,7 @@ public class HeavenlyGuardian extends Ally {
     }
 
     @Override
-    public void doAction(BattleObserver battleGroundObserver) {
+    public void doAction(Observer battleGroundObserver) {
 
     }
 
@@ -51,7 +51,7 @@ public class HeavenlyGuardian extends Ally {
     }
 
     @Override
-    public void contract(BattleObserver invokerObserver, BattleObserver enemyObserver) {
+    public void contract(Subject invokerSubject, Subject enemySubject) {
 
     }
 
@@ -79,7 +79,7 @@ public class HeavenlyGuardian extends Ally {
         System.out.println("✨ " + activePlayer.getName() + this.getAction(actionList));
         System.out.println("💫 O guardião celestial irradia luz, fortalecendo e protegendo seu aliado!");
         System.out.println();
-        battleGround.onAllyInvoked(this);
+//        battleGround.onAllyInvoked(this);
     }
 
     public static HeavenlyGuardian ofPaladinAlly() {

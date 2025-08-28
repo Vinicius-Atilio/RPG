@@ -2,15 +2,15 @@ package entities;
 
 import entities.ally.Ally;
 import entities.character.Player;
-import entities.observer.BattleObserver;
+import entities.observer.Observer;
 import entities.skill.Skill;
 import entities.skill.attack.Trap;
+import entities.turn.Game;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class BattleGround implements BattleObserver {
-    private final List<BattleObserver> observersList;
+public class BattleGround implements Observer, Game {
     private Player player1;
     private Player player2;
 //    private BattleInvoker allyInvoker;
@@ -23,7 +23,6 @@ public class BattleGround implements BattleObserver {
             throw new IllegalArgumentException("Os jogadores são obrigatórios.");
         }
 
-        this.observersList = new ArrayList<>();
         this.player1 = player1;
         this.player2 = player2;
         this.turn = 0;
@@ -87,58 +86,11 @@ public class BattleGround implements BattleObserver {
         }
     }
 
-    @Override
-    public void onAllyInvoked(Ally ally) {
-        for (BattleObserver observer : observersList) {
-            observer.onAllyInvoked(ally);
-        }
-    }
-
-    @Override
-    public void onAllyAttack(Ally ally) {
-
-    }
-
-    @Override
-    public void onAddObserver(BattleObserver observer) {
-        this.observersList.add(observer);
-    }
-
-    @Override
-    public void onNotifyAllyAction(Ally ally, Skill skill) {
-        System.out.println("👤 Campo de batalha notifica: O aliado " + ally.getName() + " realizou a ação: " + skill.getSkillAction() + "!");
-        System.out.println("👤 Campo de batalha notifica: O aliado " + ally.getName() + " possui " + ally.getLife() + " de vida restante.");
-    }
-
-    @Override
     public void onTrapActivated(Trap trap) {
         System.out.println("🪤 Armadilha ativada: " + trap.getName());
         trap.skillEffectAction(this.player1, this.player2);
         trap.applyDamage();
         trap.markAsCasted();
-    }
-
-    @Override
-    public void onReceiveAllyAttack(Ally ally, Skill skill) {
-
-    }
-
-    @Override
-    public void onAllySupport(Ally ally) {
-
-    }
-
-    @Override
-    public void onAllyUpdateState(Ally ally) {
-
-    }
-
-    @Override
-    public void onAllyContract(BattleObserver enemyObserver) {}
-
-    @Override
-    public Player getObserver() {
-        return null;
     }
 
     public void victory() {
@@ -186,5 +138,15 @@ public class BattleGround implements BattleObserver {
 
     private boolean hasAllies() {
         return this.allies != null && !this.allies.isEmpty();
+    }
+
+    @Override
+    public void update(Player player, Trap trap) {
+        System.out.println("👤 Campo de batalha notifica: O jogador " + player.getName() + " sofreu dano da armadilha " + trap.getName() + "!");
+    }
+
+    @Override
+    public void update(Player player, Ally ally) {
+        System.out.println("👤 Campo de batalha notifica: O jogador " + player.getName() + " contratou seu aliado " + ally.getName() + "!");
     }
 }

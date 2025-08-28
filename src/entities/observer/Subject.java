@@ -5,16 +5,19 @@ import entities.character.Player;
 import entities.skill.Skill;
 import entities.skill.attack.Trap;
 
-public interface BattleObserver {
-    void onTurnStart();
+public interface Subject {
+    void registerObserver(Observer observer);
+    void removeObserver(Observer observer);
+    void notifyObservers(Ally ally);
+    void notifyObservers(Trap trap);
     void onAllyInvoked(Ally ally);
     void onAllyAttack(Ally ally);
-    void onAddObserver(BattleObserver observer);
+    void onAddObserver(Observer observer);
     void onNotifyAllyAction(Ally ally, Skill skill);
     void onTrapActivated(Trap trap);
     void onReceiveAllyAttack(Ally ally, Skill skill);
     void onAllySupport(Ally ally);
     void onAllyUpdateState(Ally ally);
-    void onAllyContract(BattleObserver enemyObserver);
+    void onAllyContract(Subject enemyObserver);
     Player getObserver();
 }

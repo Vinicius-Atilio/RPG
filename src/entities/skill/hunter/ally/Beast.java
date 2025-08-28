@@ -3,7 +3,8 @@ package entities.skill.hunter.ally;
 import entities.BattleGround;
 import entities.ally.Ally;
 import entities.character.Player;
-import entities.observer.BattleObserver;
+import entities.observer.Observer;
+import entities.observer.Subject;
 import entities.skill.Skill;
 import entities.state.DeadState;
 import entities.state.OriginalState;
@@ -26,9 +27,9 @@ public class Beast extends Ally {
     }
 
     @Override
-    public void contract(BattleObserver invokerObserver, BattleObserver enemyObserver) {
-        this.invokerObserver = invokerObserver;
-        this.enemyObserver = enemyObserver;
+    public void contract(Subject invokerSubject, Subject enemySubject) {
+        this.invokerSubject = invokerSubject;
+        this.enemySubject = enemySubject;
         this.state = OriginalState.ofBeast();
     }
 
@@ -43,12 +44,12 @@ public class Beast extends Ally {
     }
 
     @Override
-    public void doAction(BattleObserver battleGroundObserver) {
+    public void doAction(Observer battleGroundObserver) {
         System.out.println("🐾 " + this.getName() + " está pronto para usar sua habilidade!");
-        battleGroundObserver.onNotifyAllyAction(this, this);
+//        battleGroundObserver.onNotifyAllyAction(this, this);
         Skill selectedSkill = this.allySelectSkill();
         System.out.println("⚔️ " + this.getName() + " escolheu a habilidade: " + selectedSkill.getName());
-        selectedSkill.prepareSkillToExecute(this, this.invokerObserver.getObserver(), this.enemyObserver.getObserver(), battleGroundObserver);
+        selectedSkill.prepareSkillToExecute(this, this.invokerSubject.getObserver(), this.enemySubject.getObserver(), battleGroundObserver);
         System.out.println("🐾 " + this.getName() + " executou a habilidade: " + selectedSkill.getName());
     }
 
@@ -68,7 +69,7 @@ public class Beast extends Ally {
         System.out.println("🐾 O aliado de " + activePlayer.getName() + this.getAction(actionList));
         System.out.println("💪 A fera companheira está pronta para atacar e ajudar na batalha!");
         System.out.println();
-        battleGround.onAllyInvoked(this);
+//        battleGround.onAllyInvoked(this);
     }
 
     public static Beast ofHunterAlly() {

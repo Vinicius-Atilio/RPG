@@ -3,10 +3,10 @@ package entities.skill.mage;
 import entities.BattleGround;
 import entities.ally.Ally;
 import entities.character.Player;
-import entities.observer.BattleObserver;
+import entities.observer.Observer;
+import entities.observer.Subject;
 import entities.skill.Skill;
 import entities.state.DeadState;
-import entities.state.OriginalState;
 import entities.state.State;
 
 import java.util.Arrays;
@@ -24,7 +24,7 @@ public class Arcane extends Ally {
     }
 
     @Override
-    public void doAction(BattleObserver battleGroundObserver) {
+    public void doAction(Observer battleGroundObserver) {
 
     }
 
@@ -49,7 +49,7 @@ public class Arcane extends Ally {
     }
 
     @Override
-    public void contract(BattleObserver invokerObserver, BattleObserver enemyObserver) {
+    public void contract(Subject invokerSubject, Subject enemySubject) {
 
     }
 
@@ -79,7 +79,7 @@ public class Arcane extends Ally {
         System.out.println("✨ " + activePlayer.getName() + " está pronto para lançar feitiços devastadores!");
         System.out.println("⚡️ " + passivePlayer.getName() + " sente a energia mágica no ar, preparando-se para enfrentar algo misterioso.!");
         System.out.println();
-        battleGround.onAllyInvoked(this);
+//        battleGround.onAllyInvoked(this);
     }
 
 
