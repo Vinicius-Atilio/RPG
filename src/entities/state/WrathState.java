@@ -12,7 +12,7 @@ public class WrathState extends  State {
     public static WrathState of(State state) {
         return new WrathState(
                 state.getLife(),
-                state.getStrength(),
+                (int) (state.getStrength() * 1.3), // aumento de 30% na força
                 state.getIntelligence(),
                 state.getAgility(),
                 state.getVigor(),
@@ -23,7 +23,7 @@ public class WrathState extends  State {
     }
 
     @Override
-    public double calculateDamage(Player activePlayer, Player passivePlayer, int activeSKillPowerAttack) {
+    public double calculateDamage(Player activePlayer, Player passivePlayer, double activeSKillPowerAttack) {
         double damage = activeSKillPowerAttack + (activePlayer.getMainAttribute() * activePlayer.weaponFactor()) * 1.2;
         return Math.max(damage, 0);
     }

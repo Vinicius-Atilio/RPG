@@ -156,7 +156,7 @@ public abstract class State {
     public abstract void onDeath(Player player);
     public abstract boolean isAlive();
 
-    public abstract double calculateDamage(Player activePlayer, Player passivePlayer, int activeSKillPowerAttack);
+    public abstract double calculateDamage(Player activePlayer, Player passivePlayer, double activeSKillPowerAttack);
     public abstract double calculateAllyDamage(Ally ally, Skill skill, Player actionPlayer, Player passivePlayer);
 //    public abstract double calculateAllyHeal(Ally ally, Skill skill, Player activePlayer);
     public abstract double calculateDefense();

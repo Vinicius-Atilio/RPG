@@ -3,9 +3,11 @@ package entities.skill.warrior;
 import entities.character.Player;
 import entities.skill.attack.Attack;
 
+import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class HeavyAttack extends Attack {
+    private Random random = new Random();
     public HeavyAttack(String name, String description, String skillAction, int cooldown, int attackPower) {
         super(name, description, skillAction, cooldown, attackPower);
     }
@@ -26,16 +28,24 @@ public class HeavyAttack extends Attack {
 
     @Override
     public void skillTypeAction(Player activePlayer, Player passivePlayer) {
-        System.out.println();
-        System.out.println("╔════════════════════════════════════════════════════════════════╗");
-        System.out.println("║                 HABILIDADE ATIVADA: GOLPE PESADO               ║");
-        System.out.println("╚════════════════════════════════════════════════════════════════╝");
+        printSkillBox("💥 HABILIDADE ATIVADA: GOLPE PESADO");
         System.out.println();
         System.out.println("💢" + activePlayer.getName() + " " + voiceActionList.get(ThreadLocalRandom.current().nextInt(voiceActionList.size())));
         System.out.println("💥" + activePlayer.getName() +" " + hitActionList.get(ThreadLocalRandom.current().nextInt(hitActionList.size())));
+        passivePlayer.receiveDamage(activePlayer, this.calculateSkillDamage(activePlayer), this);
         System.out.println("⚔️ O impacto reverbera pelo campo de batalha, fazendo o chão tremer!");
-        passivePlayer.receiveDamage(activePlayer, this.powerAttack, this);
         System.out.println();
+    }
+
+    @Override
+    public double calculateSkillDamage(Player activePlayer) {
+        double damage = this.powerAttack + ( activePlayer.getMainAttribute() * 2.5); // Golpe pesado causa 50% a mais de dano
+        if (this.random.nextInt(101) >= 75) {
+            System.out.println("🎯 GOLPE CRÍTICO! O ataque atinge um ponto vital!");
+            damage *= 2.5;
+        }
+
+        return damage;
     }
 
     public static HeavyAttack ofHeavyAttack() {

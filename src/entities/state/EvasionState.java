@@ -37,7 +37,7 @@ public class EvasionState extends State {
     }
 
     @Override
-    public double calculateDamage(Player activePlayer, Player passivePlayer, int activeSKillPowerAttack) {
+    public double calculateDamage(Player activePlayer, Player passivePlayer, double activeSKillPowerAttack) {
         return (activePlayer.getMainAttribute() * activePlayer.weaponFactor()) + (activeSKillPowerAttack - passivePlayer.originalDefenseValue());
     }
 

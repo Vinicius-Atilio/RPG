@@ -3,7 +3,6 @@ package entities.state;
 import entities.ally.Ally;
 import entities.character.Player;
 import entities.skill.Skill;
-import entities.skill.attack.Trap;
 
 public class OriginalState extends State {
 
@@ -12,7 +11,7 @@ public class OriginalState extends State {
     }
 
     @Override
-    public double calculateDamage(Player activePlayer, Player passivePlayer, int activeSKillPowerAttack) {
+    public double calculateDamage(Player activePlayer, Player passivePlayer, double activeSKillPowerAttack) {
         double damage = activeSKillPowerAttack + (activePlayer.getMainAttribute() * activePlayer.weaponFactor())
                 - passivePlayer.originalDefenseValue();
         return Math.max(damage, 0);

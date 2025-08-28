@@ -120,7 +120,7 @@ public abstract class Ally extends Skill {
         return skillMultiplier;
     }
 
-    public void receiveDamage(Player actionPlayer, Player passivePlayer, int activeSKillPowerAttack, Skill skill) {
+    public void receiveDamage(Player actionPlayer, Player passivePlayer, double activeSKillPowerAttack, Skill skill) {
         this.state.receiveDamage(actionPlayer,
                 passivePlayer,
                 this.state.calculateDamage(
