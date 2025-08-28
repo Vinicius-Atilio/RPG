@@ -3,7 +3,6 @@ package entities.state;
 import entities.ally.Ally;
 import entities.character.Player;
 import entities.skill.Skill;
-import entities.skill.attack.Trap;
 
 public class StunnedState extends State {
     public StunnedState(double life, int strength, int intelligence, int agility, int vigor, int mana, int defense, int turns) {
@@ -24,7 +23,7 @@ public class StunnedState extends State {
     }
 
     @Override
-    public double calculateDamage(Player activePlayer, Player passivePlayer, int activeSKillPowerAttack) {
+    public double calculateDamage(Player activePlayer, Player passivePlayer, double activeSKillPowerAttack) {
         System.out.println("⚠️ " + passivePlayer.getName() + " está atordoado e não pode se defender!");
         double damage = activeSKillPowerAttack + (activePlayer.getMainAttribute() * activePlayer.weaponFactor());
         return Math.max(damage, 0);

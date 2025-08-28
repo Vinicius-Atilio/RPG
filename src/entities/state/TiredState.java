@@ -24,7 +24,7 @@ public class TiredState extends State {
     }
 
     @Override
-    public double calculateDamage(Player activePlayer, Player passivePlayer, int activeSKillPowerAttack) {
+    public double calculateDamage(Player activePlayer, Player passivePlayer, double activeSKillPowerAttack) {
         System.out.println("O jogador " + passivePlayer.getName() + " está cansado! Dano aumentado.");
         return (activePlayer.getMainAttribute() * activePlayer.weaponFactor()) + (activeSKillPowerAttack - passivePlayer.tiredDefenseValue());
     }

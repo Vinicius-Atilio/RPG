@@ -18,11 +18,11 @@ public class DefensivePosture extends Defense {
         System.out.println();
         System.out.println(this.description);
         System.out.println(this.skillAction);
+        activePlayer.changeStateToDefensive();
     }
 
     @Override
     public void skillTypeAction(Player activePlayer, Player passivePlayer) {
-        activePlayer.changeStateToDefensive();
         printSkillBox("🛡️ HABILIDADE ATIVADA: POSTURA DEFENSIVA");
         System.out.println("🧍 " + activePlayer.getName() + " firma os pés no chão com autoridade.");
         System.out.println("🛡️ Ele ergue seu escudo e se posiciona com precisão inabalável.");

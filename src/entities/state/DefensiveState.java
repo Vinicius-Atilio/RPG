@@ -6,7 +6,7 @@ import entities.skill.Skill;
 import entities.skill.attack.Trap;
 
 public class DefensiveState extends State {
-    private double reducedValue = 0.5;
+    private double reducedValue = 0.6; // reduz o dano recebido em 40%
 
     public DefensiveState(double life, int strength, int intelligence, int agility, int vigor, int mana, int defense, int stateDuration) {
         super("Estado Defensivo" ,life, strength, intelligence, agility, vigor, mana, defense, stateDuration);
@@ -20,13 +20,13 @@ public class DefensiveState extends State {
                 state.getAgility(),
                 state.getVigor(),
                 state.getMana(),
-                state.getDefense() * 2, // Aumenta a defesa
+                state.getDefense() * 2, // dobro a defesa
                 1
         );
     }
 
     @Override
-    public double calculateDamage(Player activePlayer, Player passivePlayer, int activeSKillPowerAttack) {
+    public double calculateDamage(Player activePlayer, Player passivePlayer, double activeSKillPowerAttack) {
         System.out.println("😤 " + passivePlayer.getName() + " está em estado defensivo e não efetua dano!");
         return 0;
     }

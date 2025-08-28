@@ -56,7 +56,7 @@ public abstract class Trap extends Skill {
             return false;
         }
 
-        return this.random.nextInt(101) >= 1;
+        return this.random.nextInt(101) >= 90;
     }
 
     public void applyDamage() {

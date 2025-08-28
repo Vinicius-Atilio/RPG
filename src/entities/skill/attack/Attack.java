@@ -82,4 +82,5 @@ public abstract class Attack extends Skill {
     public void skillTypeAction(Player activePlayer, Player passivePlayer) {
         validateContext();
     }
+    public abstract double calculateSkillDamage(Player activePlayer);
 }

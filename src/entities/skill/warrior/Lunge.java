@@ -47,6 +47,7 @@ public class Lunge extends Attack {
         System.out.println("💨 O chão treme sob seus pés enquanto ele corta o campo em velocidade feroz!");
         System.out.println("💥 O impacto do avanço sacode tudo ao redor!");
         System.out.println("🔁 Há uma chance de que o inimigo fique completamente atordoado pela força do golpe!");
+        passivePlayer.receiveDamage(activePlayer, this.calculateSkillDamage(activePlayer), this);
         System.out.println();
 
         if (ThreadLocalRandom.current().nextBoolean()) {
@@ -57,6 +58,11 @@ public class Lunge extends Attack {
 
         System.out.println("❌ " + passivePlayer.getName() + " conseguiu resistir ao impacto e não foi atordoado.");
         System.out.println();
+    }
+
+    @Override
+    public double calculateSkillDamage(Player activePlayer) {
+        return (this.powerAttack + ( activePlayer.getMainAttribute() * 2.0));
     }
 
     public static Lunge ofLunge() {

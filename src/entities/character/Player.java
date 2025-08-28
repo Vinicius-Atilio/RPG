@@ -133,7 +133,7 @@ public class Player implements BattleObserver {
         return selectSkill(enemy);
     }
 
-    public void receiveDamage(Player activePlayer, int activeSKillPowerAttack, Skill skill) {
+    public void receiveDamage(Player activePlayer, double activeSKillPowerAttack, Skill skill) {
         var damage = this.state.calculateDamage(activePlayer, this, activeSKillPowerAttack);
         if (damage <= 0) {
             System.out.println("😱 " + this.name + " conseguiu se defender do ataque de " + activePlayer.getName() + "!");
@@ -149,7 +149,7 @@ public class Player implements BattleObserver {
         skill.skillEffectAction(activePlayer, this);
     }
 
-    public void receiveSpecialDamage(Player activePlayer, int activeSKillPowerAttack, Skill skill) {
+    public void receiveSpecialDamage(Player activePlayer, double activeSKillPowerAttack, Skill skill) {
         if (isAllyAlive()) {
             this.ally.receiveDamage(activePlayer, this, activeSKillPowerAttack, skill);
             this.receiveDamage(activePlayer, activeSKillPowerAttack, skill);
@@ -253,7 +253,7 @@ public class Player implements BattleObserver {
     }
 
     public void changeStateToDefensive() {
-
+        this.state = DefensiveState.of(this.state);
     }
 
     public void makeDeath() {

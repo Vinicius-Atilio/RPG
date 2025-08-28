@@ -32,19 +32,24 @@ public class BattlefieldWrath extends Attack {
         System.out.println(this.description);
         System.out.println(this.skillAction);
         System.out.println();
+        activePlayer.changeStateToWrath();
     }
 
     @Override
     public void skillTypeAction(Player activePlayer, Player passivePlayer) {
-        activePlayer.changeStateToWrath();
         printSkillBox("🌟 HABILIDADE ESPECIAL ATIVADA: IRA DO CAMPO DE BATALHA (ESPECIAL)");
         System.out.println("🔥 " + activePlayer.getName() + " entra em estado de furia!");
         System.out.println("💥 " + activePlayer.getName() + " sente a força do campo de batalha pulsando em suas veias!");
         System.out.println("⚔️ O ataque queima a pele dos seus inimigos!");
         System.out.println("💢 " + this.getAction(skillActionList));
-        passivePlayer.receiveSpecialDamage(activePlayer, this.powerAttack, this);
+        passivePlayer.receiveSpecialDamage(activePlayer,this.calculateSkillDamage(activePlayer), this);
         System.out.println("🛡️ Efeitos colaterais serão aplicados pelos próximos turnos.");
         System.out.println();
+    }
+
+    @Override
+    public double calculateSkillDamage(Player activePlayer) {
+        return this.powerAttack;
     }
 
     public static BattlefieldWrath ofBattlefieldWrath() {
