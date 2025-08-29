@@ -79,22 +79,9 @@ public class Player implements Subject, Game {
     }
 
     @Override
-    public void onAllyAttack(Ally ally) {
-        System.out.println("👤 " + this.name + " diz: Meu aliado " + ally.getName() + " está atacando!");
-    }
-
-    @Override
-    public void onNotifyAllyAction(Ally ally, Skill skill) {}
-
-    @Override
     public void onTrapActivated(Trap trap) {
         this.state.receiveDamage(trap, this);
         this.observersList.forEach(observer -> observer.onTrapDamage(this, trap));
-    }
-
-    @Override
-    public void onReceiveAllyAttack(Ally ally, Skill skill) {
-        System.out.println("👤 " + this.name + " diz: O aliado " + ally.getName() + " está me atacando com " + skill.getName() + "!");
     }
 
     @Override

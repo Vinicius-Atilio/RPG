@@ -15,10 +15,7 @@ public interface Observer {
     void onDefendEnemyAttack(Player activePlayer, Player passivePlayer);
     void onReceiveEnemyAttack(Player activePlayer, Player passivePlayer, double damage);
     void onReceiveSpecialDamage(Player activePlayer, Player passivePlayer, Ally ally);
-
     void onPlayerDied(Player activePlayer, Player passivePlayer, Skill skill);
-
     void onUpdateLifeStatus(Player passivePlayer);
-
     void onAllyInvoked(Player activePLayer, Ally ally);
 }
