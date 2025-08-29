@@ -185,7 +185,31 @@ public class BattleGround implements Observer, Game {
         System.out.println(this.getNotify() + passivePlayer.getName() + " e seu aliado " + ally.getName() + " sofreu dano especial pelo " + activePlayer.getName() + "!");
     }
 
+    @Override
+    public void onPlayerDied(Player activePlayer, Player passivePlayer, Skill skill) {
+        System.out.println(this.getNotify() + passivePlayer.getName() + " foi derrotado pelo ataque de " + activePlayer.getName() + "!");
+
+        System.out.println("💥 " + skill.getName() + " acerta em cheio, explodindo contra seu alvo!");
+        System.out.println("❤️ Restavam apenas " + String.format("%.2f", Math.max(0, passivePlayer.getLife())) + " pontos de vida em " + passivePlayer.getName() + "...");
+
+        System.out.println("\n💀 O impacto é devastador! " + passivePlayer.getName() + " é lançado ao chão, sua armadura se parte em estilhaços.");
+        System.out.println("🕯️ A chama da vida vacila e se apaga lentamente em seus olhos...");
+        System.out.println("⚰️ " + passivePlayer.getName() + " caiu em batalha e não pode mais lutar.");
+
+        System.out.println("\n📉 Vida atual de " + passivePlayer.getName() + ": " + String.format("%.2f", Math.max(0, passivePlayer.getLife())));
+    }
+
+    @Override
+    public void onUpdateLifeStatus(Player passivePlayer) {
+        System.out.println(this.getNotify() + passivePlayer.getName() + ": possui " + String.format("%.2f", Math.max(0, passivePlayer.getLife())) + " pontos de vida ❤️.");
+    }
+
+    @Override
+    public void onAllyInvoked(Player activePLayer, Ally ally) {
+        System.out.println(this.getNotify() + activePLayer.getName() + " invocou seu aliado " + ally.getName() + " ao campo de batalha!");
+    }
+
     private String getNotify() {
-        return "👤Campo de batalha notifica: O jogador ";
+        return "👤 Campo de batalha: O jogador ";
     }
 }

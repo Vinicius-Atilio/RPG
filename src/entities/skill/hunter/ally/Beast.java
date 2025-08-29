@@ -60,6 +60,7 @@ public class Beast extends Ally {
         System.out.println(activePlayer.getName() + " assobia e a fera aparece rapidamente ao seu lado!");
         System.out.println("⚔️ " + activePlayer.getName() + " se prepara para posicionar sua fera companheira no campo de batalha!");
         System.out.println();
+        activePlayer.onAllyInvoked(this);
     }
 
     @Override

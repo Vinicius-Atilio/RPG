@@ -2,6 +2,7 @@ package entities.observer;
 
 import entities.ally.Ally;
 import entities.character.Player;
+import entities.skill.Skill;
 import entities.skill.attack.Trap;
 
 public interface Observer {
@@ -14,4 +15,10 @@ public interface Observer {
     void onDefendEnemyAttack(Player activePlayer, Player passivePlayer);
     void onReceiveEnemyAttack(Player activePlayer, Player passivePlayer, double damage);
     void onReceiveSpecialDamage(Player activePlayer, Player passivePlayer, Ally ally);
+
+    void onPlayerDied(Player activePlayer, Player passivePlayer, Skill skill);
+
+    void onUpdateLifeStatus(Player passivePlayer);
+
+    void onAllyInvoked(Player activePLayer, Ally ally);
 }

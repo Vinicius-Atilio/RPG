@@ -64,37 +64,23 @@ public class Player implements Subject, Game {
 
     @Override
     public void registerObserver(Observer observer) {
-
+        this.observersList.add(observer);
     }
 
     @Override
     public void removeObserver(Observer observer) {
-
-    }
-
-    @Override
-    public void notifyObservers(Ally ally) {
-        this.observersList.forEach(observer -> observer.onContract(this, ally));
-    }
-
-    @Override
-    public void notifyObservers(Trap trap) {
-        this.observersList.forEach(observer -> observer.onContract(this, trap));
+        this.observersList.remove(observer);
     }
 
     @Override
     public void onAllyInvoked(Ally ally) {
-        System.out.println("👤 " + this.name + " diz: Um aliado chegou! " + ally.getName() + " e está no campo de batalha .");
+        this.ally = ally;
+        this.observersList.forEach(observer -> observer.onAllyInvoked(this, ally));
     }
 
     @Override
     public void onAllyAttack(Ally ally) {
         System.out.println("👤 " + this.name + " diz: Meu aliado " + ally.getName() + " está atacando!");
-    }
-
-    @Override
-    public void onAddObserver(Observer observer) {
-        this.observersList.add(observer);
     }
 
     @Override
@@ -125,7 +111,7 @@ public class Player implements Subject, Game {
         for (Skill skill : this.skills) {
             if (skill instanceof Trap trapSkill && trapSkill.hasBeenExploded()) {
                 trapSkill.contract(this, enemy);
-                this.notifyObservers(trapSkill);
+                this.observersList.forEach(observer -> observer.onContract(this, trapSkill));
                 break;
             }
         }
@@ -136,8 +122,7 @@ public class Player implements Subject, Game {
         for (Skill skill : this.skills) {
             if (skill instanceof Ally allySkill) {
                 allySkill.contract(this, enemyObserver);
-                this.ally = allySkill;
-                this.notifyObservers(this.ally);
+                this.observersList.forEach(observer -> observer.onContract(this, allySkill));
                 break;
             }
         }
@@ -173,6 +158,15 @@ public class Player implements Subject, Game {
         return selectSkill(enemy);
     }
 
+    private void verifyIfPlayerDied(Player activePlayer, Skill skill) {
+        if (!this.state.isAlive()) {
+            this.observersList.forEach(observer -> observer.onPlayerDied(activePlayer, this, skill));
+            return;
+        }
+
+        this.observersList.forEach(observer -> observer.onUpdateLifeStatus(this));
+    }
+
     public void receiveDamage(Player activePlayer, double activeSKillPowerAttack, Skill skill) {
         var damage = this.state.calculateDamage(activePlayer, this, activeSKillPowerAttack);
         if (damage <= 0) {
@@ -187,6 +181,7 @@ public class Player implements Subject, Game {
 
         this.observersList.forEach(observer -> observer.onReceiveEnemyAttack(activePlayer, this, damage));
         skill.skillEffectAction(activePlayer, this);
+        verifyIfPlayerDied(activePlayer, skill);
     }
 
     public void receiveSpecialDamage(Player activePlayer, double activeSKillPowerAttack, Skill skill) {
@@ -199,6 +194,7 @@ public class Player implements Subject, Game {
 
         this.receiveDamage(activePlayer, activeSKillPowerAttack, skill);
         skill.skillEffectAction(activePlayer, this);
+        verifyIfPlayerDied(activePlayer, skill);
     }
 
     public void receiveEnemyAllyDamage(Ally ally, Skill skill, Player activePlayer) {
@@ -211,6 +207,7 @@ public class Player implements Subject, Game {
         this.state.receiveDamage(activePlayer, this, damage, skill);
         this.observersList.forEach(observer -> observer.onReceiveEnemyAllyAttack(this, ally, damage));
         skill.skillEffectAction(activePlayer, this);
+        verifyIfPlayerDied(activePlayer, skill);
     }
 
     public void receiveAllyHeal(Ally ally, Skill skill, Player activePlayer) {
@@ -262,6 +259,7 @@ public class Player implements Subject, Game {
     public void receiveEffect(double value, String effectName) {
         System.out.println("O jogador " + this.name + " está sob efeito de " + effectName + " Vida reduzida em 5%." + " Vida atual: " + String.format("%.2f",  this.getLife() ));
         this.state.receiveDamage(value, this, effectName);
+//        verifyIfPlayerDied(activePlayer, skill);
     }
 
     public Ally getAlly() {

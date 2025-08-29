@@ -41,11 +41,9 @@ public abstract class Ally extends Skill {
         printSkillBox("🛡️ PREPARANDO EVOCAÇÃO DO ALIADO: " + this.name);
         System.out.println("🔄 " + activePlayer.getName() + " se prepara para invocar o aliado " + this.name + " no campo de batalha!");
         System.out.println("⚔️ O aliado se posiciona, pronto para ajudar na batalha!");
-
         this.executeSelectedSkill(activePlayer, passivePlayer, battleGround);
         this.skillTypeAction(activePlayer, passivePlayer, battleGround);
         battleGround.addAlly(this);
-        System.out.println(" ❤️ Vida atual do aliado " + this.name + ": " + String.format("%.2f", Math.max(passivePlayer.getLife(), 0)) );
         System.out.println();
     }
 

@@ -59,35 +59,28 @@ public abstract class State {
         this.defense = 0;
     }
 
-    private void playerIsDied(String skillName, Player passivePlayer) {
-        System.out.println("💥 " + skillName + " atinge em cheio!");
-        System.out.println("❤️ " + passivePlayer.getName() + " tinha apenas " +  String.format("%.2f", passivePlayer.getLife() > 0 ? passivePlayer.getLife() : 0 ) + " de vida restante...");
-        System.out.println("\n💀 Ele é derrubado com o impacto. Sua armadura racha e ele cai de joelhos.");
-        System.out.println("🕯️ A chama da vida se apaga em seus olhos...");
-        System.out.println("⚰️ " + passivePlayer.getName() + " foi derrotado.");
-    }
 
-    protected void validateIfPlayerIsAlive(String skillName, Player passivePlayer) {
+
+    protected void validateIfPlayerIsAlive(Player passivePlayer) {
         if (!this.isAlive()) {
             passivePlayer.makeDeath();
-            this.playerIsDied(skillName, passivePlayer);
         }
     }
 
     public void receiveDamage(Player activePlayer, Player passivePlayer, double value, Skill skill) {
         this.life -= value;
         skill.skillEffectAction(activePlayer, passivePlayer);
-        validateIfPlayerIsAlive(skill.getName(), passivePlayer);
+        validateIfPlayerIsAlive(passivePlayer);
     }
 
     public void receiveDamage(double value, Player passivePlayer, String effectName) {
         this.life -= value;
-        validateIfPlayerIsAlive(effectName, passivePlayer);
+        validateIfPlayerIsAlive(passivePlayer);
     }
 
     public void receiveDamage(Trap trap, Player passivePlayer) {
         this.life -= trap.getDamage();
-        validateIfPlayerIsAlive(trap.getName(), passivePlayer);
+        validateIfPlayerIsAlive(passivePlayer);
     }
 
     public double calculateAllyHeal(Ally ally, Skill skill, Player activePlayer) {

@@ -29,11 +29,8 @@ public abstract class Attack extends Skill {
         System.out.println("🔄 " + activePlayer.getName() + " se prepara para atacar " + passivePlayer.getName() + " no campo de batalha!");
         System.out.println("🗡️ O ambiente fica tenso enquanto o ataque é preparado...");
         System.out.println("⚡ Energia e determinação se acumulam para o golpe decisivo!");
-
         this.executeSelectedSkill(activePlayer, passivePlayer);
         this.skillTypeAction(activePlayer, passivePlayer);
-
-        System.out.println(" ❤️ Vida atual de " + passivePlayer.getName() + ": " + String.format("%.2f", Math.max(passivePlayer.getLife(), 0)) );
         System.out.println();
     }
 
