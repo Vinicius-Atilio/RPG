@@ -5,6 +5,13 @@ import entities.character.Player;
 import entities.skill.attack.Trap;
 
 public interface Observer {
-    void update(Player player, Trap trap);
-    void update(Player player, Ally ally);
+    void onContract(Player activePlayer, Trap trap);
+    void onContract(Player activePlayer, Ally ally);
+    void onTrapDamage(Player passivePlayer, Trap trap);
+    void onReceiveEnemyAllyAttack(Player passivePlayer, Ally ally, double damage);
+    void onDefendAgainstAllyAttack(Player passivePlayer, Ally ally);
+    void onAllySupport(Player passivePlayer, Ally ally, double heal);
+    void onDefendEnemyAttack(Player activePlayer, Player passivePlayer);
+    void onReceiveEnemyAttack(Player activePlayer, Player passivePlayer, double damage);
+    void onReceiveSpecialDamage(Player activePlayer, Player passivePlayer, Ally ally);
 }

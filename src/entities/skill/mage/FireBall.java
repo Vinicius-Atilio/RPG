@@ -41,6 +41,11 @@ public class FireBall extends Attack {
         System.out.println();
     }
 
+    @Override
+    public double calculateSkillDamage(Player activePlayer) {
+        return 0;
+    }
+
 
     public static FireBall ofFireBall() {
         return new FireBall("Bola de Fogo",

@@ -77,19 +77,16 @@ public abstract class State {
     public void receiveDamage(Player activePlayer, Player passivePlayer, double value, Skill skill) {
         this.life -= value;
         skill.skillEffectAction(activePlayer, passivePlayer);
-        System.out.printf("😤 %s recebeu o dano de %.2f devido ao ataque de %s!%n", passivePlayer.getName(), value, activePlayer.getName());
         validateIfPlayerIsAlive(skill.getName(), passivePlayer);
     }
 
     public void receiveDamage(double value, Player passivePlayer, String effectName) {
         this.life -= value;
-        System.out.printf("😤 %s recebeu o dano de %.2f devido ao efeito %s!%n", passivePlayer.getName(), value, effectName);
         validateIfPlayerIsAlive(effectName, passivePlayer);
     }
 
     public void receiveDamage(Trap trap, Player passivePlayer) {
         this.life -= trap.getDamage();
-        System.out.println("💣 A armadilha explode causando " + trap.getDamage() + " de dano!");
         validateIfPlayerIsAlive(trap.getName(), passivePlayer);
     }
 
@@ -157,7 +154,7 @@ public abstract class State {
     public abstract boolean isAlive();
 
     public abstract double calculateDamage(Player activePlayer, Player passivePlayer, double activeSKillPowerAttack);
-    public abstract double calculateAllyDamage(Ally ally, Skill skill, Player actionPlayer, Player passivePlayer);
+    public abstract double calculateEnemyAllyDamage(Ally ally, Skill skill, Player actionPlayer, Player passivePlayer);
 //    public abstract double calculateAllyHeal(Ally ally, Skill skill, Player activePlayer);
     public abstract double calculateDefense();
 

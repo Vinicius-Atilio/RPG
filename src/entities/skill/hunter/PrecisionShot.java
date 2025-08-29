@@ -31,6 +31,11 @@ public class PrecisionShot extends Attack {
         System.out.println();
     }
 
+    @Override
+    public double calculateSkillDamage(Player activePlayer) {
+        return 0;
+    }
+
     public static PrecisionShot ofPrecisionShot() {
         return new PrecisionShot("Disparo Preciso",
                 "Ataque com alto dano crítico.",

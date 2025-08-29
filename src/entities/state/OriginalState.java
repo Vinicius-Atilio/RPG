@@ -18,7 +18,7 @@ public class OriginalState extends State {
     }
 
     @Override
-    public double calculateAllyDamage(Ally ally, Skill skill, Player actionPlayer, Player passivePlayer) {
+    public double calculateEnemyAllyDamage(Ally ally, Skill skill, Player actionPlayer, Player passivePlayer) {
         double damage = (ally.getAllyPower() + skill.getActiveSkillPowerAttack()
                 + (actionPlayer.getMainAttribute() * ally.getInvokerPower()) * ally.getSkillMultiplier())
                 - passivePlayer.originalDefenseValue();

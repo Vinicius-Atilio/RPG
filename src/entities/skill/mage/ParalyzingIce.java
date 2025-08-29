@@ -80,6 +80,11 @@ public class ParalyzingIce extends Attack  {
         System.out.println();
     }
 
+    @Override
+    public double calculateSkillDamage(Player activePlayer) {
+        return 0;
+    }
+
     public static ParalyzingIce ofParalyzingIce() {
         return new ParalyzingIce("Gelo Paralizante",
                 "Causa dano e reduz velocidade do inimigo.",

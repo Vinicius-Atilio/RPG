@@ -74,12 +74,12 @@ public class Player implements Subject, Game {
 
     @Override
     public void notifyObservers(Ally ally) {
-        this.observersList.forEach(observer -> observer.update(this, ally));
+        this.observersList.forEach(observer -> observer.onContract(this, ally));
     }
 
     @Override
     public void notifyObservers(Trap trap) {
-        this.observersList.forEach(observer -> observer.update(this, trap));
+        this.observersList.forEach(observer -> observer.onContract(this, trap));
     }
 
     @Override
@@ -103,7 +103,7 @@ public class Player implements Subject, Game {
     @Override
     public void onTrapActivated(Trap trap) {
         this.state.receiveDamage(trap, this);
-        this.observersList.forEach(observer -> observer.update(this, trap));
+        this.observersList.forEach(observer -> observer.onTrapDamage(this, trap));
     }
 
     @Override
@@ -176,7 +176,7 @@ public class Player implements Subject, Game {
     public void receiveDamage(Player activePlayer, double activeSKillPowerAttack, Skill skill) {
         var damage = this.state.calculateDamage(activePlayer, this, activeSKillPowerAttack);
         if (damage <= 0) {
-            System.out.println("😱 " + this.name + " conseguiu se defender do ataque de " + activePlayer.getName() + "!");
+            this.observersList.forEach(observer -> observer.onDefendEnemyAttack(activePlayer, this));
             return;
         }
 
@@ -185,7 +185,7 @@ public class Player implements Subject, Game {
                 damage,
                 skill);
 
-        System.out.println("😤 " + this.name+ " recebeu o dano de " + String.format("%.2f", damage) + " de " + activePlayer.getName() + "!");
+        this.observersList.forEach(observer -> observer.onReceiveEnemyAttack(activePlayer, this, damage));
         skill.skillEffectAction(activePlayer, this);
     }
 
@@ -193,6 +193,7 @@ public class Player implements Subject, Game {
         if (isAllyAlive()) {
             this.ally.receiveDamage(activePlayer, this, activeSKillPowerAttack, skill);
             this.receiveDamage(activePlayer, activeSKillPowerAttack, skill);
+            this.observersList.forEach(observer -> observer.onReceiveSpecialDamage(activePlayer, this, this.ally));
             return;
         }
 
@@ -200,22 +201,22 @@ public class Player implements Subject, Game {
         skill.skillEffectAction(activePlayer, this);
     }
 
-
-    public void receiveAllyDamage(Ally ally, Skill skill, Player activePlayer, Player passivePlayer) {
-        double damage = this.state.calculateAllyDamage(ally, skill, activePlayer, passivePlayer);
+    public void receiveEnemyAllyDamage(Ally ally, Skill skill, Player activePlayer) {
+        double damage = this.state.calculateEnemyAllyDamage(ally, skill, activePlayer, this);
         if (damage <= 0) {
-            System.out.println("😱 " + this.name + " conseguiu se defender do ataque da fera de " + activePlayer.getName() + "!");
+            this.observersList.forEach(observer -> observer.onDefendAgainstAllyAttack(this, ally));
             return;
         }
 
-        this.state.receiveDamage(activePlayer, passivePlayer, damage, skill);
+        this.state.receiveDamage(activePlayer, this, damage, skill);
+        this.observersList.forEach(observer -> observer.onReceiveEnemyAllyAttack(this, ally, damage));
         skill.skillEffectAction(activePlayer, this);
-        System.out.println("😤 " + this.name + " recebeu o dano de " + String.format("%.2f", damage) + " da fera de " + activePlayer.getName() + "!");
     }
 
     public void receiveAllyHeal(Ally ally, Skill skill, Player activePlayer) {
         double heal = this.state.calculateAllyHeal(ally, skill, activePlayer);
         activePlayer.state.receiveHeal(heal);
+        this.observersList.forEach(observer -> observer.onAllySupport(this, ally, heal));
         skill.skillEffectAction(activePlayer, this);
     }
 
@@ -229,6 +230,7 @@ public class Player implements Subject, Game {
 
     public void addEffect(StatusEffect statusEffect) {
         this.effects.add(statusEffect);
+//        this.observersList.forEach(observer -> observer.onAllyUpdateState(this.ally));
     }
 
     public void applyEffect() {

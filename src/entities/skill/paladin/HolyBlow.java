@@ -37,6 +37,11 @@ public class HolyBlow extends Attack {
         System.out.println();
     }
 
+    @Override
+    public double calculateSkillDamage(Player activePlayer) {
+        return 0;
+    }
+
     public static HolyBlow ofHolyBlow() {
         return new HolyBlow("Golpe Sagrado",
                 "Ataque com dano extra contra inimigos sombrios.",

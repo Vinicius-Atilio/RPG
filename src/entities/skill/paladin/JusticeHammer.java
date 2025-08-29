@@ -39,6 +39,11 @@ public class JusticeHammer extends Attack {
         System.out.println();
     }
 
+    @Override
+    public double calculateSkillDamage(Player activePlayer) {
+        return 0;
+    }
+
     public static JusticeHammer ofJusticeHammer() {
         return new JusticeHammer(
                 "Martelo da Justiça (especial)",

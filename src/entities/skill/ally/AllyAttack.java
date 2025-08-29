@@ -21,8 +21,8 @@ public abstract class AllyAttack extends Ally {
         System.out.println("🔄 " + ally.getName() + " se prepara para atacar com " + this.name + " no campo de batalha!");
 
         this.executeSelectedSkill(ally, allyObserver.getObserver(), enemyObserver.getObserver());
-        allyObserver.onAllyAttack(ally);
-        enemyObserver.onReceiveAllyAttack(ally, this);
+//        allyObserver.onAllyAttack(ally);
+//        enemyObserver.onReceiveAllyAttack(ally, this);
         this.skillTypeAction(ally, allyObserver.getObserver(), enemyObserver.getObserver());
 //        battleGroundObserver.onNotifyAllyAction(ally, this);
         System.out.println();

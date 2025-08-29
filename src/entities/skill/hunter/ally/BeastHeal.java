@@ -14,7 +14,6 @@ public class BeastHeal extends AllySupport {
         printSkillBox(" 🐾 ALIADO: CURA DA FERA");
         System.out.println(activePlayer.getName() + " ordena a fera companheira a curar " + passivePlayer.getName() + "!");
         System.out.println("A fera usa suas habilidades naturais para restaurar parte da vida do aliado.");
-        System.out.println("💚 " + activePlayer.getName() + " executa a cura da fera com sucesso!");
         System.out.println();
         System.out.println(this.description);
         System.out.println(this.skillAction);
@@ -26,7 +25,7 @@ public class BeastHeal extends AllySupport {
         printSkillBox(" 🐾 FERA COMPANHEIRA CURA");
         System.out.println(activePlayer.getName() + " ordena a fera companheira a curar " + passivePlayer.getName() + "!");
         System.out.println("A fera usa suas habilidades naturais para restaurar parte da vida do aliado.");
-        System.out.println("💚 " + activePlayer.getName() + " executa a cura da fera com sucesso!");
+        System.out.println(ally.getName() + " executa a cura da fera com sucesso!");
         System.out.println();
         passivePlayer.receiveAllyHeal(ally, this, activePlayer);
         System.out.println();

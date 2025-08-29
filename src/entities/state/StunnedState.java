@@ -30,7 +30,7 @@ public class StunnedState extends State {
     }
 
     @Override
-    public double calculateAllyDamage(Ally ally, Skill skill, Player actionPlayer, Player passivePlayer) {
+    public double calculateEnemyAllyDamage(Ally ally, Skill skill, Player actionPlayer, Player passivePlayer) {
         System.out.println("⚠️ " + passivePlayer.getName() + " está atordoado e não pode se defender do ataque do aliado.!");
         double damage = (ally.getAllyPower() + skill.getActiveSkillPowerAttack()
                 + (actionPlayer.getMainAttribute() * ally.getInvokerPower()) * ally.getSkillMultiplier());

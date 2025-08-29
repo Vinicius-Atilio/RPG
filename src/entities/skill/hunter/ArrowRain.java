@@ -35,6 +35,11 @@ public class ArrowRain extends Attack {
         System.out.println();
     }
 
+    @Override
+    public double calculateSkillDamage(Player activePlayer) {
+        return 0;
+    }
+
     public static ArrowRain ofArrowRain() {
         return new ArrowRain("Chuva de Flechas (especial)",
                 "Dispara várias flechas em área com chance de sangramento.",

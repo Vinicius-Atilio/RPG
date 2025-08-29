@@ -39,6 +39,11 @@ public class PoisonArrow extends Attack {
         System.out.println();
     }
 
+    @Override
+    public double calculateSkillDamage(Player activePlayer) {
+        return 0;
+    }
+
     public static PoisonArrow ofPoisonArrow() {
         return new PoisonArrow("Flecha Envenenada",
                 "Aplica veneno que causa dano contínuo por 2 turnos.",

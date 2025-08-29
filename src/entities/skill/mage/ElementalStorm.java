@@ -43,6 +43,11 @@ public class ElementalStorm extends Attack {
 
     }
 
+    @Override
+    public double calculateSkillDamage(Player activePlayer) {
+        return 0;
+    }
+
     public static ElementalStorm ofElementalStorm() {
         return new ElementalStorm("Tempestade Elemental (Especial)",
                 "Conjura ataque massivo com múltiplos elementos em área, aumenta dano do aliado.",

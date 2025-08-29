@@ -141,12 +141,51 @@ public class BattleGround implements Observer, Game {
     }
 
     @Override
-    public void update(Player player, Trap trap) {
-        System.out.println("👤 Campo de batalha notifica: O jogador " + player.getName() + " sofreu dano da armadilha " + trap.getName() + "!");
+    public void onContract(Player activePlayer, Trap trap) {
+        System.out.println(this.getNotify() + activePlayer.getName() + " contratou a armadilha " + trap.getName() + "!");
     }
 
     @Override
-    public void update(Player player, Ally ally) {
-        System.out.println("👤 Campo de batalha notifica: O jogador " + player.getName() + " contratou seu aliado " + ally.getName() + "!");
+    public void onContract(Player activePlayer, Ally ally) {
+        System.out.println(this.getNotify() + activePlayer.getName() + " contratou seu aliado " + ally.getName() + "!");
+    }
+
+    @Override
+    public void onTrapDamage(Player passivePlayer, Trap trap) {
+        System.out.println(this.getNotify() + passivePlayer.getName() +  " sofreu " + trap.getDamage() + " de dano!" + " Com a explosão da armadilha 💣 " + trap.getName() + "!");
+    }
+
+    @Override
+    public void onReceiveEnemyAllyAttack(Player passivePlayer, Ally ally, double damage) {
+        System.out.println(this.getNotify() + passivePlayer.getName() + " sofreu " + String.format("%.2f", damage) + " de dano pelo aliado " + ally.getName() + "!");
+    }
+
+    @Override
+    public void onDefendAgainstAllyAttack(Player passivePlayer, Ally ally) {
+        System.out.println(this.getNotify() + passivePlayer.getName() + " defendeu o ataque do aliado " + ally.getName() + "!");
+    }
+
+    @Override
+    public void onAllySupport(Player passivePlayer, Ally ally, double heal) {
+        System.out.println(this.getNotify() + passivePlayer.getName() + " recebeu a cura  💚" + String.format("%.2f", heal) + " pelo aliado " + ally.getName() + "!");
+    }
+
+    @Override
+    public void onDefendEnemyAttack(Player activePlayer, Player passivePlayer) {
+        System.out.println(this.getNotify() + passivePlayer.getName() + " defendeu o ataque de " + activePlayer.getName() + "!");
+    }
+
+    @Override
+    public void onReceiveEnemyAttack(Player activePlayer, Player passivePlayer, double damage) {
+        System.out.println(this.getNotify() + passivePlayer.getName() + " sofreu " + String.format("%.2f", damage) + " de dano pelo ataque de " + activePlayer.getName() + "!");
+    }
+
+    @Override
+    public void onReceiveSpecialDamage(Player activePlayer, Player passivePlayer, Ally ally) {
+        System.out.println(this.getNotify() + passivePlayer.getName() + " e seu aliado " + ally.getName() + " sofreu dano especial pelo " + activePlayer.getName() + "!");
+    }
+
+    private String getNotify() {
+        return "👤Campo de batalha notifica: O jogador ";
     }
 }

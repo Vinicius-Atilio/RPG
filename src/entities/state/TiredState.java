@@ -30,7 +30,7 @@ public class TiredState extends State {
     }
 
     @Override
-    public double calculateAllyDamage(Ally ally, Skill skill, Player actionPlayer, Player passivePlayer) {
+    public double calculateEnemyAllyDamage(Ally ally, Skill skill, Player actionPlayer, Player passivePlayer) {
         return 0;
     }
 

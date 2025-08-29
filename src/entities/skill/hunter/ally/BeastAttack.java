@@ -28,7 +28,7 @@ public class BeastAttack extends AllyAttack {
         System.out.println("A fera salta sobre o " + passivePlayer.getName() + ", dilacerando-o com suas garras afiadas!");
         System.out.println("⚔️ " + activePlayer.getName() + " executa o ataque da fera com precisão!");
         System.out.println();
-        passivePlayer.receiveAllyDamage(ally, this, activePlayer, passivePlayer);
+        passivePlayer.receiveEnemyAllyDamage(ally, this, passivePlayer);
         System.out.println();
     }
 
