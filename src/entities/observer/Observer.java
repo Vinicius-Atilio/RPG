@@ -4,6 +4,7 @@ import entities.ally.Ally;
 import entities.character.Player;
 import entities.skill.Skill;
 import entities.skill.attack.Trap;
+import entities.state.State;
 
 public interface Observer {
     void onContract(Player activePlayer, Trap trap);
@@ -18,4 +19,5 @@ public interface Observer {
     void onPlayerDied(Player activePlayer, Player passivePlayer, Skill skill);
     void onUpdateLifeStatus(Player passivePlayer);
     void onAllyInvoked(Player activePLayer, Ally ally);
+    void onStateChange(Player activePlayer, State state);
 }

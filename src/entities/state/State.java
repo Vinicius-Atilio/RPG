@@ -110,6 +110,10 @@ public abstract class State {
                 '}';
     }
 
+    public String getStateName() {
+        return stateName;
+    }
+
     public double getLife() {
         return life;
     }

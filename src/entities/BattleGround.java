@@ -5,6 +5,7 @@ import entities.character.Player;
 import entities.observer.Observer;
 import entities.skill.Skill;
 import entities.skill.attack.Trap;
+import entities.state.State;
 import entities.turn.Game;
 
 import java.util.ArrayList;
@@ -207,6 +208,11 @@ public class BattleGround implements Observer, Game {
     @Override
     public void onAllyInvoked(Player activePLayer, Ally ally) {
         System.out.println(this.getNotify() + activePLayer.getName() + " invocou seu aliado " + ally.getName() + " ao campo de batalha!");
+    }
+
+    @Override
+    public void onStateChange(Player activePlayer, State state) {
+        System.out.println(this.getNotify() + activePlayer.getName() + " teve seu estado alterado para " + state.getStateName() + "!");
     }
 
     private String getNotify() {

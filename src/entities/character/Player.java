@@ -63,6 +63,11 @@ public class Player implements Subject, Game {
     }
 
     @Override
+    public void notifyObservers(State state) {
+        this.observersList.forEach(observer -> observer.onStateChange(this, state));
+    }
+
+    @Override
     public void registerObserver(Observer observer) {
         this.observersList.add(observer);
     }
@@ -261,30 +266,37 @@ public class Player implements Subject, Game {
 
     public void changeStateToImmune() {
         this.state = ImmuneState.of(this.state);
+        this.notifyObservers(this.state);
     }
 
     public void changeStateToWrath() {
         this.state = WrathState.of(this.state);
+        this.notifyObservers(this.state);
     }
 
     public void changeStateToTired(State state) {
         this.state = TiredState.of(state);
+        this.notifyObservers(this.state);
     }
 
     public void changeStateToStunned() {
         this.state = StunnedState.of(this.state);
+        this.notifyObservers(this.state);
     }
 
     public void changeStateToEvasion() {
         this.state = EvasionState.of(this.state);
+        this.notifyObservers(this.state);
     }
 
     public void changeStateToDefensive() {
         this.state = DefensiveState.of(this.state);
+        this.notifyObservers(this.state);
     }
 
     public void makeDeath() {
         this.state.onDeath(this);
+        this.notifyObservers(this.state);
     }
 
     public void changeState(State state) {
