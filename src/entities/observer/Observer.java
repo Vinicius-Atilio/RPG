@@ -2,6 +2,7 @@ package entities.observer;
 
 import entities.ally.Ally;
 import entities.character.Player;
+import entities.effect.StatusEffect;
 import entities.skill.Skill;
 import entities.skill.attack.Trap;
 import entities.state.State;
@@ -18,6 +19,8 @@ public interface Observer {
     void onReceiveSpecialDamage(Player activePlayer, Player passivePlayer, Ally ally);
     void onPlayerDied(Player activePlayer, Player passivePlayer, Skill skill);
     void onUpdateLifeStatus(Player passivePlayer);
+    void onUpdateLifeStatus(Player passivePlayer, String effectName);
     void onAllyInvoked(Player activePLayer, Ally ally);
     void onStateChange(Player activePlayer, State state);
+    void onApplyEffect(Player player, StatusEffect effect);
 }

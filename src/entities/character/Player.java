@@ -235,9 +235,9 @@ public class Player implements Subject, Game {
         // Verifica se algum efeito foi adicionado e ainda nao esta ativo
         for (StatusEffect effect : this.effects) {
             if (!effect.isActive() && this.effects.stream().noneMatch(e -> e.getId().equals(effect.getId()))) {
-                System.out.println("Efeito " + effect.getName() + " aplicado a " + this.name + ".");
                 effect.accept(this);
                 effect.makeActive();
+                this.observersList.forEach(observer -> observer.onApplyEffect(this, effect));
             }
         }
 
@@ -247,11 +247,9 @@ public class Player implements Subject, Game {
         return this.state.getLife();
     }
 
-
     public void receiveEffect(double value, String effectName) {
-        System.out.println("O jogador " + this.name + " está sob efeito de " + effectName + " Vida reduzida em 5%." + " Vida atual: " + String.format("%.2f",  this.getLife() ));
         this.state.receiveDamage(value, this, effectName);
-//        verifyIfPlayerDied(activePlayer, skill);
+        this.observersList.forEach(observer -> observer.onUpdateLifeStatus(this, effectName));
     }
 
     public Ally getAlly() {

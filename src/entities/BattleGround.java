@@ -2,6 +2,7 @@ package entities;
 
 import entities.ally.Ally;
 import entities.character.Player;
+import entities.effect.StatusEffect;
 import entities.observer.Observer;
 import entities.skill.Skill;
 import entities.skill.attack.Trap;
@@ -206,6 +207,11 @@ public class BattleGround implements Observer, Game {
     }
 
     @Override
+    public void onUpdateLifeStatus(Player passivePlayer, String effectName) {
+        System.out.println(this.getNotify() + passivePlayer.getName() + " está sob efeito de " + effectName + " Vida reduzida em 5%." + " Vida atual: " + String.format("%.2f",  passivePlayer.getLife() ));
+    }
+
+    @Override
     public void onAllyInvoked(Player activePLayer, Ally ally) {
         System.out.println(this.getNotify() + activePLayer.getName() + " invocou seu aliado " + ally.getName() + " ao campo de batalha!");
     }
@@ -213,6 +219,11 @@ public class BattleGround implements Observer, Game {
     @Override
     public void onStateChange(Player activePlayer, State state) {
         System.out.println(this.getNotify() + activePlayer.getName() + " teve seu estado alterado para " + state.getStateName() + "!");
+    }
+
+    @Override
+    public void onApplyEffect(Player player, StatusEffect effect) {
+        System.out.println(this.getNotify() + player.getName() + " foi afetado pelo efeito " + effect.getName() + "!");
     }
 
     private String getNotify() {
