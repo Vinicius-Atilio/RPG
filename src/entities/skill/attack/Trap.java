@@ -10,6 +10,8 @@ import entities.state.TrapState;
 
 import java.util.Random;
 
+// OBSERVAVEL
+// ELA AVISA QUE EXPLODIU AO SEU INIMIGO
 public abstract class Trap extends Skill {
     protected int damage;
     protected TrapState state;

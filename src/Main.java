@@ -8,6 +8,7 @@ public class Main {
         Player player1 = new CharacterBuilder()
                 .withSpecialization(Specialization.Hunter)
                 .build();
+
         Player player2 = new CharacterBuilder()
                 .build();
 

@@ -19,6 +19,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
+// OBSERVADOR
+// TERA MUDANCA DO SEU ESTADO QUANDO ARMADILHA FOR ACIONADA
 public class Player implements Subject, Game {
     private List<Observer> observersList;
     private BigInteger id;

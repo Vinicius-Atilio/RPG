@@ -154,11 +154,11 @@ public abstract class Skill {
     public static List<Skill> ofHunter() {
         return Arrays.asList(
                 PrecisionShot.ofPrecisionShot(),
-                ExplosiveTrap.ofExplosiveTrap(),
+                ExplosiveTrap.ofExplosiveTrap(), // ARMADILHA
                 EvasionDefense.ofEvasion(),
                 ArrowRain.ofArrowRain(),
                 PoisonArrow.ofPoisonArrow(),
-                Beast.ofHunterAlly());
+                Beast.ofHunterAlly()); //ALIADO
     }
 
     public static List<Skill> ofBeast() {

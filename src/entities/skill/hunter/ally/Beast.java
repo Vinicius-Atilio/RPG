@@ -73,7 +73,8 @@ public class Beast extends Ally {
     }
 
     public static Beast ofHunterAlly() {
-        return new Beast("Fera Companheira",
+        return new Beast(
+                "Fera Companheira",
                 "Um aliado animal que traz força e agilidade para a batalha",
                 "🐺 Fera Companheira está lutando por seu mestre na batalha!.",
                 1,

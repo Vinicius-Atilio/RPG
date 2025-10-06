@@ -9,6 +9,7 @@ import entities.state.State;
 
 import java.util.List;
 
+// OBSERVAVEL
 public abstract class Ally extends Skill {
     protected State state;
     protected List<Skill> skills;
